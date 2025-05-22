@@ -1,3 +1,12 @@
+import { Link } from "react-router";
+
 export default function Home() {
-  return <div>Home</div>;
+  return <>
+  Home
+   <Link to={'/checkout'} >
+     <button>checkout</button>
+    </Link>
+  </>;
 }
+
+
