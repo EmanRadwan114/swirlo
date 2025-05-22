@@ -113,13 +113,20 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
   <GoogleOAuthProvider clientId={import.meta.env.GOOGLE_CLIENT_ID}>
+
+  <QueryClientProvider client={queryClient}>
+    <AuthContextProvider>
+      <CategoriesContextProvider>
+        <RouterProvider router={router} />
+      </CategoriesContextProvider>
+    </AuthContextProvider>
+  </QueryClientProvider>
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>
-        <CategoriesContextProvider>
-          <RouterProvider router={router} />
-        </CategoriesContextProvider>
+        <RouterProvider router={router} />
       </AuthContextProvider>
     </QueryClientProvider>
+
   </GoogleOAuthProvider>
 
   /* </StrictMode> */
