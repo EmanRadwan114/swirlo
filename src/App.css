@@ -4,9 +4,11 @@ body{
     background-color:  #fffefd;
 }
 :root {
-    --main-text: #130b00;
+    --main-text: #271700;
     --main-background: #fffefd;
     --primary: #dc9830;
-    --secondary: #151d09;
-    --accent: #869639;
+    --secondary: #1d2c05;
+    --accent: #9fb144;
+    --light-bg:rgb(245, 236, 184);
   }
+ 
