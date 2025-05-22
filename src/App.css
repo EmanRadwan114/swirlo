@@ -1,0 +1,12 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color:  #fffefd;
+}
+:root {
+    --main-text: #130b00;
+    --main-background: #fffefd;
+    --primary: #dc9830;
+    --secondary: #151d09;
+    --accent: #869639;
+  }
