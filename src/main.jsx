@@ -109,24 +109,18 @@ const router = createBrowserRouter([
 
 // ^ react query setup
 const queryClient = new QueryClient();
-
+const GOOGLE_CLIENT_ID="1080001240814-lp34ugb8obpd1fab1qea4vk3bs3llhi3.apps.googleusercontent.com"
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
-  <GoogleOAuthProvider clientId={import.meta.env.GOOGLE_CLIENT_ID}>
+  <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
 
-  <QueryClientProvider client={queryClient}>
-    <AuthContextProvider>
-      <CategoriesContextProvider>
-        <RouterProvider router={router} />
-      </CategoriesContextProvider>
-    </AuthContextProvider>
-  </QueryClientProvider>
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>
+         <CategoriesContextProvider>
         <RouterProvider router={router} />
+        </CategoriesContextProvider>
       </AuthContextProvider>
     </QueryClientProvider>
-
   </GoogleOAuthProvider>
 
   /* </StrictMode> */
