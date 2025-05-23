@@ -75,6 +75,14 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: "products",
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <Products />
+          </Suspense>
+        ),
+      },
       { path: "login", element: <Login></Login> },
       { path: "register", element: <Register></Register> },
       { path: "favorites", element: <Favorites></Favorites> },
