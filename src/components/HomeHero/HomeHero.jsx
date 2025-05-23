@@ -31,7 +31,7 @@ export default function HomeHero() {
     <Stack
       direction={{ xs: "column", md: "row" }}
       minHeight={"85vh"}
-      mt={"64px"}
+      mt={"60px"}
       position="relative"
       borderRadius={2}
       overflow="hidden"
