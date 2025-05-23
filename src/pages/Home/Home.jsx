@@ -7,10 +7,10 @@ export default function Home() {
   return (
     <>
       <HomeHero></HomeHero>
+      <CategoryCard></CategoryCard>
       <Link to={"/checkout"}>
         <button>checkout</button>
       </Link>
-      <CategoryCard></CategoryCard>
     </>
   );
 }
