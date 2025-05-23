@@ -1,20 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   TextField,
   Button,
   Typography,
   Stack,
+  IconButton,
+  InputAdornment,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  FormHelperText,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../../context/AuthContext";
 import loginImg from "../../assets/login1.jpeg";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export default function Register() {
   const navigate = useNavigate();
   const {register, isRegistering, error:registerError} = useAuth()
+
+    // Show Password
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfPassword, setShowConfPassword] = useState(false);
+    const togglePasswordVisibility = () => {
+      setShowPassword((prev) => !prev);
+    };
+  
+    const toggleConfPasswordVisibility = () => {
+      setShowConfPassword((prev) => !prev);
+    };
+  
   // Validation Schema
   const regSchema = Yup.object().shape({
     userName: Yup.string()
@@ -99,7 +118,7 @@ export default function Register() {
                   borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)",
+                  borderColor: "var(--gold)",
                   borderWidth: "2px",
                 },
                 input: {
@@ -110,7 +129,7 @@ export default function Register() {
                 color: "var(--gold)",
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "var(--secondary)",
+                color: "var(--gold)",
               },
             }}
             fullWidth
@@ -134,7 +153,7 @@ export default function Register() {
                   borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)",
+                  borderColor: "var(--gold)",
                   borderWidth: "2px",
                 },
                 input: {
@@ -145,7 +164,7 @@ export default function Register() {
                 color: "var(--gold)",
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "var(--secondary)",
+                color: "var(--gold)",
               },
             }}
             fullWidth
@@ -160,7 +179,11 @@ export default function Register() {
             helperText={touched.email && errors.email}
           />
 
-          <TextField
+          <FormControl
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            error={touched.password && Boolean(errors.password)}
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
@@ -170,7 +193,7 @@ export default function Register() {
                   borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)",
+                  borderColor: "var(--gold)",
                   borderWidth: "2px",
                 },
                 input: {
@@ -181,22 +204,42 @@ export default function Register() {
                 color: "var(--gold)",
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "var(--secondary)",
+                color: "var(--gold)",
               },
             }}
+          >
+            <InputLabel htmlFor="password">Password</InputLabel>
+            <OutlinedInput
+              id="password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              label="Password"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={togglePasswordVisibility}
+                    edge="end"
+                    aria-label="toggle password visibility"
+                    sx={{ color: "var(--accent)" }}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            {touched.password && errors.password && (
+              <FormHelperText>{errors.password}</FormHelperText>
+            )}
+          </FormControl>
+
+          <FormControl
             fullWidth
             margin="normal"
-            id="password"
-            name="password"
-            label="Password"
-            type="password"
-            value={values.password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.password && errors.password}
-            helperText={touched.password && errors.password}
-          />
-          <TextField
+            variant="outlined"
+            error={touched.confirmPass && Boolean(errors.confirmPass)}
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
@@ -206,7 +249,7 @@ export default function Register() {
                   borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)",
+                  borderColor: "var(--gold)",
                   borderWidth: "2px",
                 },
                 input: {
@@ -217,23 +260,39 @@ export default function Register() {
                 color: "var(--gold)",
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "var(--secondary)",
+                color: "var(--gold)",
               },
             }}
-            fullWidth
-            margin="normal"
-            id="confirmPass"
-            name="confirmPass"
-            label="Confirm Password"
-            type="password"
-            value={values.confirmPass}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.confirmPass && errors.confirmPass}
-            helperText={touched.confirmPass && errors.confirmPass}
-          />
+          >
+            <InputLabel htmlFor="confirmPass">Confirm Password</InputLabel>
+            <OutlinedInput
+              id="confirmPass"
+              name="confirmPass"
+              type={showConfPassword ? "text" : "password"}
+              value={values.confirmPass}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              label="Confirm Password"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={toggleConfPasswordVisibility}
+                    edge="end"
+                    aria-label="toggle password visibility"
+                    sx={{ color: "var(--accent)" }}
+                  >
+                    {showConfPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            {touched.confirmPass && errors.confirmPass && (
+              <FormHelperText>{errors.confirmPass}</FormHelperText>
+            )}
+          </FormControl>
+
           <Typography variant="subtitle1">
-            Already Have Account?{" "}
+            Already Have Account?
             <Typography
               component={Link}
               to="/login"
@@ -252,7 +311,7 @@ export default function Register() {
               mb: 2,
               backgroundColor: "var(--gold)",
               "&:hover": {
-                backgroundColor: "var(--primary)", 
+                backgroundColor: "var(--primary)",
               },
             }}
           >
@@ -276,7 +335,7 @@ export default function Register() {
             objectFit: "cover",
           }}
           alt="coffe shop swerllo"
-          src = { loginImg }
+          src={loginImg}
         />
       </Box>
     </Box>

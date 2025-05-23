@@ -1,15 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
-  Container,
   Box,
   TextField,
   Button,
   Typography,
-  Avatar,
   Divider,
   Stack,
+  IconButton,
+  InputAdornment,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  FormHelperText,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router";
@@ -19,19 +22,27 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import loginImg from "../../assets/login1.jpeg";
 import { toast } from "react-toastify";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export default function Login() {
-  const { role, login, handleLoginSuccess, handelLoginError } = useAuth();
+  const {login, handleLoginSuccess, handelLoginError } = useAuth();
 
   const navigate = useNavigate();
   const onSuccess = (credentialResponse) => {
     const decoded = jwtDecode(credentialResponse.credential);
     handleLoginSuccess(decoded, credentialResponse.credential, navigate);
   };
+  
+  // Show Password
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const onError = () => {
     handelLoginError();
   };
+
   // Validation Schema
   const loginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid Email").required("Email is required"),
@@ -49,7 +60,7 @@ export default function Login() {
         email: values.email,
         password: values.password,
       });
-      toast.success("Login successful! 🎉");
+      toast.success("Login successful");
       navigate("/");
     } catch (error) {
       toast.error(`${error.response.data.message}`);
@@ -132,7 +143,11 @@ export default function Login() {
             error={touched.email && Boolean(errors.email)}
             helperText={touched.email && errors.email}
           />
-          <TextField
+          <FormControl
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            error={touched.password && Boolean(errors.password)}
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
@@ -156,18 +171,34 @@ export default function Login() {
                 color: "var(--gold)",
               },
             }}
-            fullWidth
-            margin="normal"
-            id="password"
-            name="password"
-            label="Password"
-            type="password"
-            value={values.password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.password && errors.password}
-            helperText={touched.password && errors.password}
-          />
+          >
+            <InputLabel htmlFor="password">Password</InputLabel>
+            <OutlinedInput
+              id="password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              label="Password"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={togglePasswordVisibility}
+                    edge="end"
+                    aria-label="toggle password visibility"
+                    sx={{ color: "var(--accent)" }}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            {touched.password && errors.password && (
+              <FormHelperText>{errors.password}</FormHelperText>
+            )}
+          </FormControl>
+
           <Divider sx={{ m: 1, color: "var(--gold)", fontSize: 18 }}>
             or
           </Divider>
