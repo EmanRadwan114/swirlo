@@ -37,7 +37,6 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import CategoriesContextProvider from "./context/CategoriesContext.jsx";
 import { Toaster } from "react-hot-toast";
 import Favorites from "./pages/Favorites/Favorites.jsx";
-import FavoritesContextProvider from "./context/FavoritesContext.jsx";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./utils/theme.js"; // import your custom theme
@@ -126,13 +125,11 @@ createRoot(document.getElementById("root")).render(
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <QueryClientProvider client={queryClient}>
         <AuthContextProvider>
-          <FavoritesContextProvider>
-            <CategoriesContextProvider>
-              <ToastContainer />
-              {/* <Toaster position="top-right" reverseOrder={false} /> */}
-              <RouterProvider router={router} />
-            </CategoriesContextProvider>
-          </FavoritesContextProvider>
+          <CategoriesContextProvider>
+            <ToastContainer />
+            {/* <Toaster position="top-right" reverseOrder={false} /> */}
+            <RouterProvider router={router} />
+          </CategoriesContextProvider>
         </AuthContextProvider>
       </QueryClientProvider>
     </GoogleOAuthProvider>
