@@ -32,7 +32,7 @@ const Navbar = () => {
 
   const navLinks = [
     { label: "Home", to: "/home" },
-    { label: "Shop", to: "/shop" },
+    { label: "Shop", to: "/products" },
     { label: "About Us", to: "/about" },
     { label: "Contact Us", to: "/contact" },
   ];
@@ -67,8 +67,8 @@ const Navbar = () => {
               ? "none"
               : "0 2px 10px rgba(0,0,0,0.1)",
           zIndex: 10,
-        }}
-      >
+          overflowX: "hidden",
+        }}>
         <Toolbar
           sx={{
             maxWidth: "1450px",
@@ -76,8 +76,8 @@ const Navbar = () => {
             marginX: "auto",
             justifyContent: "space-between",
             display: "flex",
-          }}
-        >
+            padding: "0",
+          }}>
           {/* Left: Logo */}
           <Box
             component={RouterLink}
@@ -86,8 +86,7 @@ const Navbar = () => {
               display: "flex",
               alignItems: "center",
               textDecoration: "none",
-            }}
-          >
+            }}>
             <Box
               component="img"
               src={logoImg}
@@ -114,8 +113,7 @@ const Navbar = () => {
                     "&:hover, &:active": {
                       color: "var(--primary)",
                     },
-                  }}
-                >
+                  }}>
                   {label}
                 </Typography>
               ))}
@@ -136,8 +134,7 @@ const Navbar = () => {
                   px: 1,
                   py: 0.5,
                   mx: 2,
-                }}
-              >
+                }}>
                 <SearchIcon
                   fontSize="small"
                   sx={{ color: "var(--tertiary)" }}
@@ -161,8 +158,7 @@ const Navbar = () => {
                   "&:hover, &:active": {
                     color: "var(--primary)",
                   },
-                }}
-              >
+                }}>
                 <AccountCircleIcon />
               </IconButton>
               <IconButton
@@ -176,8 +172,7 @@ const Navbar = () => {
                   "&:hover, &:active": {
                     color: "var(--primary)",
                   },
-                }}
-              >
+                }}>
                 <FavoriteBorderIcon />
               </IconButton>
               <IconButton
@@ -191,8 +186,7 @@ const Navbar = () => {
                   "&:hover, &:active": {
                     color: "var(--primary)",
                   },
-                }}
-              >
+                }}>
                 <ShoppingCartIcon />
               </IconButton>
             </Box>
@@ -207,8 +201,7 @@ const Navbar = () => {
                   color: "var(--primary)",
                 },
               }}
-              onClick={() => setDrawerOpen(true)}
-            >
+              onClick={() => setDrawerOpen(true)}>
               <MenuIcon />
             </IconButton>
           )}
@@ -224,8 +217,7 @@ const Navbar = () => {
           "& .MuiDrawer-paper": {
             backgroundColor: "var(--light-bg)",
           },
-        }}
-      >
+        }}>
         <Box sx={{ width: 250, p: 2 }}>
           <Box
             sx={{
@@ -239,8 +231,7 @@ const Navbar = () => {
               py: 0.5,
               mx: 2,
               mb: 1,
-            }}
-          >
+            }}>
             <SearchIcon fontSize="small" sx={{ color: "var(--tertiary)" }} />
             <InputBase
               placeholder="Search…"
@@ -265,8 +256,7 @@ const Navbar = () => {
                     color: "var(--primary)",
                   },
                 }}
-                onClick={() => setDrawerOpen(false)}
-              >
+                onClick={() => setDrawerOpen(false)}>
                 <ListItemText primary={label} />
               </ListItem>
             ))}
