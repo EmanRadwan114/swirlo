@@ -7,6 +7,7 @@ import {
   Typography,
   Avatar,
   Divider,
+  Stack,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useFormik } from "formik";
@@ -14,13 +15,15 @@ import * as Yup from "yup";
 import { Link } from "react-router";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import {  useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import loginImg from "../../assets/login1.jpeg";
+import { toast } from "react-toastify";
 
 export default function Login() {
-  const { handleLoginSuccess, handelLoginError } = useAuth();
-  const navigate = useNavigate();
+  const { role, login, handleLoginSuccess, handelLoginError } = useAuth();
 
+  const navigate = useNavigate();
   const onSuccess = (credentialResponse) => {
     const decoded = jwtDecode(credentialResponse.credential);
     handleLoginSuccess(decoded, credentialResponse.credential, navigate);
@@ -33,11 +36,25 @@ export default function Login() {
   const loginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid Email").required("Email is required"),
     password: Yup.string()
-      .min(6, "At least 6 characters")
+      .min(8, "Password must be at least 8 characters")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/,
+        "Must contain uppercase, lowercase, number, and special character"
+      )
       .required("Password is required"),
   });
-  // Submit
-  const onSubmit = () => {
+  const onSubmit = async (values) => {
+    try {
+      await login({
+        email: values.email,
+        password: values.password,
+      });
+      toast.success("Login successful! 🎉");
+      navigate("/");
+    } catch (error) {
+      toast.error(`${error.response.data.message}`);
+      console.error("Response data:", error.response.data);
+    }
     console.log("submitted");
   };
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -54,7 +71,7 @@ export default function Login() {
     <Box
       sx={{
         display: "flex",
-        height: "100vh", // full height
+        height: "100vh",
       }}
     >
       <Box
@@ -70,22 +87,27 @@ export default function Login() {
         <Typography
           component="h1"
           variant="h3"
-          sx={{ mb: 4, color: "var(--main-text)" }}
+          sx={{ mb: 4, color: "var(--gold)" }}
         >
           Sign In
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate>
+        <Stack
+          component="form"
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{ width: "70%", mt: 1 }}
+        >
           <TextField
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)",
+                  borderColor: "var(--gold)",
                 },
                 "&:hover fieldset": {
                   borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)",
+                  borderColor: "var(--gold)",
                   borderWidth: "2px",
                 },
                 input: {
@@ -93,10 +115,10 @@ export default function Login() {
                 },
               },
               "& .MuiInputLabel-root": {
-                color: "var(--primary)",
+                color: "var(--gold)",
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "var(--secondary)",
+                color: "var(--gold)",
               },
             }}
             fullWidth
@@ -114,13 +136,13 @@ export default function Login() {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)",
+                  borderColor: "var(--gold)",
                 },
                 "&:hover fieldset": {
                   borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)",
+                  borderColor: "var(--gold)",
                   borderWidth: "2px",
                 },
                 input: {
@@ -128,10 +150,10 @@ export default function Login() {
                 },
               },
               "& .MuiInputLabel-root": {
-                color: "var(--primary)",
+                color: "var(--gold)",
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "var(--secondary)",
+                color: "var(--gold)",
               },
             }}
             fullWidth
@@ -146,16 +168,18 @@ export default function Login() {
             error={touched.password && errors.password}
             helperText={touched.password && errors.password}
           />
-          <Divider sx={{ m:1 ,color: "var(--primary)" ,fontSize:18 }}>or</Divider>
+          <Divider sx={{ m: 1, color: "var(--gold)", fontSize: 18 }}>
+            or
+          </Divider>
           <Box sx={{ mt: 2 }}>
             <GoogleLogin onSuccess={onSuccess} onError={onError} />
           </Box>
-          <Typography variant="subtitle1" sx={{my:1,}}>
+          <Typography variant="subtitle1" sx={{ my: 1 }}>
             Don't Have Account? {""}
             <Typography
               component={Link}
               to="/register"
-              sx={{  color: "var(--primary)", cursor: "pointer" }}
+              sx={{ color: "var(--gold)", cursor: "pointer" }}
             >
               Sign Up
             </Typography>
@@ -168,15 +192,15 @@ export default function Login() {
             sx={{
               mt: 3,
               mb: 2,
-              backgroundColor: "var(--primary)",
+              backgroundColor: "var(--gold)",
               "&:hover": {
-                backgroundColor: "var(--secondary)",
+                backgroundColor: "var(--primary)",
               },
             }}
           >
             Sign In
           </Button>
-        </Box>
+        </Stack>
       </Box>
       <Box
         sx={{
@@ -194,8 +218,8 @@ export default function Login() {
             height: "100%",
             objectFit: "cover",
           }}
-          alt="coffe shop"
-          src="https://i.pinimg.com/736x/ae/dd/0a/aedd0a44a89d19f6be16bdff578f4a44.jpg"
+          alt="coffe shop swerllo"
+          src={loginImg}
         />
       </Box>
     </Box>

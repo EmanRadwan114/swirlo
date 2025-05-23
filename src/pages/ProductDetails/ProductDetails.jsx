@@ -7,7 +7,7 @@ export default function ProductDetails() {
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
         p: { xs: 2, md: 6 },
-        overflowX: "hidden", // remove horizontal scroll
+        overflowX: "hidden",
       }}
     >
       {/* Image Section */}
@@ -41,33 +41,61 @@ export default function ProductDetails() {
           height: "100%",
           px: { xs: 2, md: 6 },
           py: { xs: 2, md: 4 },
-          alignItems: { xs: "center", md: "flex-start" }, // center on small screens
-          textAlign: { xs: "center", md: "left" }, // center text on small screens
+          alignItems: { xs: "center", md: "flex-start" },
+          textAlign: { xs: "center", md: "left" },
         }}
       >
-        <Typography variant="h3" sx={{ mb: 2, color: "var(--main-text)" }}>
+        <Typography
+          variant="h3"
+          sx={{
+            mb: 2,
+            color: "var(--primary)",
+            fontFamily: "Pacifico, cursive",
+          }}
+        >
           Lavender Matcha Frappe
         </Typography>
 
         <Box
           sx={{
-            bgcolor: "var(--primary)",
+            background: "var(--custom-gradient)",
+            // bgcolor: "var(--gold)",
             height: "5px",
-            width: { xs: "80%", md: "18rem" }, // responsive width
+            width: { xs: "80%", md: "18rem" },
             mb: 4,
           }}
         />
 
-        <Typography variant="h5" sx={{ mb: 2, color: "var(--accent)" }}>
+        <Typography
+          variant="h5"
+          sx={{
+            mb: 2,
+            color: "var(--tertiary)",
+          }}
+        >
           Ingredients
         </Typography>
 
-        <Typography variant="h5" sx={{ mb: 4, color: "var(--secondary)" }}>
+        <Typography
+          variant="h5"
+          sx={{
+            mb: 4,
+            color: "var(--main-text)",
+          }}
+        >
           Matcha, lavender, and milk of choice blended with ice and topped with
           whipped cream.
         </Typography>
 
-        <Typography variant="h6" sx={{ mb: 6, fontWeight: "700" }}>
+        <Typography
+          variant="h6"
+          sx={{
+            mb: 6,
+            fontWeight: "700",
+            color: "var(--primary)",
+            fontFamily: "Playpen Sans Hebrew",
+          }}
+        >
           Price: 150 LE
         </Typography>
 
@@ -83,7 +111,7 @@ export default function ProductDetails() {
             alignItems: "center",
             justifyContent: "center",
             cursor: "pointer",
-            mx: "auto", 
+            mx: "auto",
             textAlign: "center",
             transition: "background-color 0.3s ease",
             "&:hover": {

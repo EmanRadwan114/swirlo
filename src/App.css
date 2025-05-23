@@ -1,14 +1,18 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #fffefd;
+  background-color: #f2ece0;
 }
 :root {
-  --main-text: #271700;
-  --main-background: #fffefd;
-  --primary: #dc9830;
-  --secondary: #1d2c05;
+  --main-text: #0e0602;
+  --main-background: #f2ece0;
+  --primary: #4b2a19;
+  --secondary: #e3d1bb;
   --tertiary: #363636;
-  --accent: #9fb144;
-  --light-bg: rgb(245, 236, 184);
+  --accent: #dabc9a;
+  --light-bg: #f6f4f2;
+  --light-color: #8d6e63;
+  --gold: #dc9830;
+  --custom-gradient: linear-gradient(135deg,  var(--primary), var(--gold));
+
 }
