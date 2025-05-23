@@ -13,13 +13,12 @@ export default function CategoryCard() {
       <Box
         sx={{
           display: "flex",
-          flexDirection: {  sm: "row" },
+          flexDirection: { sm: "row" },
           alignItems: "center",
           justifyContent: "center",
           gap: { xs: 4, sm: 6 },
           p: 4,
-          // background: "var(--accent)",
-          background: "var(--light-bg)",
+          background: "var( --main-background)",
           flexWrap: "wrap",
         }}
       >
@@ -65,8 +64,7 @@ export default function CategoryCard() {
                 cursor: "pointer",
                 textDecoration: "none",
                 fontWeight: "700",
-                // color: "var(--main-background)",
-                color: "var(--secondary)",
+                color: "var(--primary)",
                 fontFamily: "Playpen Sans Hebrew",
               }}
               variant="h6"
