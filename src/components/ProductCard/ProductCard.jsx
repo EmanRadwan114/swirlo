@@ -11,6 +11,9 @@ import {
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { styled } from "@mui/material/styles";
+import { toast } from "react-toastify";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import favoritesServices from "../../services/favorites";
 
 // Styled components
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -58,7 +61,8 @@ const StarRating = ({ rating = 0 }) => (
           color: i < rating ? "gold" : "gray",
           marginRight: "2px",
           fontSize: "1.3rem",
-        }}>
+        }}
+      >
         ★
       </Typography>
     ))}
@@ -101,7 +105,8 @@ const ProductCard = ({
       sx={{ width: sx.width, aspectRatio: sx.aspectRatio }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={handleClick}>
+      onClick={handleClick}
+    >
       <Box position="relative" sx={{ height: sx.height, overflow: "hidden" }}>
         <CardMedia
           component="div"
@@ -112,7 +117,8 @@ const ProductCard = ({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-          }}>
+          }}
+        >
           <Box
             component="img"
             src={product.thumbnail}
@@ -159,7 +165,8 @@ const ProductCard = ({
             sx={{
               color: isFavorited ? "var(--secondary)" : "white",
               "&:hover": { color: "var(--secondary)" },
-            }}>
+            }}
+          >
             <FavoriteIcon />
           </IconButton>
           <IconButton
@@ -167,7 +174,8 @@ const ProductCard = ({
             sx={{
               color: "white",
               "&:hover": { color: "var(--secondary)" },
-            }}>
+            }}
+          >
             <ShoppingCartIcon />
           </IconButton>
         </OverlayBox>
@@ -178,7 +186,8 @@ const ProductCard = ({
         <Typography
           variant="h6"
           color="var(--primary)"
-          sx={{ fontSize: "1.35rem" }}>
+          sx={{ fontSize: "1.35rem" }}
+        >
           {product.title}
         </Typography>
         <Typography variant="body1" sx={{ fontSize: "1.1rem" }}>
