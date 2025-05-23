@@ -36,6 +36,8 @@ import AuthContextProvider from "./context/AuthContext.jsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import CategoriesContextProvider from "./context/CategoriesContext.jsx";
 import { Toaster } from "react-hot-toast";
+import Favorites from "./pages/Favorites/Favorites.jsx";
+import FavoritesContextProvider from "./context/FavoritesContext.jsx";
 // ^ routing setup
 const router = createBrowserRouter([
   {
@@ -71,6 +73,7 @@ const router = createBrowserRouter([
       },
       { path: "login", element: <Login></Login> },
       { path: "register", element: <Register></Register> },
+      { path: "favorites", element: <Favorites></Favorites> },
       { path: "cart", element: <Cart></Cart> },
       { path: "checkout", element: <Checkout></Checkout> },
       {
@@ -109,17 +112,19 @@ const router = createBrowserRouter([
 
 // ^ react query setup
 const queryClient = new QueryClient();
-const GOOGLE_CLIENT_ID="1080001240814-lp34ugb8obpd1fab1qea4vk3bs3llhi3.apps.googleusercontent.com"
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
   <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>
-         <CategoriesContextProvider>
-          <Toaster position="top-right" reverseOrder={false} />
-        <RouterProvider router={router} />
-        </CategoriesContextProvider>
+        <FavoritesContextProvider>
+          <CategoriesContextProvider>
+            <Toaster position="top-right" reverseOrder={false} />
+            <RouterProvider router={router} />
+          </CategoriesContextProvider>
+        </FavoritesContextProvider>
       </AuthContextProvider>
     </QueryClientProvider>
   </GoogleOAuthProvider>
