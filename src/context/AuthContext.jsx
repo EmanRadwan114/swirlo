@@ -4,9 +4,9 @@ import { login, logout, register, getCurrentUser } from "../services/authApi";
 
 const AuthContext = createContext();
 
-export default function  AuthProvider  ({ children }) {
+export default function AuthProvider({ children }) {
+  // useQueryClient: Manages cached data
   const queryClient = useQueryClient();
-
   const {
     data: user,
     isLoading,
@@ -29,7 +29,8 @@ export default function  AuthProvider  ({ children }) {
       register({ name, email, password, role }),
     onSuccess: (data) => {
       if (data.user) {
-        queryClient.setQueryData(["auth", "user"], data.user);
+        console.log("sign up successfully go to login page");
+        // queryClient.setQueryData(["auth", "user"], data.user);
       }
     },
   });
@@ -52,11 +53,11 @@ export default function  AuthProvider  ({ children }) {
     logout: logoutMutation.mutateAsync,
     isLoggingOut: logoutMutation.isLoading,
     error: loginMutation.error || registerMutation.error,
-    role: user?.role, // Add role to context value
+    role: user?.role,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
+}
 
 export const useAuth = () => {
   const context = useContext(AuthContext);

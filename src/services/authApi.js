@@ -1,36 +1,39 @@
-import axios from "axios";
 import api from "../utils/apiUrl";
+
+// Sign Up
 export const register = async (userData) => {
   try {
     const response = await api.post("/auth/register", {
       name: userData.name,
       email: userData.email,
       password: userData.password,
-      role: userData.role || "user", // Fallback to "user" if not provided
+      role: userData.role || "user",
     });
     return response.data;
   } catch (error) {
-    // Rethrow the error to be caught in the component
     throw error;
   }
 };
-export const login = async (credentials) => {
-  const res = await api.post("/auth/login");
-  return res.data;
-};
 
-export const logout = async () => {
-  const res = await api.post("/auth/logout");
-  return res.data;
-};
-
-export const activateEmail = async (token) => {
-  const response = await api.get(`/auth/activate/${token}`);
+// Login
+export const login = async (userData) => {
+  const response = await api.post("/auth/login", userData);
   return response.data;
 };
 
+
+// Logout
+export const logout = async () => {
+  try {
+    const res = await api.post("/auth/logout");
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Get Current User
 export const getCurrentUser = async () => {
   const res = await api.get("/users/me");
   return res.data;
 };
-  
