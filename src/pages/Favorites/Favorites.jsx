@@ -113,7 +113,7 @@ const Favorites = () => {
   const { favorites, setFavorites } = useContext(FavoritesContext);
 
   useEffect(() => {
-    setFavorites(dummyFavorites);
+    // setFavorites(dummyFavorites);
   }, []);
 
   return (
@@ -137,7 +137,7 @@ const Favorites = () => {
             variant="h4"
             sx={{
               fontWeight: 700,
-              color: "#5d4037",
+              color: "var(--primary)",
               display: "flex",
               alignItems: "center",
             }}
@@ -161,24 +161,32 @@ const Favorites = () => {
             <FavoriteBorder
               sx={{
                 fontSize: "4rem",
-                color: "#d7ccc8",
+                color: "var(--accent)",
                 mb: 3,
               }}
             />
-            <Typography variant="h6" gutterBottom>
+            <Typography
+              variant="h6"
+              gutterBottom
+              sx={{ color: "var(--main-text)" }}
+            >
               Your favorites list is empty
             </Typography>
-            <Typography color="textSecondary" paragraph sx={{ mb: 3 }}>
+            <Typography
+              color="textSecondary"
+              paragraph
+              sx={{ color: "var(--main-text)", mb: 3 }}
+            >
               Start adding your favorite coffee drinks and treats to build your
               perfect order!
             </Typography>
             <Button
               variant="contained"
-              color="primary"
               startIcon={<ArrowBack />}
               href="/menu"
               sx={{
-                background: "linear-gradient(45deg, #8d6e63 30%, #5d4037 90%)",
+                background:
+                  "linear-gradient(45deg, #8d6e63 30%, var(--primary) 90%)",
                 color: "white",
                 fontWeight: 600,
                 borderRadius: 50,

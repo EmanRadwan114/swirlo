@@ -119,11 +119,12 @@ createRoot(document.getElementById("root")).render(
   <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>
-        <FavoritesContextProvider></FavoritesContextProvider>
-        <CategoriesContextProvider>
-          <Toaster position="top-right" reverseOrder={false} />
-          <RouterProvider router={router} />
-        </CategoriesContextProvider>
+        <FavoritesContextProvider>
+          <CategoriesContextProvider>
+            <Toaster position="top-right" reverseOrder={false} />
+            <RouterProvider router={router} />
+          </CategoriesContextProvider>
+        </FavoritesContextProvider>
       </AuthContextProvider>
     </QueryClientProvider>
   </GoogleOAuthProvider>
