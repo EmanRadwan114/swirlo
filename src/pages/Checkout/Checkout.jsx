@@ -9,6 +9,7 @@ import {
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
+import Coupons from "../../components/Coupons/Coupons";
 
 export default function Checkout() {
   // Validation Schema
@@ -160,10 +161,7 @@ export default function Checkout() {
           alignItems: "center",
         }}
       >
-        <Typography component="h2">
-          coupon
-        </Typography>
-        
+       <Coupons></Coupons>
       </Box>
     </Box>
   );
