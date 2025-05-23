@@ -38,6 +38,10 @@ import CategoriesContextProvider from "./context/CategoriesContext.jsx";
 import { Toaster } from "react-hot-toast";
 import Favorites from "./pages/Favorites/Favorites.jsx";
 import FavoritesContextProvider from "./context/FavoritesContext.jsx";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import theme from "./utils/theme.js"; // import your custom theme
+
 // ^ routing setup
 const router = createBrowserRouter([
   {
@@ -116,18 +120,20 @@ const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
-  <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-    <QueryClientProvider client={queryClient}>
-      <AuthContextProvider>
-        <FavoritesContextProvider>
-          <CategoriesContextProvider>
-            <Toaster position="top-right" reverseOrder={false} />
-            <RouterProvider router={router} />
-          </CategoriesContextProvider>
-        </FavoritesContextProvider>
-      </AuthContextProvider>
-    </QueryClientProvider>
-  </GoogleOAuthProvider>
-
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <QueryClientProvider client={queryClient}>
+        <AuthContextProvider>
+          <FavoritesContextProvider>
+            <CategoriesContextProvider>
+              <Toaster position="top-right" reverseOrder={false} />
+              <RouterProvider router={router} />
+            </CategoriesContextProvider>
+          </FavoritesContextProvider>
+        </AuthContextProvider>
+      </QueryClientProvider>
+    </GoogleOAuthProvider>
+  </ThemeProvider>
   /* </StrictMode> */
 );
