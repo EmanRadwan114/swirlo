@@ -1,14 +1,14 @@
-body{
-    margin: 0;
-    padding: 0;
-    background-color:  #fffefd;
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fffefd;
 }
 :root {
-    --main-text: #271700;
-    --main-background: #fffefd;
-    --primary: #dc9830;
-    --secondary: #1d2c05;
-    --accent: #9fb144;
-    --light-bg:rgb(245, 236, 184);
-  }
- 
+  --main-text: #271700;
+  --main-background: #fffefd;
+  --primary: #dc9830;
+  --secondary: #1d2c05;
+  --tertiary: #363636;
+  --accent: #9fb144;
+  --light-bg: rgb(245, 236, 184);
+}

@@ -1,12 +1,16 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { login, logout, register, getCurrentUser } from "../services/authApi";
 
 const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
-  // useQueryClient: Manages cached data
+  // State user to store login info (local state)
+  const [userState, setUserState] = useState(null);
+
   const queryClient = useQueryClient();
+
+  // useQuery fetches current user data
   const {
     data: user,
     isLoading,
@@ -42,8 +46,27 @@ export default function AuthProvider({ children }) {
     },
   });
 
+  const handleLoginSuccess = (decoded, token, navigate) => {
+    setUserState({
+      name: decoded.name,
+      email: decoded.email,
+      picture: decoded.picture,
+      token,
+    });
+    navigate("/");
+  };
+
+  const handleLogout = (navigate) => {
+    setUserState(null);
+    navigate("/");
+  };
+
+  const handelLoginError = () => {
+    console.log("error in login with google api ");
+  };
+
   const value = {
-    user,
+    user: userState || user, 
     isLoading,
     isAuthenticated: !!user && !isError,
     login: loginMutation.mutateAsync,
@@ -53,7 +76,10 @@ export default function AuthProvider({ children }) {
     logout: logoutMutation.mutateAsync,
     isLoggingOut: logoutMutation.isLoading,
     error: loginMutation.error || registerMutation.error,
-    role: user?.role,
+    role: (userState || user)?.role,
+    handleLoginSuccess,
+    handleLogout,
+    handelLoginError,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
