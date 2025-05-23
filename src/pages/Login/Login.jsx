@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Container,
   Box,
@@ -6,13 +6,29 @@ import {
   Button,
   Typography,
   Avatar,
+  Divider,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const { handleLoginSuccess, handelLoginError } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const onSuccess = (credentialResponse) => {
+    const decoded = jwtDecode(credentialResponse.credential);
+    handleLoginSuccess(decoded, credentialResponse.credential, navigate);
+  };
+
+  const onError = () => {
+    handelLoginError();
+  };
   // Validation Schema
   const loginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid Email").required("Email is required"),
@@ -123,12 +139,16 @@ export default function Login() {
             error={touched.password && errors.password}
             helperText={touched.password && errors.password}
           />
-          <Typography variant="subtitle1">
+          <Divider sx={{ m:1 ,color: "var(--primary)" ,fontSize:18 }}>or</Divider>
+          <Box sx={{ mt: 2 }}>
+            <GoogleLogin onSuccess={onSuccess} onError={onError} />
+          </Box>
+          <Typography variant="subtitle1" sx={{my:1,}}>
             Don't Have Account? {""}
             <Typography
               component={Link}
               to="/register"
-              sx={{ color: "var(--primary)", cursor: "pointer" }}
+              sx={{  color: "var(--primary)", cursor: "pointer" }}
             >
               Sign Up
             </Typography>
