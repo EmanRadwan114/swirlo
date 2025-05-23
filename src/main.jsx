@@ -53,7 +53,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "contacts",
+        path: "contact",
         element: (
           <Suspense fallback={<LoadingSpinner />}>
             <ContactsComponent />

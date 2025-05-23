@@ -2,10 +2,11 @@ import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import ProductDetails from "../ProductDetails/ProductDetails";
 
 export default function Home() {
-  return <div>
-    <CategoryCard></CategoryCard>
-    
-    {/* <ProductDetails></ProductDetails>  */} 
+  return (
+    <div>
+      <CategoryCard></CategoryCard>
 
-  </div>;
+      {/* <ProductDetails></ProductDetails>  */}
+    </div>
+  );
 }
