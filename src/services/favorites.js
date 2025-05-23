@@ -2,8 +2,10 @@
 
 import api from "../utils/apiUrl";
 
-const fetchFavorites = async () => {
-  const res = await api.get("/favorites");
+const fetchFavorites = async (page = 1) => {
+  const res = await api.get(`/favorites?page=${page}&limit=6`);
+  console.log(res);
+
   return res.data;
 };
 

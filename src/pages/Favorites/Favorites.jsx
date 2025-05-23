@@ -5,7 +5,6 @@ import {
   Card,
   CardMedia,
   CardContent,
-  CardActions,
   IconButton,
   Button,
   Box,
@@ -24,24 +23,43 @@ import {
 } from "@mui/icons-material";
 
 import { red } from "@mui/material/colors";
-import { memo } from "react";
+import { memo, useState } from "react";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 import { toast } from "react-toastify";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import favoritesServices from "../../services/favorites";
+import PaginationComponent from "../../components/Pagination/PaginationComp";
 
 const Favorites = () => {
   const queryClient = useQueryClient();
 
-  const { data, error, isLoading } = useQuery({
-    queryKey: ["favorites"],
-    queryFn: favoritesServices.fetchFavorites,
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const {
+    data: {
+      favorites = [],
+      currentPage: serverCurrentPage = 1,
+      totalPages,
+    } = {},
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["favorites", currentPage],
+    queryFn: () => favoritesServices.fetchFavorites(currentPage),
+    keepPreviousData: true,
   });
 
-  const favorites = data?.favorites || [];
-  const totalPages = data?.totalPages || 0;
-  const currentPage = data?.currentPage || 1;
+  const handlePagination = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+
+  if (error) {
+    toast.error(error.message || "Failed to fetch favorites");
+    return <ErrorFallback />;
+  }
 
   const { mutateAsync: removeFromFavorites, isPending: isRemoving } =
     useMutation({
@@ -205,7 +223,7 @@ const Favorites = () => {
             >
               Clear Favorites
             </Button>
-            <Grid container spacing={4}>
+            <Grid container spacing={4} sx={{ marginBottom: "20px" }}>
               {favorites.map((item) => (
                 <Grid key={item._id} size={{ xs: 12, md: 6, lg: 4 }}>
                   <Card
@@ -367,6 +385,12 @@ const Favorites = () => {
                 </Grid>
               ))}
             </Grid>
+
+            <PaginationComponent
+              currentPage={currentPage}
+              totalPages={totalPages}
+              handlePagination={handlePagination}
+            ></PaginationComponent>
           </Box>
         )}
       </Container>
