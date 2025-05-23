@@ -1,7 +1,8 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #e3d1bb;
+  box-sizing: border-box;
+  background-color: #f2ece0;
 }
 :root {
   --main-text: #0e0602;
@@ -13,4 +14,6 @@ body {
   --light-bg: #f6f4f2;
   --light-color: #8d6e63;
   --gold: #dc9830;
+  --custom-gradient: linear-gradient(135deg,  var(--primary), var(--gold));
+
 }
