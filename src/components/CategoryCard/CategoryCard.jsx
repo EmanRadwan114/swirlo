@@ -1,7 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router";
 import { useCategoriesContext } from "../../context/CategoriesContext";
-import { useEffect } from "react";
 
 export default function CategoryCard() {
   const { categories, isLoading, isError } = useCategoriesContext();

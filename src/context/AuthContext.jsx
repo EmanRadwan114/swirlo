@@ -1,12 +1,53 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { login, logout, register, getCurrentUser } from "../services/authApi";
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
-export default function AuthContextProvider({ children }) {
-  const [user, setUser] = useState(null);
+export default function AuthProvider({ children }) {
+  // State user to store login info (local state)
+  const [userState, setUserState] = useState(null);
+
+  const queryClient = useQueryClient();
+
+  // useQuery fetches current user data
+  const {
+    data: user,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["auth", "user"],
+    queryFn: getCurrentUser,
+    retry: false,
+  });
+
+  const loginMutation = useMutation({
+    mutationFn: ({ email, password, role }) => login({ email, password, role }),
+    onSuccess: (data) => {
+      queryClient.setQueryData(["auth", "user"], data.user);
+    },
+  });
+
+  const registerMutation = useMutation({
+    mutationFn: ({ name, email, password, role }) =>
+      register({ name, email, password, role }),
+    onSuccess: (data) => {
+      if (data.user) {
+        console.log("sign up successfully go to login page");
+        // queryClient.setQueryData(["auth", "user"], data.user);
+      }
+    },
+  });
+
+  const logoutMutation = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      queryClient.removeQueries(["auth", "user"]);
+    },
+  });
 
   const handleLoginSuccess = (decoded, token, navigate) => {
-    setUser({
+    setUserState({
       name: decoded.name,
       email: decoded.email,
       picture: decoded.picture,
@@ -16,7 +57,7 @@ export default function AuthContextProvider({ children }) {
   };
 
   const handleLogout = (navigate) => {
-    setUser(null);
+    setUserState(null);
     navigate("/");
   };
 
@@ -24,16 +65,28 @@ export default function AuthContextProvider({ children }) {
     console.log("error in login with google api ");
   };
 
-  return (
-    <AuthContext.Provider
-      value={{
-        user,
-        handleLoginSuccess,
-        handleLogout,
-        handelLoginError,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  const value = {
+    user: userState || user, 
+    isLoading,
+    isAuthenticated: !!user && !isError,
+    login: loginMutation.mutateAsync,
+    isLoggingIn: loginMutation.isLoading,
+    register: registerMutation.mutateAsync,
+    isRegistering: registerMutation.isLoading,
+    logout: logoutMutation.mutateAsync,
+    isLoggingOut: logoutMutation.isLoading,
+    error: loginMutation.error || registerMutation.error,
+    role: (userState || user)?.role,
+    handleLoginSuccess,
+    handleLogout,
+    handelLoginError,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error("useAuth must be used within AuthProvider");
+  return context;
+};
