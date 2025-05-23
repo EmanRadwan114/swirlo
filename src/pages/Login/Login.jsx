@@ -14,11 +14,11 @@ import * as Yup from "yup";
 import { Link } from "react-router";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import { AuthContext } from "../../context/AuthContext";
+import {  useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const { handleLoginSuccess, handelLoginError } = useContext(AuthContext);
+  const { handleLoginSuccess, handelLoginError } = useAuth();
   const navigate = useNavigate();
 
   const onSuccess = (credentialResponse) => {
@@ -67,10 +67,11 @@ export default function Login() {
           p: 4,
         }}
       >
-        {/* <Avatar sx={{ m: 1, bgcolor: "var(--primary)" }}>
-          <LockOutlinedIcon />
-        </Avatar> */}
-        <Typography component="h1" variant="h3" sx={{ mb: 4 }}>
+        <Typography
+          component="h1"
+          variant="h3"
+          sx={{ mb: 4, color: "var(--main-text)" }}
+        >
           Sign In
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate>
@@ -78,21 +79,24 @@ export default function Login() {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)", // normal state
+                  borderColor: "var(--primary)",
                 },
                 "&:hover fieldset": {
-                  borderColor: "var(--accent)", // hover state
+                  borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)", // focus state
+                  borderColor: "var(--secondary)",
                   borderWidth: "2px",
                 },
+                input: {
+                  color: "var(--text)",
+                },
               },
-              input: {
-                color: "var(--text)", // text color
+              "& .MuiInputLabel-root": {
+                color: "var(--primary)",
               },
-              label: {
-                color: "var(--primary)", // label color
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "var(--secondary)",
               },
             }}
             fullWidth
@@ -110,21 +114,24 @@ export default function Login() {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)", // normal state
+                  borderColor: "var(--primary)",
                 },
                 "&:hover fieldset": {
-                  borderColor: "var(--accent)", // hover state
+                  borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)", // focus state
+                  borderColor: "var(--secondary)",
                   borderWidth: "2px",
                 },
+                input: {
+                  color: "var(--text)",
+                },
               },
-              input: {
-                color: "var(--text)", // text color
+              "& .MuiInputLabel-root": {
+                color: "var(--primary)",
               },
-              label: {
-                color: "var(--primary)", // label color
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "var(--secondary)",
               },
             }}
             fullWidth
@@ -163,7 +170,7 @@ export default function Login() {
               mb: 2,
               backgroundColor: "var(--primary)",
               "&:hover": {
-                backgroundColor: "var(--secondary)", // slightly darker for hover effect
+                backgroundColor: "var(--secondary)",
               },
             }}
           >
@@ -178,6 +185,7 @@ export default function Login() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          display: { xs: "none", md: "flex" },
         }}
       >
         <img
