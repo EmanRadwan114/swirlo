@@ -1,22 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  Container,
   Box,
   TextField,
   Button,
   Typography,
-  Avatar,
   Stack,
+  IconButton,
+  InputAdornment,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  FormHelperText,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../../context/AuthContext";
+import loginImg from "../../assets/login1.jpeg";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 export default function Register() {
   const navigate = useNavigate();
   const {register, isRegistering, error:registerError} = useAuth()
+
+    // Show Password
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfPassword, setShowConfPassword] = useState(false);
+    const togglePasswordVisibility = () => {
+      setShowPassword((prev) => !prev);
+    };
+  
+    const toggleConfPasswordVisibility = () => {
+      setShowConfPassword((prev) => !prev);
+    };
+  
   // Validation Schema
   const regSchema = Yup.object().shape({
     userName: Yup.string()
@@ -46,7 +63,6 @@ export default function Register() {
       console.error("Full error object:", error);
       if (error.response) {
         console.error("Response data:", error.response.data);
-       
       }
   };}
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -82,7 +98,7 @@ export default function Register() {
         <Typography
           component="h1"
           variant="h3"
-          sx={{ mb: 3, color: "var(--main-text)" }}
+          sx={{ mb: 3, color: "var(--gold)" }}
         >
           Sign Up
         </Typography>
@@ -96,13 +112,13 @@ export default function Register() {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)",
+                  borderColor: "var(--gold)",
                 },
                 "&:hover fieldset": {
                   borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)",
+                  borderColor: "var(--gold)",
                   borderWidth: "2px",
                 },
                 input: {
@@ -110,10 +126,10 @@ export default function Register() {
                 },
               },
               "& .MuiInputLabel-root": {
-                color: "var(--primary)",
+                color: "var(--gold)",
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "var(--secondary)",
+                color: "var(--gold)",
               },
             }}
             fullWidth
@@ -131,13 +147,13 @@ export default function Register() {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)",
+                  borderColor: "var(--gold)",
                 },
                 "&:hover fieldset": {
                   borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)",
+                  borderColor: "var(--gold)",
                   borderWidth: "2px",
                 },
                 input: {
@@ -145,10 +161,10 @@ export default function Register() {
                 },
               },
               "& .MuiInputLabel-root": {
-                color: "var(--primary)",
+                color: "var(--gold)",
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "var(--secondary)",
+                color: "var(--gold)",
               },
             }}
             fullWidth
@@ -163,17 +179,21 @@ export default function Register() {
             helperText={touched.email && errors.email}
           />
 
-          <TextField
+          <FormControl
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            error={touched.password && Boolean(errors.password)}
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)",
+                  borderColor: "var(--gold)",
                 },
                 "&:hover fieldset": {
                   borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)",
+                  borderColor: "var(--gold)",
                   borderWidth: "2px",
                 },
                 input: {
@@ -181,35 +201,55 @@ export default function Register() {
                 },
               },
               "& .MuiInputLabel-root": {
-                color: "var(--primary)",
+                color: "var(--gold)",
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "var(--secondary)",
+                color: "var(--gold)",
               },
             }}
+          >
+            <InputLabel htmlFor="password">Password</InputLabel>
+            <OutlinedInput
+              id="password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              label="Password"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={togglePasswordVisibility}
+                    edge="end"
+                    aria-label="toggle password visibility"
+                    sx={{ color: "var(--accent)" }}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            {touched.password && errors.password && (
+              <FormHelperText>{errors.password}</FormHelperText>
+            )}
+          </FormControl>
+
+          <FormControl
             fullWidth
             margin="normal"
-            id="password"
-            name="password"
-            label="Password"
-            type="password"
-            value={values.password}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.password && errors.password}
-            helperText={touched.password && errors.password}
-          />
-          <TextField
+            variant="outlined"
+            error={touched.confirmPass && Boolean(errors.confirmPass)}
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)",
+                  borderColor: "var(--gold)",
                 },
                 "&:hover fieldset": {
                   borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)",
+                  borderColor: "var(--gold)",
                   borderWidth: "2px",
                 },
                 input: {
@@ -217,30 +257,46 @@ export default function Register() {
                 },
               },
               "& .MuiInputLabel-root": {
-                color: "var(--primary)",
+                color: "var(--gold)",
               },
               "& .MuiInputLabel-root.Mui-focused": {
-                color: "var(--secondary)",
+                color: "var(--gold)",
               },
             }}
-            fullWidth
-            margin="normal"
-            id="confirmPass"
-            name="confirmPass"
-            label="Confirm Password"
-            type="password"
-            value={values.confirmPass}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.confirmPass && errors.confirmPass}
-            helperText={touched.confirmPass && errors.confirmPass}
-          />
+          >
+            <InputLabel htmlFor="confirmPass">Confirm Password</InputLabel>
+            <OutlinedInput
+              id="confirmPass"
+              name="confirmPass"
+              type={showConfPassword ? "text" : "password"}
+              value={values.confirmPass}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              label="Confirm Password"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={toggleConfPasswordVisibility}
+                    edge="end"
+                    aria-label="toggle password visibility"
+                    sx={{ color: "var(--accent)" }}
+                  >
+                    {showConfPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            {touched.confirmPass && errors.confirmPass && (
+              <FormHelperText>{errors.confirmPass}</FormHelperText>
+            )}
+          </FormControl>
+
           <Typography variant="subtitle1">
-            Already Have Account?{" "}
+            Already Have Account?
             <Typography
               component={Link}
               to="/login"
-              sx={{ color: "var(--primary)", cursor: "pointer" }}
+              sx={{ color: "var(--gold)", cursor: "pointer" }}
             >
               Sign In
             </Typography>
@@ -253,9 +309,9 @@ export default function Register() {
             sx={{
               mt: 3,
               mb: 2,
-              backgroundColor: "var(--primary)",
+              backgroundColor: "var(--gold)",
               "&:hover": {
-                backgroundColor: "var(--secondary)", 
+                backgroundColor: "var(--primary)",
               },
             }}
           >
@@ -278,8 +334,8 @@ export default function Register() {
             height: "100%",
             objectFit: "cover",
           }}
-          alt="coffe shop"
-          src="https://i.pinimg.com/736x/ae/dd/0a/aedd0a44a89d19f6be16bdff578f4a44.jpg"
+          alt="coffe shop swerllo"
+          src={loginImg}
         />
       </Box>
     </Box>

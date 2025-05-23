@@ -18,7 +18,6 @@ export default function CategoryCard() {
           justifyContent: "center",
           gap: { xs: 4, sm: 6 },
           p: 4,
-          background: "var( --main-background)",
           flexWrap: "wrap",
         }}
       >
@@ -60,7 +59,7 @@ export default function CategoryCard() {
               component={Link}
               to="/login"
               sx={{
-                color: "black",
+                // color: "black",
                 cursor: "pointer",
                 textDecoration: "none",
                 fontWeight: "700",

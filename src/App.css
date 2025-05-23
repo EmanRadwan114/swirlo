@@ -3,7 +3,6 @@ body {
   padding: 0;
   box-sizing: border-box;
   background-color: #f2ece0;
-  font-family: "Playpen Sans Hebrew";
 }
 :root {
   --main-text: #0e0602;
@@ -14,4 +13,7 @@ body {
   --accent: #dabc9a;
   --light-bg: #f6f4f2;
   --light-color: #8d6e63;
+  --gold: #dc9830;
+  --custom-gradient: linear-gradient(135deg,  var(--primary), var(--gold));
+
 }
