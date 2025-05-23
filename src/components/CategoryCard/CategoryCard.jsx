@@ -59,7 +59,7 @@ export default function CategoryCard() {
               component={Link}
               to="/login"
               sx={{
-                color: "black",
+                // color: "black",
                 cursor: "pointer",
                 textDecoration: "none",
                 fontWeight: "700",
