@@ -35,7 +35,7 @@ import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import AuthContextProvider from "./context/AuthContext.jsx";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import CategoriesContextProvider from "./context/CategoriesContext.jsx";
-
+import { Toaster } from "react-hot-toast";
 // ^ routing setup
 const router = createBrowserRouter([
   {
@@ -117,6 +117,7 @@ createRoot(document.getElementById("root")).render(
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>
          <CategoriesContextProvider>
+          <Toaster position="top-right" reverseOrder={false} />
         <RouterProvider router={router} />
         </CategoriesContextProvider>
       </AuthContextProvider>
