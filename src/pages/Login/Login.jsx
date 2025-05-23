@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Container,
   Box,
@@ -6,13 +6,29 @@ import {
   Button,
   Typography,
   Avatar,
+  Divider,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
+import {  useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const { handleLoginSuccess, handelLoginError } = useAuth();
+  const navigate = useNavigate();
+
+  const onSuccess = (credentialResponse) => {
+    const decoded = jwtDecode(credentialResponse.credential);
+    handleLoginSuccess(decoded, credentialResponse.credential, navigate);
+  };
+
+  const onError = () => {
+    handelLoginError();
+  };
   // Validation Schema
   const loginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid Email").required("Email is required"),
@@ -51,10 +67,11 @@ export default function Login() {
           p: 4,
         }}
       >
-        {/* <Avatar sx={{ m: 1, bgcolor: "var(--primary)" }}>
-          <LockOutlinedIcon />
-        </Avatar> */}
-        <Typography component="h1" variant="h3" sx={{ mb: 4 }}>
+        <Typography
+          component="h1"
+          variant="h3"
+          sx={{ mb: 4, color: "var(--main-text)" }}
+        >
           Sign In
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate>
@@ -62,21 +79,24 @@ export default function Login() {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)", // normal state
+                  borderColor: "var(--primary)",
                 },
                 "&:hover fieldset": {
-                  borderColor: "var(--accent)", // hover state
+                  borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)", // focus state
+                  borderColor: "var(--secondary)",
                   borderWidth: "2px",
                 },
+                input: {
+                  color: "var(--text)",
+                },
               },
-              input: {
-                color: "var(--text)", // text color
+              "& .MuiInputLabel-root": {
+                color: "var(--primary)",
               },
-              label: {
-                color: "var(--primary)", // label color
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "var(--secondary)",
               },
             }}
             fullWidth
@@ -94,21 +114,24 @@ export default function Login() {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)", // normal state
+                  borderColor: "var(--primary)",
                 },
                 "&:hover fieldset": {
-                  borderColor: "var(--accent)", // hover state
+                  borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)", // focus state
+                  borderColor: "var(--secondary)",
                   borderWidth: "2px",
                 },
+                input: {
+                  color: "var(--text)",
+                },
               },
-              input: {
-                color: "var(--text)", // text color
+              "& .MuiInputLabel-root": {
+                color: "var(--primary)",
               },
-              label: {
-                color: "var(--primary)", // label color
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "var(--secondary)",
               },
             }}
             fullWidth
@@ -123,12 +146,16 @@ export default function Login() {
             error={touched.password && errors.password}
             helperText={touched.password && errors.password}
           />
-          <Typography variant="subtitle1">
+          <Divider sx={{ m:1 ,color: "var(--primary)" ,fontSize:18 }}>or</Divider>
+          <Box sx={{ mt: 2 }}>
+            <GoogleLogin onSuccess={onSuccess} onError={onError} />
+          </Box>
+          <Typography variant="subtitle1" sx={{my:1,}}>
             Don't Have Account? {""}
             <Typography
               component={Link}
               to="/register"
-              sx={{ color: "var(--primary)", cursor: "pointer" }}
+              sx={{  color: "var(--primary)", cursor: "pointer" }}
             >
               Sign Up
             </Typography>
@@ -143,7 +170,7 @@ export default function Login() {
               mb: 2,
               backgroundColor: "var(--primary)",
               "&:hover": {
-                backgroundColor: "var(--secondary)", // slightly darker for hover effect
+                backgroundColor: "var(--secondary)",
               },
             }}
           >
@@ -158,6 +185,7 @@ export default function Login() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          display: { xs: "none", md: "flex" },
         }}
       >
         <img

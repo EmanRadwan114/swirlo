@@ -33,7 +33,9 @@ import DashboardCoupons from "./pages/DashboardCoupons/DashboardCoupons";
 import DashboardAdmins from "./pages/DashboardAdmins/DashboardAdmins";
 import Dashboard from "./pages/Dashboard/Dashboard.jsx";
 import AuthContextProvider from "./context/AuthContext.jsx";
-
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import CategoriesContextProvider from "./context/CategoriesContext.jsx";
+import { Toaster } from "react-hot-toast";
 // ^ routing setup
 const router = createBrowserRouter([
   {
@@ -52,7 +54,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "contacts",
+        path: "contact",
         element: (
           <Suspense fallback={<LoadingSpinner />}>
             <ContactsComponent />
@@ -107,15 +109,20 @@ const router = createBrowserRouter([
 
 // ^ react query setup
 const queryClient = new QueryClient();
-
+const GOOGLE_CLIENT_ID="1080001240814-lp34ugb8obpd1fab1qea4vk3bs3llhi3.apps.googleusercontent.com"
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
+  <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
 
-  <QueryClientProvider client={queryClient}>
-    <AuthContextProvider>
-      <RouterProvider router={router} />
-    </AuthContextProvider>
-  </QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthContextProvider>
+         <CategoriesContextProvider>
+          <Toaster position="top-right" reverseOrder={false} />
+        <RouterProvider router={router} />
+        </CategoriesContextProvider>
+      </AuthContextProvider>
+    </QueryClientProvider>
+  </GoogleOAuthProvider>
 
   /* </StrictMode> */
 );

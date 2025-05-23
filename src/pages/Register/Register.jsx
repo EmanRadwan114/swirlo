@@ -6,13 +6,17 @@ import {
   Button,
   Typography,
   Avatar,
+  Stack,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Register() {
+  const navigate = useNavigate();
+  const {register, isRegistering, error:registerError} = useAuth()
   // Validation Schema
   const regSchema = Yup.object().shape({
     userName: Yup.string()
@@ -21,16 +25,30 @@ export default function Register() {
       .required("Name is required"),
     email: Yup.string().email("Invalid Email").required("Email is required"),
     password: Yup.string()
-      .min(6, "At least 6 characters")
+      .min(8, "Password must be at least 8 characters")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/,
+        "Must contain uppercase, lowercase, number, and special character"
+      )
       .required("Password is required"),
     confirmPass: Yup.string()
       .oneOf([Yup.ref("password")], "Passwords must match")
       .required("Confirm Password is Required"),
   });
   // Submit
-  const onSubmit = () => {
-    console.log("submitted");
-  };
+  const onSubmit = async(values) => {
+    console.log("submitted", values);
+
+    try{
+      await register({name:values.userName, email:values.email,password:values.password, role:"user"})
+      navigate('/login')
+    }catch(error) {
+      console.error("Full error object:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+       
+      }
+  };}
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: {
@@ -44,41 +62,58 @@ export default function Register() {
     });
 
   return (
-    <Container maxWidth="xs">
+    <Box
+      sx={{
+        display: "flex",
+        height: "100vh",
+        flexDirection: { xs: "column", md: "row" },
+      }}
+    >
       <Box
         sx={{
-          mt: 8,
+          flex: 1,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          justifyContent: "center",
+          p: 4,
         }}
       >
-        {/* <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar> */}
-        <Typography component="h1" variant="h5">
+        <Typography
+          component="h1"
+          variant="h3"
+          sx={{ mb: 3, color: "var(--main-text)" }}
+        >
           Sign Up
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <Stack
+          component="form"
+          onSubmit={handleSubmit}
+          noValidate
+          sx={{ width: "70%", mt: 1 }}
+        >
           <TextField
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)", // normal state
+                  borderColor: "var(--primary)",
                 },
                 "&:hover fieldset": {
-                  borderColor: "var(--accent)", // hover state
+                  borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)", // focus state
+                  borderColor: "var(--secondary)",
                   borderWidth: "2px",
                 },
+                input: {
+                  color: "var(--text)",
+                },
               },
-              input: {
-                color: "var(--text)", // text color
+              "& .MuiInputLabel-root": {
+                color: "var(--primary)",
               },
-              label: {
-                color: "var(--primary)", // label color
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "var(--secondary)",
               },
             }}
             fullWidth
@@ -96,21 +131,24 @@ export default function Register() {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)", // normal state
+                  borderColor: "var(--primary)",
                 },
                 "&:hover fieldset": {
-                  borderColor: "var(--accent)", // hover state
+                  borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)", // focus state
+                  borderColor: "var(--secondary)",
                   borderWidth: "2px",
                 },
+                input: {
+                  color: "var(--text)",
+                },
               },
-              input: {
-                color: "var(--text)", // text color
+              "& .MuiInputLabel-root": {
+                color: "var(--primary)",
               },
-              label: {
-                color: "var(--primary)", // label color
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "var(--secondary)",
               },
             }}
             fullWidth
@@ -129,21 +167,24 @@ export default function Register() {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)", // normal state
+                  borderColor: "var(--primary)",
                 },
                 "&:hover fieldset": {
-                  borderColor: "var(--accent)", // hover state
+                  borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)", // focus state
+                  borderColor: "var(--secondary)",
                   borderWidth: "2px",
                 },
+                input: {
+                  color: "var(--text)",
+                },
               },
-              input: {
-                color: "var(--text)", // text color
+              "& .MuiInputLabel-root": {
+                color: "var(--primary)",
               },
-              label: {
-                color: "var(--primary)", // label color
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "var(--secondary)",
               },
             }}
             fullWidth
@@ -162,21 +203,24 @@ export default function Register() {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)", // normal state
+                  borderColor: "var(--primary)",
                 },
                 "&:hover fieldset": {
-                  borderColor: "var(--accent)", // hover state
+                  borderColor: "var(--accent)",
                 },
                 "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)", // focus state
+                  borderColor: "var(--secondary)",
                   borderWidth: "2px",
                 },
+                input: {
+                  color: "var(--text)",
+                },
               },
-              input: {
-                color: "var(--text)", // text color
+              "& .MuiInputLabel-root": {
+                color: "var(--primary)",
               },
-              label: {
-                color: "var(--primary)", // label color
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "var(--secondary)",
               },
             }}
             fullWidth
@@ -211,14 +255,33 @@ export default function Register() {
               mb: 2,
               backgroundColor: "var(--primary)",
               "&:hover": {
-                backgroundColor: "var(--secondary)", // slightly darker for hover effect
+                backgroundColor: "var(--secondary)", 
               },
             }}
           >
             Sign Up
           </Button>
-        </Box>
+        </Stack>
       </Box>
-    </Container>
+      <Box
+        sx={{
+          flex: 1,
+          backgroundColor: "#f5f5f5",
+          display: { xs: "none", md: "flex" },
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <img
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+          alt="coffe shop"
+          src="https://i.pinimg.com/736x/ae/dd/0a/aedd0a44a89d19f6be16bdff578f4a44.jpg"
+        />
+      </Box>
+    </Box>
   );
 }
