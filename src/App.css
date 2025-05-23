@@ -13,4 +13,7 @@ body {
   --accent: #dabc9a;
   --light-bg: #f6f4f2;
   --light-color: #8d6e63;
+  --gold: #f1ac50;
+  --custom-gradient: linear-gradient(135deg,  var(--primary), var(--gold));
+
 }
