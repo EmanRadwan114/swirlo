@@ -18,9 +18,9 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const { login, handleLoginSuccess, handelLoginError } = useAuth();
+  const { role,login, handleLoginSuccess, handelLoginError } = useAuth();
+  
   const navigate = useNavigate();
-
   const onSuccess = (credentialResponse) => {
     const decoded = jwtDecode(credentialResponse.credential);
     handleLoginSuccess(decoded, credentialResponse.credential, navigate);
@@ -45,6 +45,7 @@ export default function Login() {
       await login({
         email: values.email,
         password: values.password,
+
       });
       navigate("/");
     } catch (error) {

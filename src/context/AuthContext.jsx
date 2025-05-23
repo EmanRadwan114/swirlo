@@ -22,9 +22,10 @@ export default function AuthProvider({ children }) {
   });
 
   const loginMutation = useMutation({
-    mutationFn: ({ email, password, role }) => login({ email, password, role }),
+    mutationFn: login,
     onSuccess: (data) => {
       queryClient.setQueryData(["auth", "user"], data.user);
+      console.log("Login successful, role:", data.user.role);
     },
   });
 
