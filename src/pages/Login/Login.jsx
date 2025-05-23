@@ -187,6 +187,7 @@ export default function Login() {
                     onClick={togglePasswordVisibility}
                     edge="end"
                     aria-label="toggle password visibility"
+                    sx={{ color: "var(--accent)" }}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>

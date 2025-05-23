@@ -223,6 +223,7 @@ export default function Register() {
                     onClick={togglePasswordVisibility}
                     edge="end"
                     aria-label="toggle password visibility"
+                    sx={{ color: "var(--accent)" }}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
@@ -278,6 +279,7 @@ export default function Register() {
                     onClick={toggleConfPasswordVisibility}
                     edge="end"
                     aria-label="toggle password visibility"
+                    sx={{ color: "var(--accent)" }}
                   >
                     {showConfPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
