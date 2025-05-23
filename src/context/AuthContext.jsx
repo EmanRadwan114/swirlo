@@ -6,7 +6,9 @@ const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
   // State user to store login info (local state)
-  const [userState, setUserState] = useState(null);
+  const [userState, setUserState] = useState(()=>{const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
   const queryClient = useQueryClient();
 
@@ -22,9 +24,16 @@ export default function AuthProvider({ children }) {
   });
 
   const loginMutation = useMutation({
-    mutationFn: ({ email, password, role }) => login({ email, password, role }),
+    mutationFn: login,
     onSuccess: (data) => {
       queryClient.setQueryData(["auth", "user"], data.user);
+      const userData = {
+        name:data.user.name,
+        email:data.user.email,
+        role:data.user.role,
+      }
+      localStorage.setItem("user",JSON.stringify(userData))
+      console.log("Login successful, role:", userData);
     },
   });
 
@@ -43,6 +52,9 @@ export default function AuthProvider({ children }) {
     mutationFn: logout,
     onSuccess: () => {
       queryClient.removeQueries(["auth", "user"]);
+      localStorage.removeItem("user")
+      setUserState(null);
+      navigate("/");
     },
   });
 
@@ -57,8 +69,7 @@ export default function AuthProvider({ children }) {
   };
 
   const handleLogout = (navigate) => {
-    setUserState(null);
-    navigate("/");
+   
   };
 
   const handelLoginError = () => {

@@ -10,6 +10,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../../context/AuthContext";
+import loginImg from "../../assets/login1.jpeg";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -78,7 +79,7 @@ export default function Register() {
         <Typography
           component="h1"
           variant="h3"
-          sx={{ mb: 3, color: "var(--main-text)" }}
+          sx={{ mb: 3, color: "var(--gold)" }}
         >
           Sign Up
         </Typography>
@@ -92,7 +93,7 @@ export default function Register() {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)",
+                  borderColor: "var(--gold)",
                 },
                 "&:hover fieldset": {
                   borderColor: "var(--accent)",
@@ -106,7 +107,7 @@ export default function Register() {
                 },
               },
               "& .MuiInputLabel-root": {
-                color: "var(--primary)",
+                color: "var(--gold)",
               },
               "& .MuiInputLabel-root.Mui-focused": {
                 color: "var(--secondary)",
@@ -127,7 +128,7 @@ export default function Register() {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)",
+                  borderColor: "var(--gold)",
                 },
                 "&:hover fieldset": {
                   borderColor: "var(--accent)",
@@ -141,7 +142,7 @@ export default function Register() {
                 },
               },
               "& .MuiInputLabel-root": {
-                color: "var(--primary)",
+                color: "var(--gold)",
               },
               "& .MuiInputLabel-root.Mui-focused": {
                 color: "var(--secondary)",
@@ -163,7 +164,7 @@ export default function Register() {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)",
+                  borderColor: "var(--gold)",
                 },
                 "&:hover fieldset": {
                   borderColor: "var(--accent)",
@@ -177,7 +178,7 @@ export default function Register() {
                 },
               },
               "& .MuiInputLabel-root": {
-                color: "var(--primary)",
+                color: "var(--gold)",
               },
               "& .MuiInputLabel-root.Mui-focused": {
                 color: "var(--secondary)",
@@ -199,7 +200,7 @@ export default function Register() {
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: "var(--primary)",
+                  borderColor: "var(--gold)",
                 },
                 "&:hover fieldset": {
                   borderColor: "var(--accent)",
@@ -213,7 +214,7 @@ export default function Register() {
                 },
               },
               "& .MuiInputLabel-root": {
-                color: "var(--primary)",
+                color: "var(--gold)",
               },
               "& .MuiInputLabel-root.Mui-focused": {
                 color: "var(--secondary)",
@@ -236,7 +237,7 @@ export default function Register() {
             <Typography
               component={Link}
               to="/login"
-              sx={{ color: "var(--primary)", cursor: "pointer" }}
+              sx={{ color: "var(--gold)", cursor: "pointer" }}
             >
               Sign In
             </Typography>
@@ -249,9 +250,9 @@ export default function Register() {
             sx={{
               mt: 3,
               mb: 2,
-              backgroundColor: "var(--primary)",
+              backgroundColor: "var(--gold)",
               "&:hover": {
-                backgroundColor: "var(--secondary)", 
+                backgroundColor: "var(--primary)", 
               },
             }}
           >
@@ -274,8 +275,8 @@ export default function Register() {
             height: "100%",
             objectFit: "cover",
           }}
-          alt="coffe shop"
-          src="https://i.pinimg.com/736x/ae/dd/0a/aedd0a44a89d19f6be16bdff578f4a44.jpg"
+          alt="coffe shop swerllo"
+          src = { loginImg }
         />
       </Box>
     </Box>
