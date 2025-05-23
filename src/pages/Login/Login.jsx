@@ -14,11 +14,11 @@ import * as Yup from "yup";
 import { Link } from "react-router";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import {  useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const { handleLoginSuccess, handelLoginError } = useAuth();
+  const { login, handleLoginSuccess, handelLoginError } = useAuth();
   const navigate = useNavigate();
 
   const onSuccess = (credentialResponse) => {
@@ -33,11 +33,26 @@ export default function Login() {
   const loginSchema = Yup.object().shape({
     email: Yup.string().email("Invalid Email").required("Email is required"),
     password: Yup.string()
-      .min(6, "At least 6 characters")
+      .min(8, "Password must be at least 8 characters")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/,
+        "Must contain uppercase, lowercase, number, and special character"
+      )
       .required("Password is required"),
   });
-  // Submit
-  const onSubmit = () => {
+  const onSubmit = async (values) => {
+    try {
+      await login({
+        email: values.email,
+        password: values.password,
+      });
+      navigate("/");
+    } catch (error) {
+      console.error("Full error object:", error);
+      if (error.response) {
+        console.error("Response data:", error.response.data);
+      }
+    }
     console.log("submitted");
   };
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
@@ -146,16 +161,18 @@ export default function Login() {
             error={touched.password && errors.password}
             helperText={touched.password && errors.password}
           />
-          <Divider sx={{ m:1 ,color: "var(--primary)" ,fontSize:18 }}>or</Divider>
+          <Divider sx={{ m: 1, color: "var(--primary)", fontSize: 18 }}>
+            or
+          </Divider>
           <Box sx={{ mt: 2 }}>
             <GoogleLogin onSuccess={onSuccess} onError={onError} />
           </Box>
-          <Typography variant="subtitle1" sx={{my:1,}}>
+          <Typography variant="subtitle1" sx={{ my: 1 }}>
             Don't Have Account? {""}
             <Typography
               component={Link}
               to="/register"
-              sx={{  color: "var(--primary)", cursor: "pointer" }}
+              sx={{ color: "var(--primary)", cursor: "pointer" }}
             >
               Sign Up
             </Typography>

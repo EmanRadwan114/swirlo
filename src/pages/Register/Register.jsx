@@ -1,14 +1,11 @@
 import React from "react";
 import {
-  Container,
   Box,
   TextField,
   Button,
   Typography,
-  Avatar,
   Stack,
 } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router";
@@ -46,7 +43,6 @@ export default function Register() {
       console.error("Full error object:", error);
       if (error.response) {
         console.error("Response data:", error.response.data);
-       
       }
   };}
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
