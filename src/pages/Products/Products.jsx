@@ -7,6 +7,7 @@ import favoritesServices from "../../services/favorites";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { useProductsContext } from "../../context/ProductsContext";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 export default function Products() {
   const {
@@ -18,11 +19,6 @@ export default function Products() {
   } = useProductsContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-
-  // function handlePagination(value) {
-  //   setCurrentPage(value);
-  //   //handle logic api here to get data also or useEffect with setCurrentPage dependency
-  // }
 
   const handleProductClick = (id) => {
     navigate(`/menu-items/${id}`);
@@ -78,10 +74,6 @@ export default function Products() {
     }
   };
 
-  // if (error) {
-  //   toast.error(error.message || "Failed to fetch products");
-  // }
-
   // // Handle Pagination
   // console.log("Pagination data:", {
   //   currentPage: page,
@@ -93,9 +85,9 @@ export default function Products() {
     setPage(newPage);
   };
 
-  if (isLoading) return <p>Loading....</p>;
+  if (isLoading) return <LoadingSpinner />;
   if (isError)
-    return <p>Error loading Products: {error?.message || "Unknown error"}</p>;
+    return toast.error(error.message || "Failed to fetch products");;
 
   return (
     <div>
