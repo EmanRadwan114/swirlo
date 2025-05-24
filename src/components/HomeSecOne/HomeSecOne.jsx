@@ -62,7 +62,7 @@ const FeatureCard = ({ title, desc, icon }) => (
   </Box>
 );
 
-export default function CoffeeFeatures() {
+export default function HomeSecOne() {
   return (
     <ParallaxProvider>
       <Box
