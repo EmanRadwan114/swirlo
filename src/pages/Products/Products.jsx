@@ -82,12 +82,12 @@ export default function Products() {
   //   toast.error(error.message || "Failed to fetch products");
   // }
 
-  // Handle Pagination
-  console.log("Pagination data:", {
-    currentPage: page,
-    totalPages: products?.pagination?.totalPages,
-    productsCount: products?.data?.length,
-  });
+  // // Handle Pagination
+  // console.log("Pagination data:", {
+  //   currentPage: page,
+  //   totalPages: products?.pagination?.totalPages,
+  //   productsCount: products?.data?.length,
+  // });
 
   const handlePagination = (newPage) => {
     setPage(newPage);
@@ -97,7 +97,6 @@ export default function Products() {
   if (isError)
     return <p>Error loading Products: {error?.message || "Unknown error"}</p>;
 
-  console.log(products.data);
   return (
     <div>
       <Box
