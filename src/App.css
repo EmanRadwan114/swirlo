@@ -14,6 +14,5 @@ body {
   --light-bg: #f6f4f2;
   --light-color: #8d6e63;
   --gold: #dc9830;
-  --custom-gradient: linear-gradient(135deg,  var(--primary), var(--gold));
-
+  --custom-gradient: linear-gradient(135deg, var(--primary), var(--gold));
 }
