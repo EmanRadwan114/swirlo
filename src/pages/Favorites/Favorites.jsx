@@ -58,7 +58,6 @@ const Favorites = () => {
 
   if (error) {
     toast.error(error.message || "Failed to fetch favorites");
-    return <ErrorFallback />;
   }
 
   const { mutateAsync: removeFromFavorites, isPending: isRemoving } =
