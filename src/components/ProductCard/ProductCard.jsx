@@ -118,9 +118,9 @@ const ProductCard = ({
             src={product.thumbnail}
             alt={product.title}
             sx={{
-              width: "90%",
-              height: "90%",
-              objectFit: "contain",
+              width: "95%",
+              height: "95%",
+              objectFit: "cover",
               transition: "transform 0.4s",
               transform: hover ? "scale(1.15)" : "scale(1)",
             }}
@@ -181,7 +181,7 @@ const ProductCard = ({
           sx={{ fontSize: "1.35rem" }}>
           {product.title}
         </Typography>
-        <Typography variant="body1" sx={{ fontSize: "1.1rem" }}>
+        <Typography variant="body1" sx={{ fontSize: "1.1rem",marginTop:1}}>
           {product.price} EGP
         </Typography>
       </CardContent>
