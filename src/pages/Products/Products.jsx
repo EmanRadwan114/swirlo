@@ -6,24 +6,29 @@ import { Box } from "@mui/material";
 import favoritesServices from "../../services/favorites";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { useProductsContext } from "../../context/ProductsContext";
 
 export default function Products() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-
-  function handlePagination(value) {
-    setCurrentPage(value);
-    //handle logic api here to get data also or useEffect with setCurrentPage dependency
-  }
-
+  const {
+    products = [],
+    isLoading,
+    isError,
+    page,
+    setPage,
+  } = useProductsContext();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  // function handlePagination(value) {
+  //   setCurrentPage(value);
+  //   //handle logic api here to get data also or useEffect with setCurrentPage dependency
+  // }
 
   const handleProductClick = (id) => {
     navigate(`/products/${id}`);
   };
-  // ^ handle add to / remove from favorites
-  const queryClient = useQueryClient();
 
+  // Handle Favourites
   const {
     data: { favorites = [] } = {},
     isFetched,
@@ -73,32 +78,62 @@ export default function Products() {
     }
   };
 
-  if (error) {
-    toast.error(error.message || "Failed to fetch products");
-  }
+  // if (error) {
+  //   toast.error(error.message || "Failed to fetch products");
+  // }
 
+  // Handle Pagination
+  console.log("Pagination data:", {
+    currentPage: page,
+    totalPages: products?.pagination?.totalPages,
+    productsCount: products?.data?.length,
+  });
+
+  const handlePagination = (newPage) => {
+    setPage(newPage);
+  };
+
+  if (isLoading) return <p>Loading....</p>;
+  if (isError)
+    return <p>Error loading Products: {error?.message || "Unknown error"}</p>;
+
+  console.log(products.data);
   return (
     <div>
-      <Box sx={{ display: "flex", justifyContent: "center", marginY: 4 }}>
-        <ProductCard
-          product={{
-            thumbnail: "src/assets/slider1.png",
-            title: "Ice Coffee",
-            avgRating: 4,
-            price: 79.99,
-            label: "new arrival",
-            _id: "12345",
-          }}
-          onAddToCart={(id) => console.log("Add to cart:", id)}
-          onToggleFavorite={(id) => toggleWishlist(id)}
-          onProductClick={handleProductClick}
-          sx={{ width: "250px", aspectRatio: "2/3", height: "66%" }}
-        />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          gap: 4,
+          justifyContent: "center",
+          marginY: 4,
+        }}
+      >
+        {products?.map((prd) => (
+          <ProductCard
+            key={prd._id}
+            product={{
+              thumbnail: prd.thumbnail,
+              title: prd.title,
+              avgRating: prd.avgRating,
+              price: prd.price,
+              label: prd.label || "no label",
+              _id: prd._id,
+            }}
+            onAddToCart={(id) => console.log("Add to cart:", id)}
+            onToggleFavorite={(id) => toggleWishlist(id)}
+            onProductClick={handleProductClick}
+            sx={{ width: "290px", aspectRatio: "2/3", height: "66%" }}
+          />
+        ))}
       </Box>
+
       <PaginationComponent
-        currentPage={currentPage}
-        totalPages={totalPages}
-        handlePagination={handlePagination}></PaginationComponent>
+        currentPage={page}
+        totalPages={products?.totalPages || 1}
+        handlePagination={handlePagination}
+      />
     </div>
   );
 }
