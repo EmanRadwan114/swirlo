@@ -40,7 +40,7 @@ const AboutOne = () => {
             }}>
             <Typography
               variant="h4"
-              color="#3f704d"
+              color="var(--green-color)"
               sx={{
                 fontSize: { xs: "2.4rem", md: "2.7rem" },
                 fontFamily: "'Segoe Script', cursive",
