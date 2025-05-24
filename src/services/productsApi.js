@@ -5,5 +5,5 @@ export const fetchProducts = async () => {
   const response = await api.get("/products");
   console.log("Products response:", response);
   console.log("Products data:", response.data);
-  return response.data;
+  return response.data.data;
 };
