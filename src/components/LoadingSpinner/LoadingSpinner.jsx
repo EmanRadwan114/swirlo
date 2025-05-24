@@ -1,9 +1,22 @@
-import { CircleLoader } from 'react-spinners';
+import { Box, CircularProgress } from "@mui/material";
 
 export default function LoadingSpinner() {
   return (
-    <div className="flex justify-center items-center h-full">
-      <CircleLoader color="#ab795a" size={80} />
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+        backgroundColor: "rgba(0,0,0,0.05)",
+      }}
+    >
+      <CircularProgress
+        variant="indeterminate"
+        thickness={3}
+        size={40}
+        sx={{ color: "var(--light-color)" }}
+      />
+    </Box>
   );
 }
