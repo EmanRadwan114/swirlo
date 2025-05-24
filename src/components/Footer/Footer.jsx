@@ -12,21 +12,21 @@ export default function Footer() {
         px: "60px",
         py: "60px",
         backgroundColor: "var(--tertiary)",
-        color: "var(--light-bg)",
-        minHeight: "300px",
+        color: "var(--secondary)",
+        minHeight: "320px",
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "space-between",
-        gap: "40px",
+        gap: "30px",
         backgroundImage: 'url("src/assets/coffee.png")',
-        backgroundSize: "250px",
+        backgroundSize: "300px",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "right bottom",
         backgroundBlendMode: "soft-light",
       }}
     >
       {/* Logo & Description */}
-      <Box sx={{ flex: "1 1 250px", display: "flex", flexDirection: "column", gap: 2 }}>
+      <Box sx={{ flex: "1 1 250px", display: "flex", flexDirection: "column", gap: 3 }}>
         <Box
           component={RouterLink}
           to="/"
@@ -34,9 +34,9 @@ export default function Footer() {
         >
           <Box
             component="img"
-            src="/logo2.png"
+            src="src/assets/logo2.png"
             alt="Logo"
-            sx={{ height: 80, width: "auto" }}
+            sx={{ height: 85, width: "auto" }}
           />
         </Box>
         <Typography variant="body1" sx={{ maxWidth: 300, fontSize: "16px" }}>
@@ -115,7 +115,7 @@ const styles = {
     cursor: "pointer",
     transition: "0.3s",
     "&:hover": {
-      color: "var(--primary)",
+       color: "var(--accent)",
       transform: "scale(1.2)",
     },
   },
@@ -126,7 +126,7 @@ const styles = {
     cursor: "pointer",
     transition: "0.3s",
     "&:hover": {
-      color: "var(--primary)",
+      color: "var(--accent)",
       transform: "translateX(4px)",
     },
   },
