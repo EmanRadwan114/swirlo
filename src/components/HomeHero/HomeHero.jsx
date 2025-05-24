@@ -22,7 +22,7 @@ export default function HomeHero() {
   const themeC = createTheme({
     palette: {
       primary: {
-        main: "#363636",
+        main: "#e3d1bb",
       },
     },
   });
