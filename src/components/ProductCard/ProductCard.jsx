@@ -11,9 +11,6 @@ import {
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { styled } from "@mui/material/styles";
-import { toast } from "react-toastify";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import favoritesServices from "../../services/favorites";
 
 // Styled components
 const StyledCard = styled(Card)(({ theme }) => ({
