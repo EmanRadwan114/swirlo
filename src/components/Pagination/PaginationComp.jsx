@@ -35,12 +35,12 @@ export default function PaginationComponent({
             "& .MuiPagination-ul": {
               justifyContent: "center", // this centers the inner ul of pagination
             },
+            marginBottom: 5,
           }}
           color="primary"
           count={totalPages}
           page={page}
-          onChange={handleChange}
-        ></Pagination>
+          onChange={handleChange}></Pagination>
       </ThemeProvider>
     </>
   );

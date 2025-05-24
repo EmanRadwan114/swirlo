@@ -18,7 +18,7 @@ body {
   --custom-gradient: linear-gradient(135deg, var(--primary), var(--gold));
 }
 
-/* RelatedProducts.css or global stylesheet */
+/* Related Products css */
 .related-swiper .swiper-button-next,
 .related-swiper .swiper-button-prev {
   color: beige;
@@ -41,7 +41,9 @@ body {
 .related-swiper .swiper-button-prev::after {
   font-size: 20px;
 }
+/* End Related Products css */
 
+/* Milk poured css */
 .myImg {
   animation: transitionIn 4s ease-in-out;
 }
@@ -54,7 +56,9 @@ body {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
 }
+/* End Milk poured css */
 
+/* About page css */
 .circular-text-wrapper {
   animation: rotate 10s linear infinite;
   width: 160px;
@@ -66,3 +70,4 @@ body {
     transform: rotate(360deg);
   }
 }
+/* End About page css */
