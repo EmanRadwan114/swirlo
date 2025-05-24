@@ -9,18 +9,18 @@ import {
 export const ProductsContext = createContext();
 
 export default function ProductsContextProvider({ children }) {
-  // const [page, setPage] = useState(1);
-  // const limit = 12;
+  const [page, setPage] = useState(1);
+  const limit = 12;
 
-  // const {
-  //   data: products,
-  //   isLoading,
-  //   isError,
-  //   error,
-  // } = useQuery({
-  //   queryKey: ["products", page],
-  //   queryFn: () => fetchProducts(page, limit),
-  // });
+  const {
+    data: products,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["products", page],
+    queryFn: () => fetchProducts(page, limit),
+  });
 
   const getProductDetails = (id) => {
     return useQuery({
@@ -37,12 +37,12 @@ export default function ProductsContextProvider({ children }) {
   };
 
   const value = {
-    // products: products?.data || [],
-    // isLoading,
-    // isError,
-    // error,
-    // page,
-    // setPage,
+    products: products?.data || [],
+    isLoading,
+    isError,
+    error,
+    page,
+    setPage,
     getProductDetails,
     getProductCategry,
   };
