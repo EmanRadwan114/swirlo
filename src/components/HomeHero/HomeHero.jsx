@@ -22,7 +22,7 @@ export default function HomeHero() {
   const themeC = createTheme({
     palette: {
       primary: {
-        main: "#dc9830",
+        main: "#e3d1bb",
       },
     },
   });
@@ -36,7 +36,7 @@ export default function HomeHero() {
       borderRadius={2}
       overflow="hidden"
       sx={{
-        backgroundImage: `linear-gradient(135deg, var(--accent), var(--secondary), var(--primary))`,
+        backgroundImage: `linear-gradient(280deg, var(--accent),var(--light-bg), var(--primary))`,
       }}
     >
       {/* Text Section */}
@@ -47,7 +47,7 @@ export default function HomeHero() {
         justifyContent={"center"}
         sx={{
           textAlign: "center",
-          color: "var(--primary)",
+          // color: "var(--primary)",
         }}
       >
         <Typography
