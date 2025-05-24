@@ -10,7 +10,7 @@ export default function Home() {
     <>
       <HomeHero></HomeHero>
       <CategoryCard></CategoryCard>
-      <ProductDetails></ProductDetails>
+      {/* <ProductDetails></ProductDetails> */}
       <Link to={"/checkout"}>
         <button>checkout</button>
       </Link>

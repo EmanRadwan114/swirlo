@@ -1,6 +1,6 @@
 // components/Navbar.jsx
 import React, { useState, useEffect } from "react";
-import { useLocation, Link as RouterLink } from "react-router";
+import { useLocation, Link as RouterLink, useNavigate } from "react-router";
 import {
   AppBar,
   Toolbar,
@@ -30,6 +30,10 @@ const Navbar = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const navigate = useNavigate();
+
   const navLinks = [
     { label: "Home", to: "/home" },
     { label: "Shop", to: "/products" },
@@ -42,6 +46,12 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/search?q=${searchQuery}`);
+    setSearchQuery("");
+  };
 
   return (
     <>
@@ -68,7 +78,8 @@ const Navbar = () => {
               : "0 2px 10px rgba(0,0,0,0.1)",
           zIndex: 10,
           overflowX: "hidden",
-        }}>
+        }}
+      >
         <Toolbar
           sx={{
             maxWidth: "1450px",
@@ -77,7 +88,8 @@ const Navbar = () => {
             justifyContent: "space-between",
             display: "flex",
             padding: "0",
-          }}>
+          }}
+        >
           {/* Left: Logo */}
           <Box
             component={RouterLink}
@@ -86,7 +98,8 @@ const Navbar = () => {
               display: "flex",
               alignItems: "center",
               textDecoration: "none",
-            }}>
+            }}
+          >
             <Box
               component="img"
               src={logoImg}
@@ -113,7 +126,8 @@ const Navbar = () => {
                     "&:hover, &:active": {
                       color: "var(--primary)",
                     },
-                  }}>
+                  }}
+                >
                   {label}
                 </Typography>
               ))}
@@ -134,7 +148,10 @@ const Navbar = () => {
                   px: 1,
                   py: 0.5,
                   mx: 2,
-                }}>
+                }}
+                component="form"
+                onSubmit={handleSubmit}
+              >
                 <SearchIcon
                   fontSize="small"
                   sx={{ color: "var(--tertiary)" }}
@@ -142,6 +159,8 @@ const Navbar = () => {
                 <InputBase
                   placeholder="Search…"
                   sx={{ ml: 1, color: "var(--tertiary)" }}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </Box>
             )}
@@ -158,7 +177,8 @@ const Navbar = () => {
                   "&:hover, &:active": {
                     color: "var(--primary)",
                   },
-                }}>
+                }}
+              >
                 <AccountCircleIcon />
               </IconButton>
               <IconButton
@@ -172,7 +192,8 @@ const Navbar = () => {
                   "&:hover, &:active": {
                     color: "var(--primary)",
                   },
-                }}>
+                }}
+              >
                 <FavoriteBorderIcon />
               </IconButton>
               <IconButton
@@ -186,7 +207,8 @@ const Navbar = () => {
                   "&:hover, &:active": {
                     color: "var(--primary)",
                   },
-                }}>
+                }}
+              >
                 <ShoppingCartIcon />
               </IconButton>
             </Box>
@@ -201,7 +223,8 @@ const Navbar = () => {
                   color: "var(--primary)",
                 },
               }}
-              onClick={() => setDrawerOpen(true)}>
+              onClick={() => setDrawerOpen(true)}
+            >
               <MenuIcon />
             </IconButton>
           )}
@@ -217,7 +240,8 @@ const Navbar = () => {
           "& .MuiDrawer-paper": {
             backgroundColor: "var(--light-bg)",
           },
-        }}>
+        }}
+      >
         <Box sx={{ width: 250, p: 2 }}>
           <Box
             sx={{
@@ -231,11 +255,16 @@ const Navbar = () => {
               py: 0.5,
               mx: 2,
               mb: 1,
-            }}>
+            }}
+            component="form"
+            onSubmit={handleSubmit}
+          >
             <SearchIcon fontSize="small" sx={{ color: "var(--tertiary)" }} />
             <InputBase
               placeholder="Search…"
               sx={{ ml: 1, color: "var(--tertiary)" }}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </Box>
           <List>
@@ -256,7 +285,8 @@ const Navbar = () => {
                     color: "var(--primary)",
                   },
                 }}
-                onClick={() => setDrawerOpen(false)}>
+                onClick={() => setDrawerOpen(false)}
+              >
                 <ListItemText primary={label} />
               </ListItem>
             ))}
