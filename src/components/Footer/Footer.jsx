@@ -11,6 +11,7 @@ export default function Footer() {
       sx={{
         px: "60px",
         py: "60px",
+        marginTop:5,
         backgroundColor: "var(--tertiary)",
         color: "var(--secondary)",
         minHeight: "320px",
