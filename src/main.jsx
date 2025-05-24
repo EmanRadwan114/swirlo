@@ -43,6 +43,7 @@ import theme from "./utils/theme.js"; // import your custom theme
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Search from "./pages/Search/Search.jsx";
+import ProductsContextProvider from "./context/ProductsContext.jsx";
 // ^ routing setup
 const router = createBrowserRouter([
   {
@@ -135,11 +136,15 @@ createRoot(document.getElementById("root")).render(
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <QueryClientProvider client={queryClient}>
         <AuthContextProvider>
+          {/* <FavoritesContextProvider> */}
           <CategoriesContextProvider>
-            <ToastContainer />
-            {/* <Toaster position="top-right" reverseOrder={false} /> */}
-            <RouterProvider router={router} />
+            <ProductsContextProvider>
+              <ToastContainer />
+              {/* <Toaster position="top-right" reverseOrder={false} /> */}
+              <RouterProvider router={router} />
+            </ProductsContextProvider>
           </CategoriesContextProvider>
+          {/* </FavoritesContextProvider> */}
         </AuthContextProvider>
       </QueryClientProvider>
     </GoogleOAuthProvider>
