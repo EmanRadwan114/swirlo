@@ -15,10 +15,6 @@ export default function ProductsContextProvider({ children }) {
     queryFn: fetchProducts,
   });
 
-  return (
-    <ProductsContext.Provider value={{ products, isLoading, isError, error }}>
-      {children}
-    </ProductsContext.Provider>
-  );
+  return <ProductsContext.Provider value={{ products, isLoading, isError, error }}>{children}</ProductsContext.Provider>;
 }
 export const useProductsContext = () => useContext(ProductsContext);
