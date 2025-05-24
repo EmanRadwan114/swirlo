@@ -7,7 +7,6 @@ import CoffeeMakerIcon from "@mui/icons-material/CoffeeMaker";
 import CoffeeOutlinedIcon from "@mui/icons-material/CoffeeOutlined";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import beans from "../../assets/beans.png";
-import dessertBg from "../../assets/dessertBg1.jpg";
 import donutMug from "../../assets/donutMug.png";
 
 const steps = [
