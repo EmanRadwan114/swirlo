@@ -1,17 +1,19 @@
 import React from "react";
 import {
-  Container,
   Box,
   TextField,
   Button,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
 import Coupons from "../../components/Coupons/Coupons";
+import MultiCardSlider from "../../components/slider/slider";
 
 export default function Checkout() {
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   // Validation Schema
   const CheckoutSchema = Yup.object().shape({
     address: Yup.string()
@@ -20,52 +22,83 @@ export default function Checkout() {
     paymentMethod: Yup.string().required("Payment method is required"),
   });
 
-  // Submit
-  const onSubmit = (values) => {
-    console.log("Submitted values:", values);
-  };
-
-  const {
-    values,
-    errors,
-    touched,
-    handleBlur,
-    handleChange,
-    handleSubmit,
-  } = useFormik({
-    initialValues: {
-      address: "",
-      paymentMethod: "cash",
-    },
-    validationSchema: CheckoutSchema,
-    onSubmit,
-  });
+  // Formik Setup
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: {
+        address: "",
+        paymentMethod: "cash",
+      },
+      validationSchema: CheckoutSchema,
+      onSubmit: (values) => {
+        console.log("Submitted values:", values);
+        alert("Order Placed Successfully!");
+      },
+    });
 
   return (
     <Box
       sx={{
         display: "flex",
-        height: "100vh",
+        flexDirection: { xs: "column", md: "row" },
+        minHeight: "100vh",
+        backgroundColor: "#f7f7f7",
+        p: 2,
+        gap: 2,
       }}
     >
+      {/* LEFT SIDE: Address + Payment */}
       <Box
         sx={{
-          flex: 1,
+          flex: 2,
+          backgroundColor: "#fff",
+          // backgroundImage:"url('')",
+          borderRadius: 2,
+          p: 4,
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          p: 4,
+          gap: 3,
         }}
       >
-        <Typography component="h1" variant="h3" sx={{ mb: 4 }}>
-          Checkout
+   
+        <Typography
+          variant="h3"
+          sx={{
+            mb: 2,
+            color: "var(--primary)",
+            fontFamily: "Pacifico, cursive",
+          }}
+        >
+          CheckOut
         </Typography>
 
-        <Box component="form" onSubmit={handleSubmit} noValidate>
+        <Box
+          sx={{
+            background: "var(--custom-gradient)",
+            // bgcolor: "var(--gold)",
+            height: "5px",
+            width: { xs: "80%", md: "18rem" },
+            mb: 4,
+          }}
+        />
+
+        <Box sx={{ width: "100%", padding: 2 }}>
+          <MultiCardSlider />
+        </Box>
+
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            mx: "auto",
+            width: "80%",
+          }}
+        >
           <TextField
             fullWidth
-            margin="normal"
             id="address"
             name="address"
             label="Shipping Address"
@@ -74,33 +107,11 @@ export default function Checkout() {
             onBlur={handleBlur}
             error={touched.address && Boolean(errors.address)}
             helperText={touched.address && errors.address}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "var(--primary)",
-                },
-                "&:hover fieldset": {
-                  borderColor: "var(--accent)",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)",
-                  borderWidth: "2px",
-                },
-              },
-              input: {
-                color: "var(--text)",
-              },
-              label: {
-                color: "var(--primary)",
-              },
-            }}
           />
 
           <TextField
             select
-            SelectProps={{ native: true }}
             fullWidth
-            margin="normal"
             id="paymentMethod"
             name="paymentMethod"
             label="Payment Method"
@@ -109,26 +120,6 @@ export default function Checkout() {
             onBlur={handleBlur}
             error={touched.paymentMethod && Boolean(errors.paymentMethod)}
             helperText={touched.paymentMethod && errors.paymentMethod}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "var(--primary)",
-                },
-                "&:hover fieldset": {
-                  borderColor: "var(--accent)",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)",
-                  borderWidth: "2px",
-                },
-              },
-              input: {
-                color: "var(--text)",
-              },
-              label: {
-                color: "var(--primary)",
-              },
-            }}
           >
             <option value="cash">Cash on Delivery</option>
             <option value="online">Online Payment</option>
@@ -139,9 +130,70 @@ export default function Checkout() {
             fullWidth
             variant="contained"
             sx={{
-              mt: 3,
-              mb: 2,
               backgroundColor: "var(--primary)",
+              color: "#fff",
+              fontWeight: "bold",
+              borderRadius: 2,
+              mt: 2,
+              "&:hover": {
+                backgroundColor: "var(--secondary)",
+              },
+            }}
+          >
+            Continue
+          </Button>
+        </Box>
+      </Box>
+
+      {/* RIGHT SIDE: Coupons + Summary */}
+      <Box
+        sx={{
+          flex: 1,
+          backgroundColor: "var(--main-background)",
+          borderRadius: 2,
+          p: 4,
+          display: "flex",
+          flexDirection: "column",
+          gap: 3,
+        }}
+      >
+        <Coupons />
+
+        <Box sx={{ borderTop: "1px solid #ddd", pt: 2 }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
+            <Typography variant="body1">Subtotal:</Typography>
+            <Typography variant="body1">EGP 3344</Typography>
+          </Box>
+
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
+            <Typography variant="body1">Shipping:</Typography>
+            <Typography variant="body1">EGP 34</Typography>
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              fontWeight: "bold",
+              mt: 2,
+              borderTop: "1px solid #ccc",
+              pt: 2,
+            }}
+          >
+            <Typography variant="h6">Total:</Typography>
+            <Typography variant="h6">EGP 3378</Typography>
+          </Box>
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{
+              mt: 3,
+              backgroundColor: "var(--primary)",
+              fontWeight: "bold",
+              color: "#fff",
+              borderRadius: 2,
               "&:hover": {
                 backgroundColor: "var(--secondary)",
               },
@@ -149,19 +201,24 @@ export default function Checkout() {
           >
             Place Order
           </Button>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <img
+              src="src/assets/coup.png"
+              alt="Placeholder"
+              style={{
+                width: "100%",
+                maxWidth: "320px",
+                height: "auto",
+              }}
+            />
+          </Box>
         </Box>
-      </Box>
-
-      <Box
-        sx={{
-          flex: 1,
-          backgroundColor: "#f5f5f5",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-       <Coupons></Coupons>
       </Box>
     </Box>
   );
