@@ -10,27 +10,17 @@ import { toast } from "react-toastify";
 
 export default function Products() {
   const { products, isLoading, isError, page, setPage } = useProductsContext();
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  if (isLoading) return <p>Loading....</p>;
-  if (isError) return <p>Error loading Products</p>;
+  // function handlePagination(value) {
+  //   setCurrentPage(value);
+  //   //handle logic api here to get data also or useEffect with setCurrentPage dependency
+  // }
 
   const handleProductClick = (id) => {
     navigate(`/products/${id}`);
   };
-
-  const handlePagination = (newPage) => {
-    setPage(newPage);
-  };
-
-  {
-    /* // ^ handle add to / remove from favorites */
-  }
-  const queryClient = useQueryClient();
 
   const {
     data: { favorites = [] } = {},
@@ -81,9 +71,23 @@ export default function Products() {
     }
   };
 
-  if (error) {
-    toast.error(error.message || "Failed to fetch products");
-  }
+  // if (error) {
+  //   toast.error(error.message || "Failed to fetch products");
+  // }
+
+  console.log("Pagination data:", {
+    currentPage: page,
+    totalPages: products?.pagination?.totalPages,
+    productsCount: products?.data?.length,
+  });
+
+  const handlePagination = (newPage) => {
+    setPage(newPage);
+  };
+
+  if (isLoading) return <p>Loading....</p>;
+  if (isError)
+    return <p>Error loading Products: {error?.message || "Unknown error"}</p>;
 
   return (
     <div>
@@ -97,8 +101,9 @@ export default function Products() {
           marginY: 4,
         }}
       >
-        {products?.data?.map((prd) => (
-          <ProductCard
+        {products.data?.map((prd) => {
+        console.log("Mapping product:", prd._id); 
+        <ProductCard
             key={prd._id}
             product={{
               thumbnail: prd.thumbnail,
@@ -112,13 +117,13 @@ export default function Products() {
             onToggleFavorite={(id) => toggleWishlist(id)}
             onProductClick={handleProductClick}
             sx={{ width: "290px", aspectRatio: "2/3", height: "66%" }}
-          />
-        ))}
+          />;
+        })}
       </Box>
 
       <PaginationComponent
         currentPage={page}
-        totalPages={products?.totalPages || 1}
+        totalPages={products?.totalPages}
         handlePagination={handlePagination}
       />
     </div>
