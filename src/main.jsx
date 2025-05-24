@@ -134,15 +134,15 @@ createRoot(document.getElementById("root")).render(
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <QueryClientProvider client={queryClient}>
         <AuthContextProvider>
-          <FavoritesContextProvider>
-            <CategoriesContextProvider>
-              <ProductsContextProvider>
-                <ToastContainer />
-                {/* <Toaster position="top-right" reverseOrder={false} /> */}
-                <RouterProvider router={router} />
-              </ProductsContextProvider>
-            </CategoriesContextProvider>
-          </FavoritesContextProvider>
+          {/* <FavoritesContextProvider> */}
+          <CategoriesContextProvider>
+            <ProductsContextProvider>
+              <ToastContainer />
+              {/* <Toaster position="top-right" reverseOrder={false} /> */}
+              <RouterProvider router={router} />
+            </ProductsContextProvider>
+          </CategoriesContextProvider>
+          {/* </FavoritesContextProvider> */}
         </AuthContextProvider>
       </QueryClientProvider>
     </GoogleOAuthProvider>
