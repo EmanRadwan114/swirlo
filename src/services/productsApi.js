@@ -7,3 +7,8 @@ export const fetchProducts = async () => {
   console.log("Products data:", response.data);
   return response.data;
 };
+
+export const searchProducts = async (query, page) => {
+  const res = await api.get(`products/search?q=${query}&page=${page}&limit=6`);
+  return res.data;
+};

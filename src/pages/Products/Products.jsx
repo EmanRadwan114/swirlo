@@ -38,7 +38,7 @@ export default function Products() {
 
   useEffect(() => {
     if (isFetched) {
-      setFavArr([...favorites.map((item) => item._id), "12345"]);
+      setFavArr([...favorites.map((item) => item._id)]);
     }
   }, [isFetched, favorites]);
 

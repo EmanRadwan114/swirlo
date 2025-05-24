@@ -42,6 +42,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./utils/theme.js"; // import your custom theme
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import Search from "./pages/Search/Search.jsx";
 // ^ routing setup
 const router = createBrowserRouter([
   {
@@ -86,6 +87,7 @@ const router = createBrowserRouter([
       { path: "login", element: <Login></Login> },
       { path: "register", element: <Register></Register> },
       { path: "favorites", element: <Favorites></Favorites> },
+      { path: "search", element: <Search></Search> },
       { path: "cart", element: <Cart></Cart> },
       { path: "checkout", element: <Checkout></Checkout> },
       {
