@@ -44,6 +44,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Search from "./pages/Search/Search.jsx";
 import ProductsContextProvider from "./context/ProductsContext.jsx";
+import CategoryProducts from "./pages/CategoryProducts/CategoryProducts.jsx";
 import ArrowUp from '../src/components/ArrowUp/ArrowUp.jsx'
 
 // ^ routing setup
@@ -99,6 +100,7 @@ const router = createBrowserRouter([
       },
       { path: "menu-items", element: <Products></Products> },
       { path: "menu-items/:id", element: <ProductDetails></ProductDetails> },
+      { path: "menu-items/:category", element: <CategoryProducts/> },
 
       // ^ dashboard
       {
