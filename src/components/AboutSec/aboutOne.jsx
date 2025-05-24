@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography, Grid, Container, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import CoffeeIcon from "@mui/icons-material/LocalCafe";
 import bgLeaf from "../../assets/bg-leaf0.jpg";
 import beansBag from "../../assets/beansBag.png";
 
@@ -11,7 +12,7 @@ const AboutOne = () => {
   return (
     <Box
       sx={{
-        background: `linear-gradient(0deg, rgba(232, 241, 229, 0.69), rgba(255, 255, 255, 0.74)), url(${bgLeaf})`,
+        background: `linear-gradient(0deg, rgba(255, 255, 255, 0.69), rgba(255, 255, 255, 0.74)), url(${bgLeaf})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         minHeight: "100vh",
@@ -39,10 +40,46 @@ const AboutOne = () => {
             }}>
             <Typography
               variant="h4"
-              color="var(--primary)"
-              sx={{ fontSize: { xs: "2.4rem", md: "2.7rem" } }}>
+              color="#3f704d"
+              sx={{
+                fontSize: { xs: "2.4rem", md: "2.7rem" },
+                fontFamily: "'Segoe Script', cursive",
+                fontWeight: "bold",
+              }}>
               Discover Our Coffee
+              {/* Top Icon with Line */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 2,
+                }}>
+                {/* Left Curved Line */}
+                <Box
+                  sx={{
+                    width: 50,
+                    height: 4,
+                    backgroundColor: "var(--primary)",
+                    borderRadius: "50px 0 0 50px",
+                  }}
+                />
+
+                {/* Coffee Icon */}
+                <CoffeeIcon sx={{ color: "var(--primary)", fontSize: 30 }} />
+
+                {/* Right Curved Line */}
+                <Box
+                  sx={{
+                    width: 50,
+                    height: 4,
+                    backgroundColor: "var(--primary)",
+                    borderRadius: "0 50px 50px 0",
+                  }}
+                />
+              </Box>
             </Typography>
+
             <Typography
               variant="body1"
               sx={{
