@@ -81,28 +81,38 @@ export default function Review() {
               </Box>
             ) : (
               <>
-                {data?.data.map((review) => {
-                  return (
-                    <Stack key={review?._id} p={2} borderRadius={2} border={2} sx={{ borderColor: "rgb(175, 169, 135)" }} minWidth={"100%"}>
-                      <Stack flexDirection={"row"} justifyContent={"space-between"}>
-                        <Typography variant="h6">{review?.user.name}</Typography>
-                        <Rating value={+review?.rating} precision={0.5} readOnly size="large" sx={{ mt: 1 }} />
-                      </Stack>
-                      <Box
-                        sx={{
-                          background: "var(--custom-gradient)",
-                          height: "3px",
-                          width: { xs: "40%", md: "14rem" },
-                          mb: 2,
-                        }}
-                      />
-                      <Typography variant="p" pl={0.5} fontSize={"1.2rem"}>
-                        {review?.description}
-                      </Typography>
-                    </Stack>
-                  );
-                })}
-                <PaginationComponent currentPage={page} totalPages={totalPages} handlePagination={handlePagination}></PaginationComponent>
+                {data.data.length > 0 ? (
+                  <>
+                    {data?.data.map((review) => {
+                      return (
+                        <Stack key={review?._id} p={2} borderRadius={2} border={2} sx={{ borderColor: "rgb(175, 169, 135)" }} minWidth={"100%"}>
+                          <Stack flexDirection={"row"} justifyContent={"space-between"}>
+                            <Typography variant="h6">{review?.user.name}</Typography>
+                            <Rating value={+review?.rating} precision={0.5} readOnly size="large" sx={{ mt: 1 }} />
+                          </Stack>
+                          <Box
+                            sx={{
+                              background: "var(--custom-gradient)",
+                              height: "3px",
+                              width: { xs: "40%", md: "14rem" },
+                              mb: 2,
+                            }}
+                          />
+                          <Typography variant="p" pl={0.5} fontSize={"1.2rem"}>
+                            {review?.description}
+                          </Typography>
+                        </Stack>
+                      );
+                    })}
+                    <PaginationComponent currentPage={page} totalPages={totalPages} handlePagination={handlePagination}></PaginationComponent>
+                  </>
+                ) : (
+                  <>
+                    <Typography variant="h5" sx={{ color: "var(--primary)" }}>
+                      There is no reviews for this item😞
+                    </Typography>
+                  </>
+                )}
               </>
             )}
           </Stack>
@@ -163,7 +173,7 @@ export default function Review() {
                 />
                 <ThemeProvider theme={themeC}>
                   <Button
-                    sx={{ textTransform: "none", width: "fit-content", alignSelf: "center", px: 4, fontSize: "1rem", mt: 3 }}
+                    sx={{ textTransform: "none", width: "fit-content", alignSelf: "center", px: 4, fontSize: "1rem", my: 3 }}
                     variant="contained"
                     size="large"
                     type="submit"

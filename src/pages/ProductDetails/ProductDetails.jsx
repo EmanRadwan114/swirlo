@@ -128,6 +128,7 @@ export default function ProductDetails() {
           </Box>
         </Box>
       </Box>
+      <Review></Review>
       <Box sx={{ maxWidth: "1200px", mx: "auto", px: { xs: 2, md: 6 } }}>
         <RelatedProducts
           categoryId={"6812879bbcafe5c8e6084e62"}
