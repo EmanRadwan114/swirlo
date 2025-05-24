@@ -11,7 +11,7 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 export default function Products() {
   const {
-    products = [],
+    products ,
     isLoading,
     isError,
     page,
@@ -74,16 +74,9 @@ export default function Products() {
     }
   };
 
-  // // Handle Pagination
-  // console.log("Pagination data:", {
-  //   currentPage: page,
-  //   totalPages: products?.pagination?.totalPages,
-  //   productsCount: products?.data?.length,
-  // });
-
-  const handlePagination = (newPage) => {
-    setPage(newPage);
-  };
+  function handlePagination(value) {
+    setPage(value);
+  }
 
   if (isLoading) return <LoadingSpinner />;
   if (isError)
@@ -101,7 +94,7 @@ export default function Products() {
           marginY: 4,
         }}
       >
-        {products?.map((prd) => (
+        {products?.data?.map((prd) => (
           <ProductCard
             key={prd._id}
             product={{
@@ -122,7 +115,7 @@ export default function Products() {
 
       <PaginationComponent
         currentPage={page}
-        totalPages={products?.totalPages || 1}
+        totalPages={products?.totalPages}
         handlePagination={handlePagination}
       />
     </div>

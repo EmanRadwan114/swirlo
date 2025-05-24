@@ -45,7 +45,7 @@ export default function ProductDetails() {
             display: "flex",
             flex: 1,
             width: "100%",
-            height: { xs: "auto", md: "85dvh" },
+            height: { xs: "auto", md: "75dvh" },
           }}
         >
           <img
@@ -53,7 +53,7 @@ export default function ProductDetails() {
             alt="coffee shop"
             style={{
               width: "100%",
-              height: "85%",
+              height: "100%",
               objectFit: "cover",
               borderRadius: "1.5rem",
             }}
