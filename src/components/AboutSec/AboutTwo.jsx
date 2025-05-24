@@ -99,7 +99,7 @@ const AboutTwo = () => {
                     sx={{
                       fontWeight: "bold",
                       mb: 1,
-                      color: "#3f704d",
+                      color: "var(--green-color)",
                       fontSize: { xs: "2rem", md: "2.6rem" },
                       fontFamily: "'Segoe Script', cursive",
                     }}>
@@ -156,7 +156,10 @@ const AboutTwo = () => {
                           <Box>
                             <Typography
                               variant="h6"
-                              sx={{ fontWeight: "bold", color: "#3f704d" }}>
+                              sx={{
+                                fontWeight: "bold",
+                                color: "var(--green-color)",
+                              }}>
                               {step.title}
                             </Typography>
                             <Typography variant="body1" color="text.primary">
@@ -196,7 +199,7 @@ const AboutTwo = () => {
                       variant="contained"
                       onClick={() => navigate("/menu-items")}
                       sx={{
-                        backgroundColor: "#3f704d",
+                        backgroundColor: "var(--green-color)",
                         color: "#fff",
                         fontWeight: "bold",
                         px: 4,

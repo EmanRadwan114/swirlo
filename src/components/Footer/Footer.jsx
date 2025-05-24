@@ -11,7 +11,6 @@ export default function Footer() {
       sx={{
         px: "60px",
         py: "60px",
-        marginTop:5,
         backgroundColor: "var(--tertiary)",
         color: "var(--secondary)",
         minHeight: "320px",
@@ -24,15 +23,23 @@ export default function Footer() {
         backgroundRepeat: "no-repeat",
         backgroundPosition: "right bottom",
         backgroundBlendMode: "soft-light",
-      }}
-    >
+      }}>
       {/* Logo & Description */}
-      <Box sx={{ flex: "1 1 250px", display: "flex", flexDirection: "column", gap: 3 }}>
+      <Box
+        sx={{
+          flex: "1 1 250px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 3,
+        }}>
         <Box
           component={RouterLink}
           to="/"
-          sx={{ display: "flex", alignItems: "center", textDecoration: "none" }}
-        >
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            textDecoration: "none",
+          }}>
           <Box
             component="img"
             src="src/assets/logo2.png"
@@ -41,8 +48,8 @@ export default function Footer() {
           />
         </Box>
         <Typography variant="body1" sx={{ maxWidth: 300, fontSize: "16px" }}>
-          Premium coffee and pastries crafted with passion since 2010. We bring the authentic
-          Italian café experience to your neighborhood.
+          Premium coffee and pastries crafted with passion since 2010. We bring
+          the authentic Italian café experience to your neighborhood.
         </Typography>
         <Box sx={{ display: "flex", gap: 2 }}>
           <FacebookOutlinedIcon sx={styles.socialMedia} />
@@ -54,7 +61,9 @@ export default function Footer() {
 
       {/* Quick Access */}
       <Box sx={{ flex: "1 1 150px" }}>
-        <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1, fontSize: "20px" }}>
+        <Typography
+          variant="subtitle1"
+          sx={{ fontWeight: "bold", mb: 1, fontSize: "20px" }}>
           Quick Access
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -72,7 +81,9 @@ export default function Footer() {
 
       {/* For You */}
       <Box sx={{ flex: "1 1 150px" }}>
-        <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1, fontSize: "20px" }}>
+        <Typography
+          variant="subtitle1"
+          sx={{ fontWeight: "bold", mb: 1, fontSize: "20px" }}>
           For You
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -90,7 +101,9 @@ export default function Footer() {
 
       {/* Contact Info */}
       <Box sx={{ flex: "1 1 200px" }}>
-        <Typography variant="subtitle1" sx={{ fontWeight: "bold", mb: 1, fontSize: "20px" }}>
+        <Typography
+          variant="subtitle1"
+          sx={{ fontWeight: "bold", mb: 1, fontSize: "20px" }}>
           Contact Us
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -116,7 +129,7 @@ const styles = {
     cursor: "pointer",
     transition: "0.3s",
     "&:hover": {
-       color: "var(--accent)",
+      color: "var(--accent)",
       transform: "scale(1.2)",
     },
   },
