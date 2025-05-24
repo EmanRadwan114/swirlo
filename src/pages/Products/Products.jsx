@@ -8,9 +8,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { fetchProducts } from "../../services/productsApi";
+import { useProductsContext } from "../../context/ProductsContext";
 
 export default function Products() {
-  // const { products, isLoading, isError, page, setPage } = useProductsContext();
+  const { products, isLoading, isError,error, page, setPage } = useProductsContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -19,19 +20,19 @@ export default function Products() {
   };
 
   // * get products
-  const [page, setPage] = useState(1);
-  const limit = 12;
+  // const [page, setPage] = useState(1);
+  // const limit = 12;
 
-  const {
-    data: {
-      data: { data: products = [], totalPages = 1, currentPage = 1 } = {},
-    } = {},
-    isLoading,
-    error: productErr,
-  } = useQuery({
-    queryKey: ["products", page],
-    queryFn: () => fetchProducts(page, limit),
-  });
+  // const {
+  //   data: {
+  //     data: { data: products = [], totalPages = 1, currentPage = 1 } = {},
+  //   } = {},
+  //   isLoading,
+  //   error: productErr,
+  // } = useQuery({
+  //   queryKey: ["products", page],
+  //   queryFn: () => fetchProducts(page, limit),
+  // });
 
   // Handle Favourites
   const {
@@ -88,8 +89,8 @@ export default function Products() {
   }
 
   if (isLoading) return <LoadingSpinner />;
-  if (productErr || favError)
-    return toast.error(productErr.message || "Failed to fetch products");
+  if (error || favError)
+    return toast.error(error.message || "Failed to fetch products");
 
   return (
     <Container fixed>
@@ -103,7 +104,7 @@ export default function Products() {
           marginY: 4,
         }}
       >
-        {products?.map((prd) => (
+        {products?.data?.map((prd) => (
           <ProductCard
             key={prd._id}
             product={{
@@ -123,8 +124,8 @@ export default function Products() {
       </Box>
 
       <PaginationComponent
-        currentPage={currentPage}
-        totalPages={totalPages}
+        currentPage={products.currentPage}
+        totalPages={products.totalPages}
         handlePagination={handlePagination}
       />
     </Container>
