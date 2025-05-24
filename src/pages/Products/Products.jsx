@@ -1,29 +1,89 @@
-import { useNavigate } from "react-router";
-import { Box } from "@mui/material";
+import { useProductsContext } from "../../context/ProductsContext";
+import { useEffect, useState } from "react";
 import PaginationComponent from "../../components/Pagination/PaginationComp";
 import ProductCard from "../../components/ProductCard/ProductCard";
-import { useProductsContext } from "../../context/ProductsContext";
+import { useNavigate } from "react-router";
+import { Box } from "@mui/material";
+import favoritesServices from "../../services/favorites";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 export default function Products() {
-  const { products, isLoading, isError,error, page, setPage } = useProductsContext();
+  const { products, isLoading, isError, page, setPage } = useProductsContext();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
   const navigate = useNavigate();
 
   if (isLoading) return <p>Loading....</p>;
-  if (isError) return <p>Error loading Products: {error?.message || "Unknown error"}</p>;
-
+  if (isError) return <p>Error loading Products</p>;
 
   const handleProductClick = (id) => {
     navigate(`/products/${id}`);
   };
-  console.log("Pagination data:", {
-    currentPage: page,
-    totalPages: products?.pagination?.totalPages,
-    productsCount: products?.data?.length,
-  });
 
   const handlePagination = (newPage) => {
-    setPage(newPage); // ✅ Triggers re-fetch from context
+    setPage(newPage);
   };
+
+  {
+    /* // ^ handle add to / remove from favorites */
+  }
+  const queryClient = useQueryClient();
+
+  const {
+    data: { favorites = [] } = {},
+    isFetched,
+    error,
+  } = useQuery({
+    queryKey: ["favorites"],
+    queryFn: () => favoritesServices.fetchAllFavorites(),
+  });
+
+  const [favArr, setFavArr] = useState([]);
+
+  useEffect(() => {
+    if (isFetched) {
+      setFavArr([...favorites.map((item) => item._id), "12345"]);
+    }
+  }, [isFetched, favorites]);
+
+  const { mutateAsync: removeFromFavorites, isPending: isRemoving } =
+    useMutation({
+      mutationFn: (id) => favoritesServices.removeFromFavorites(id),
+      onSuccess: (data) => {
+        setFavArr([...data.favorites]);
+        queryClient.invalidateQueries(["favorites"]);
+        toast.success("Item removed from favorites!");
+      },
+      onError: (error) => {
+        toast.error(`Failed to remove: ${error.message}`);
+      },
+    });
+  const { mutateAsync: addToFavorites, isPending: isAdding } = useMutation({
+    mutationFn: (id) => favoritesServices.addToFavorites(id),
+    onSuccess: (data) => {
+      setFavArr([...data.favorites]);
+      queryClient.invalidateQueries(["favorites"]);
+      toast.success("Item Added To Your favorites!");
+    },
+    onError: (error) => {
+      toast.error(`Failed to add: ${error.message}`);
+    },
+  });
+
+  const toggleWishlist = (id) => {
+    if (favArr.includes(id)) {
+      removeFromFavorites(id);
+    } else {
+      addToFavorites(id);
+    }
+  };
+
+  if (error) {
+    toast.error(error.message || "Failed to fetch products");
+  }
 
   return (
     <div>
@@ -49,7 +109,7 @@ export default function Products() {
               _id: prd._id,
             }}
             onAddToCart={(id) => console.log("Add to cart:", id)}
-            onToggleFavorite={(id) => console.log("Toggle favorite:", id)}
+            onToggleFavorite={(id) => toggleWishlist(id)}
             onProductClick={handleProductClick}
             sx={{ width: "290px", aspectRatio: "2/3", height: "66%" }}
           />
