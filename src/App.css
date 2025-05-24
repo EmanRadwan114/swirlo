@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   background-color: #f2ece0;
 }
 :root {
@@ -13,6 +14,29 @@ body {
   --light-bg: #f6f4f2;
   --light-color: #8d6e63;
   --gold: #dc9830;
-  --custom-gradient: linear-gradient(135deg,  var(--primary), var(--gold));
+  --custom-gradient: linear-gradient(135deg, var(--primary), var(--gold));
+}
 
+/* RelatedProducts.css or global stylesheet */
+.related-swiper .swiper-button-next,
+.related-swiper .swiper-button-prev {
+  color: beige;
+  background-color: var(--accent); /* semi-transparent beige */
+  border-radius: 50%;
+  padding: 10px;
+  width: 40px;
+  height: 40px;
+  top: 40%;
+  transform: translateY(-50%);
+  transition: background-color 0.3s ease;
+}
+
+.related-swiper .swiper-button-next:hover,
+.related-swiper .swiper-button-prev:hover {
+  background-color: #e7ccac;
+}
+
+.related-swiper .swiper-button-next::after,
+.related-swiper .swiper-button-prev::after {
+  font-size: 20px;
 }

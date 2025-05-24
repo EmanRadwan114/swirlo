@@ -37,12 +37,12 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import CategoriesContextProvider from "./context/CategoriesContext.jsx";
 import { Toaster } from "react-hot-toast";
 import Favorites from "./pages/Favorites/Favorites.jsx";
-import FavoritesContextProvider from "./context/FavoritesContext.jsx";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./utils/theme.js"; // import your custom theme
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import ProductsContextProvider from "./context/ProductsContext.jsx";
 // ^ routing setup
 const router = createBrowserRouter([
   {
@@ -73,6 +73,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<LoadingSpinner />}>
             <ProfileComponent />
+          </Suspense>
+        ),
+      },
+      {
+        path: "products",
+        element: (
+          <Suspense fallback={<LoadingSpinner />}>
+            <Products />
           </Suspense>
         ),
       },
@@ -128,9 +136,11 @@ createRoot(document.getElementById("root")).render(
         <AuthContextProvider>
           <FavoritesContextProvider>
             <CategoriesContextProvider>
-              <ToastContainer />
-              {/* <Toaster position="top-right" reverseOrder={false} /> */}
-              <RouterProvider router={router} />
+              <ProductsContextProvider>
+                <ToastContainer />
+                {/* <Toaster position="top-right" reverseOrder={false} /> */}
+                <RouterProvider router={router} />
+              </ProductsContextProvider>
             </CategoriesContextProvider>
           </FavoritesContextProvider>
         </AuthContextProvider>

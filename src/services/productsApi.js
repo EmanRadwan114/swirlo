@@ -9,3 +9,10 @@ export const addReview = async (id, details) => {
   const response = await api.post(`/products/${id}/reviews`, details);
   return response.data;
 };
+
+export const fetchProducts = async () => {
+  const response = await api.get("/products");
+  console.log("Products response:", response);
+  console.log("Products data:", response.data);
+  return response.data.data;
+};

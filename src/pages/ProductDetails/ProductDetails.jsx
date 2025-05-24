@@ -1,9 +1,13 @@
 import { Typography, Box } from "@mui/material";
 import Review from "../../components/Review/Review";
+import RelatedProducts from "../../components/RelatedProducts/RelatedProducts";
+import { useNavigate } from "react-router";
 
 export default function ProductDetails() {
+  const navigate = useNavigate();
+
   return (
-    <>
+    <Box>
       <Box
         sx={{
           display: "flex",
@@ -124,7 +128,13 @@ export default function ProductDetails() {
           </Box>
         </Box>
       </Box>
-      <Review></Review>
-    </>
+      <Box sx={{ maxWidth: "1200px", mx: "auto", px: { xs: 2, md: 6 } }}>
+        <RelatedProducts
+          categoryId={"6812879bbcafe5c8e6084e62"}
+          currentProductId={"6830e8a24b950461489ae1ca"}
+          onProductClick={(id) => navigate(`/products/${id}`)}
+        />
+      </Box>
+    </Box>
   );
 }
