@@ -53,3 +53,15 @@ body {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
 }
+
+.circular-text-wrapper {
+  animation: rotate 10s linear infinite;
+  width: 160px;
+  height: 160px;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}

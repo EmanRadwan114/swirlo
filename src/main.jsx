@@ -79,7 +79,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "products",
+        path: "menu-items",
         element: (
           <Suspense fallback={<LoadingSpinner />}>
             <Products />
@@ -139,10 +139,10 @@ createRoot(document.getElementById("root")).render(
         <AuthContextProvider>
           {/* <FavoritesContextProvider> */}
           <CategoriesContextProvider>
-              <ProductsContextProvider>
-                <ToastContainer />
-                {/* <Toaster position="top-right" reverseOrder={false} /> */}
-                <RouterProvider router={router} />
+            <ProductsContextProvider>
+              <ToastContainer />
+              {/* <Toaster position="top-right" reverseOrder={false} /> */}
+              <RouterProvider router={router} />
             </ProductsContextProvider>
           </CategoriesContextProvider>
           {/* </FavoritesContextProvider> */}

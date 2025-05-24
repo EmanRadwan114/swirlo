@@ -131,7 +131,7 @@ const HomeSecTwo = () => {
                 variant="contained"
                 color="primary"
                 size="large"
-                onClick={() => navigate("/products")}
+                onClick={() => navigate("/menu-items")}
                 sx={{
                   backgroundColor: "var(--gold)",
                   color: "white",
@@ -140,7 +140,7 @@ const HomeSecTwo = () => {
                   },
                   marginBottom: 10,
                 }}>
-                Explore Our Products
+                Explore Our Menu
               </Button>
             </Grid>
           </Grid>
