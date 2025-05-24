@@ -13,9 +13,7 @@ import Home from "./pages/Home/Home";
 import { lazy, Suspense } from "react";
 const AboutComponent = lazy(() => import("../src/pages/About/About.jsx"));
 import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
-const ContactsComponent = lazy(() =>
-  import("../src/pages/Contact/Contact.jsx")
-);
+const ContactsComponent = lazy(() => import("../src/pages/Contact/Contact.jsx"));
 const ProfileComponent = lazy(() => import("../src/pages/Profile/Profile.jsx"));
 import NotFound from "./pages/NotFound/NotFound";
 import Login from "./pages/Login/Login";

@@ -1,4 +1,5 @@
 import { Typography, Box } from "@mui/material";
+import Review from "../../components/Review/Review";
 import RelatedProducts from "../../components/RelatedProducts/RelatedProducts";
 import { useNavigate } from "react-router";
 
@@ -13,7 +14,8 @@ export default function ProductDetails() {
           flexDirection: { xs: "column", md: "row" },
           p: { xs: 2, md: 6 },
           overflowX: "hidden",
-        }}>
+        }}
+      >
         {/* Image Section */}
         <Box
           sx={{
@@ -21,7 +23,8 @@ export default function ProductDetails() {
             flex: 1,
             width: "100%",
             height: { xs: "auto", md: "80dvh" },
-          }}>
+          }}
+        >
           <img
             src="https://i.pinimg.com/736x/a9/9b/9a/a99b9a2edc3fa6ce6052c8bb96344522.jpg"
             alt="coffee shop"
@@ -46,14 +49,16 @@ export default function ProductDetails() {
             py: { xs: 2, md: 4 },
             alignItems: { xs: "center", md: "flex-start" },
             textAlign: { xs: "center", md: "left" },
-          }}>
+          }}
+        >
           <Typography
             variant="h3"
             sx={{
               mb: 2,
               color: "var(--primary)",
               fontFamily: "Pacifico, cursive",
-            }}>
+            }}
+          >
             Lavender Matcha Frappe
           </Typography>
 
@@ -72,7 +77,8 @@ export default function ProductDetails() {
             sx={{
               mb: 2,
               color: "var(--tertiary)",
-            }}>
+            }}
+          >
             Ingredients
           </Typography>
 
@@ -81,9 +87,9 @@ export default function ProductDetails() {
             sx={{
               mb: 4,
               color: "var(--main-text)",
-            }}>
-            Matcha, lavender, and milk of choice blended with ice and topped
-            with whipped cream.
+            }}
+          >
+            Matcha, lavender, and milk of choice blended with ice and topped with whipped cream.
           </Typography>
 
           <Typography
@@ -93,7 +99,8 @@ export default function ProductDetails() {
               fontWeight: "700",
               color: "var(--primary)",
               fontFamily: "Playpen Sans Hebrew",
-            }}>
+            }}
+          >
             Price: 150 LE
           </Typography>
 
@@ -115,11 +122,13 @@ export default function ProductDetails() {
               "&:hover": {
                 bgcolor: "var(--primary)",
               },
-            }}>
+            }}
+          >
             Add To Cart
           </Box>
         </Box>
       </Box>
+      <Review></Review>
       <Box sx={{ maxWidth: "1200px", mx: "auto", px: { xs: 2, md: 6 } }}>
         <RelatedProducts
           categoryId={"6812879bbcafe5c8e6084e62"}
