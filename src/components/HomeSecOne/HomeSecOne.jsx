@@ -135,8 +135,8 @@ export default function CoffeeFeatures() {
                 component="img"
                 src={cup}
                 alt="Coffee Cup"
+                maxHeight={{ xs: 400, lg: 550 }}
                 sx={{
-                  maxHeight: 550,
                   height: "100%",
                   width: "auto",
                   "&:hover": {

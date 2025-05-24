@@ -3,6 +3,7 @@ import CategoryCard from "../../components/CategoryCard/CategoryCard";
 import ProductDetails from "../ProductDetails/ProductDetails";
 import HomeSecOne from "../../components/HomeSecOne/HomeSecOne";
 import { Link } from "react-router";
+import HomeSecTwo from "../../components/HomeSecTwo/HomeSecTwo";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
         <button>checkout</button>
       </Link>
       <HomeSecOne></HomeSecOne>
+      <HomeSecTwo></HomeSecTwo>
     </>
   );
 }

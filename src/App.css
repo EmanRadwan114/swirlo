@@ -40,3 +40,16 @@ body {
 .related-swiper .swiper-button-prev::after {
   font-size: 20px;
 }
+
+.myImg {
+  animation: transitionIn 4s ease-in-out;
+}
+
+@keyframes transitionIn {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
