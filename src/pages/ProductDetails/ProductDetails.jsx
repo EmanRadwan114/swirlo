@@ -1,11 +1,34 @@
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, IconButton, Button } from "@mui/material";
 import Review from "../../components/Review/Review";
 import RelatedProducts from "../../components/RelatedProducts/RelatedProducts";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { useProductsContext } from "../../context/ProductsContext";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import { toast } from "react-toastify";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { useState } from "react";
+import { red } from "@mui/material/colors";
 
 export default function ProductDetails() {
-  const navigate = useNavigate();
+  const { id } = useParams();
 
+  const { getProductDetails } = useProductsContext();
+  const { data: product, isLoading, isError, error } = getProductDetails(id);
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return toast.error(`Error: ${error.message}`);
+  if (!product.data[0]) return toast.error(`product Not Found`);
+
+  const prd = product.data[0];
+
+  const handleFavoriteClick = () => {
+    setIsFavorited(!isFavorited);
+  };
+
+  console.log(product);
   return (
     <Box>
       <Box
@@ -22,17 +45,17 @@ export default function ProductDetails() {
             display: "flex",
             flex: 1,
             width: "100%",
-            height: { xs: "auto", md: "80dvh" },
+            height: { xs: "auto", md: "75dvh" },
           }}
         >
           <img
-            src="https://i.pinimg.com/736x/a9/9b/9a/a99b9a2edc3fa6ce6052c8bb96344522.jpg"
+            src={prd.thumbnail}
             alt="coffee shop"
             style={{
               width: "100%",
-              height: "85%",
+              height: "100%",
               objectFit: "cover",
-              borderRadius: "10%",
+              borderRadius: "1.5rem",
             }}
           />
         </Box>
@@ -51,23 +74,46 @@ export default function ProductDetails() {
             textAlign: { xs: "center", md: "left" },
           }}
         >
-          <Typography
-            variant="h3"
+          <Box
             sx={{
-              mb: 2,
-              color: "var(--primary)",
-              fontFamily: "Pacifico, cursive",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              width: "100%",
             }}
           >
-            Lavender Matcha Frappe
-          </Typography>
+            <Typography
+              variant="h3"
+              sx={{
+                mb: 2,
+                fontSize: { xs: "1.75rem", sm: "2rem", md: "2.5rem" },
+                color: "var(--primary)",
+                fontFamily: "Pacifico, cursive",
+              }}
+            >
+              {prd.title}
+            </Typography>
+
+            {/* Add to Fav */}
+            <IconButton onClick={handleFavoriteClick}>
+              {isFavorited ? (
+                <FavoriteIcon sx={{ fontSize: "2.5rem", color: red[800] }} />
+              ) : (
+                <FavoriteBorderOutlinedIcon
+                  sx={{ fontSize: "2.5rem", color: "var( --primary)" }}
+                />
+              )}
+            </IconButton>
+          </Box>
 
           <Box
             sx={{
               background: "var(--custom-gradient)",
               // bgcolor: "var(--gold)",
               height: "5px",
-              width: { xs: "80%", md: "18rem" },
+              width: { xs: "70%", md: "18rem" },
+              alignSelf: "flex-start",
               mb: 4,
             }}
           />
@@ -89,7 +135,7 @@ export default function ProductDetails() {
               color: "var(--main-text)",
             }}
           >
-            Matcha, lavender, and milk of choice blended with ice and topped with whipped cream.
+            {prd.description}
           </Typography>
 
           <Typography
@@ -101,31 +147,33 @@ export default function ProductDetails() {
               fontFamily: "Playpen Sans Hebrew",
             }}
           >
-            Price: 150 LE
+            Price: {prd.price}
           </Typography>
 
-          <Box
+          <Button
             sx={{
-              width: { xs: "60%", sm: "80%" },
+              width: { xs: "80%", sm: "80%" },
               p: 2,
-              borderRadius: "20px",
-              bgcolor: "var(--main-text)",
+              borderRadius: "1rem",
+              bgcolor: "var(--primary)",
               color: "var(--main-background)",
               fontWeight: "bold",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               cursor: "pointer",
+              gap: 2,
               mx: "auto",
               textAlign: "center",
               transition: "background-color 0.3s ease",
               "&:hover": {
-                bgcolor: "var(--primary)",
+                bgcolor: "var(--main-text)",
               },
             }}
           >
+            <ShoppingCartIcon />
             Add To Cart
-          </Box>
+          </Button>
         </Box>
       </Box>
       <Review></Review>
@@ -133,7 +181,7 @@ export default function ProductDetails() {
         <RelatedProducts
           categoryId={"6812879bbcafe5c8e6084e62"}
           currentProductId={"6830e8a24b950461489ae1ca"}
-          onProductClick={(id) => navigate(`/products/${id}`)}
+          onProductClick={(id) => navigate(`/menu-items/${id}`)}
         />
       </Box>
     </Box>

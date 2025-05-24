@@ -12,8 +12,6 @@ import * as Yup from "yup";
 import { applyCoupon } from "../../services/couponApi";
 
 export default function Coupons() {
- 
-
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState({ message: "", success: null });
 
@@ -32,15 +30,17 @@ export default function Coupons() {
         setFeedback({ message: "", success: null });
 
         // Fake delay for demo purpose (remove if applyCoupon is async already)
-        const response = await applyCoupon(values.coupon); // real API call
+        const response = await applyCoupon({ couponCode: values.coupon }); // real API call
+        console.log(response);
         setFeedback({
-          message: "Coupon applied successfully!",
+          message: response.message || "Coupon applied successfully!",
           success: true,
         });
         resetForm();
       } catch (error) {
         setFeedback({
-          message: "Invalid coupon or something went wrong.",
+          // message:error.response?.data?.message || "Invalid coupon or something went wrong.",
+          message: "Invalid coupon",
           success: false,
         });
       } finally {
@@ -49,82 +49,75 @@ export default function Coupons() {
     },
   });
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = formik;
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    formik;
 
   return (
-    <Box sx={{ display: "flex", height: "350px" }}>
-      <Box
-        sx={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          p: 4,
-        }}
-      >
-        <Typography component="h1" variant="h3" sx={{ mb: 3 }}>
-          Coupon
-        </Typography>
-
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ width: "100%" }}>
-          <TextField
-            fullWidth
-            margin="normal"
-            id="coupon"
-            name="coupon"
-            label="Coupon Code"
-            value={values.coupon}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.coupon && Boolean(errors.coupon)}
-            helperText={touched.coupon && errors.coupon}
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": { borderColor: "var(--primary)" },
-                "&:hover fieldset": { borderColor: "var(--accent)" },
-                "&.Mui-focused fieldset": {
-                  borderColor: "var(--secondary)",
-                  borderWidth: "2px",
-                },
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      noValidate
+      sx={{
+        width: "100%",
+        maxWidth: "400px",
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+      }}
+    >
+      {/* === Group TextField + Button Side by Side === */}
+      <Box sx={{ display: "flex", gap: 1 }}>
+        <TextField
+          id="coupon"
+          name="coupon"
+          label="Coupon Code"
+          value={values.coupon}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.coupon && Boolean(errors.coupon)}
+          helperText={touched.coupon && errors.coupon}
+          sx={{
+            flex: 1,
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": { borderColor: "var(--primary)" },
+              "&:hover fieldset": { borderColor: "var(--accent)" },
+              "&.Mui-focused fieldset": {
+                borderColor: "var(--secondary)",
+                borderWidth: "2px",
               },
-              input: { color: "var(--text)" },
-              label: { color: "var(--primary)" },
-            }}
-          />
+            },
+            input: { color: "var(--text)" },
+            label: { color: "var(--primary)" },
+          }}
+        />
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            disabled={loading}
-            sx={{
-              mt: 3,
-              mb: 2,
-              backgroundColor: "var(--primary)",
-              "&:hover": {
-                backgroundColor: "var(--secondary)",
-              },
-            }}
-          >
-            {loading ? (
-              <CircularProgress size={24} sx={{ color: "white" }} />
-            ) : (
-              "Apply Coupon"
-            )}
-          </Button>
-
-          {/* ✅ Feedback Message */}
-          {feedback.message && (
-            <Alert
-              severity={feedback.success ? "success" : "error"}
-              sx={{ mt: 2 }}
-            >
-              {feedback.message}
-            </Alert>
+        <Button
+          type="submit"
+          variant="contained"
+          disabled={loading}
+          sx={{
+            height: "56px", // same height as TextField
+            backgroundColor: "var(--primary)",
+            whiteSpace: "nowrap",
+            "&:hover": {
+              backgroundColor: "var(--secondary)",
+            },
+          }}
+        >
+          {loading ? (
+            <CircularProgress size={24} sx={{ color: "white" }} />
+          ) : (
+            "Apply"
           )}
-        </Box>
+        </Button>
       </Box>
+
+      {/* ✅ Feedback Message */}
+      {feedback.message && (
+        <Alert severity={feedback.success ? "success" : "error"}>
+          {feedback.message}
+        </Alert>
+      )}
     </Box>
   );
 }

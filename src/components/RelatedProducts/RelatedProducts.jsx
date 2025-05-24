@@ -33,7 +33,7 @@ export default function RelatedProducts({
   if (isLoading) return <Typography>Loading related products...</Typography>;
   if (isError) return <Typography>Error loading related products.</Typography>;
 
-  const relatedProducts = products?.filter(
+  const relatedProducts = products?.data?.filter(
     (product) =>
       product.categoryID === categoryId && product._id !== currentProductId
   );
