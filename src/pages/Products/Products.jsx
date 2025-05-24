@@ -21,7 +21,6 @@ export default function Products() {
   const handleProductClick = (id) => {
     navigate(`/products/${id}`);
   };
-
   // ^ handle add to / remove from favorites
   const queryClient = useQueryClient();
 
@@ -99,8 +98,7 @@ export default function Products() {
       <PaginationComponent
         currentPage={currentPage}
         totalPages={totalPages}
-        handlePagination={handlePagination}
-      ></PaginationComponent>
+        handlePagination={handlePagination}></PaginationComponent>
     </div>
   );
 }
