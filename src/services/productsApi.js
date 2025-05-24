@@ -1,6 +1,6 @@
 import api from "../utils/apiUrl";
 
-export const fetchProducts = async (page=1, limit = 12) => {
+export const fetchProducts = async (page, limit ) => {
   const response = await api.get(
     `/products?page=${page}&limit=${limit}`
   );
