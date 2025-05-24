@@ -91,7 +91,7 @@ const Favorites = () => {
   return (
     <Box
       sx={{
-        py: 4,
+        padding: "70px 0",
       }}
     >
       <Container fixed>

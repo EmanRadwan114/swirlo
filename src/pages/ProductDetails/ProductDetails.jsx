@@ -45,7 +45,7 @@ export default function ProductDetails() {
             display: "flex",
             flex: 1,
             width: "100%",
-            height: { xs: "auto", md: "75dvh" },
+            height: { xs: "60vh", sm: "430px", md: "75vh", lg: "75vh" },
           }}
         >
           <img
