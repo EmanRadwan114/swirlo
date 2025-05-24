@@ -6,7 +6,7 @@ export const fetchProducts = async (page = 1, limit = 12) => {
   );
   console.log("Products response:", response);
   console.log("Products data:", response.data);
-  return response.data.data;}
+  return response.data;}
 
 export const getReviews = async (id, page) => {
   const response = await api.get(`/products/${id}/reviews?page=${page}`);

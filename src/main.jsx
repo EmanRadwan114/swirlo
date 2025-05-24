@@ -137,12 +137,10 @@ createRoot(document.getElementById("root")).render(
         <AuthContextProvider>
           {/* <FavoritesContextProvider> */}
           <CategoriesContextProvider>
-            <ProductsContextProvider>
               <ProductsContextProvider>
                 <ToastContainer />
                 {/* <Toaster position="top-right" reverseOrder={false} /> */}
                 <RouterProvider router={router} />
-              </ProductsContextProvider>
             </ProductsContextProvider>
           </CategoriesContextProvider>
           {/* </FavoritesContextProvider> */}

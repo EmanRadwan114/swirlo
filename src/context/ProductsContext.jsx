@@ -19,9 +19,19 @@ export default function ProductsContextProvider({ children }) {
     keepPreviousData: true,
   });
 
+
+  const value = {
+    products: products?.data || [], 
+    isLoading,
+    isError,
+    error,
+    page,
+    setPage,
+  };
+
   return (
     <ProductsContext.Provider
-      value={{ products, isLoading, isError, error, page, setPage }}
+      value={value}
     >
       {children}
     </ProductsContext.Provider>

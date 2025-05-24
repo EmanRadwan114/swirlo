@@ -1,4 +1,3 @@
-import { useProductsContext } from "../../context/ProductsContext";
 import { useEffect, useState } from "react";
 import PaginationComponent from "../../components/Pagination/PaginationComp";
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -7,9 +6,16 @@ import { Box } from "@mui/material";
 import favoritesServices from "../../services/favorites";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
+import { useProductsContext } from "../../context/ProductsContext";
 
 export default function Products() {
-  const { products, isLoading, isError, page, setPage } = useProductsContext();
+  const {
+    products = [],
+    isLoading,
+    isError,
+    page,
+    setPage,
+  } = useProductsContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -22,6 +28,7 @@ export default function Products() {
     navigate(`/products/${id}`);
   };
 
+  // Handle Favourites
   const {
     data: { favorites = [] } = {},
     isFetched,
@@ -75,6 +82,7 @@ export default function Products() {
   //   toast.error(error.message || "Failed to fetch products");
   // }
 
+  // Handle Pagination
   console.log("Pagination data:", {
     currentPage: page,
     totalPages: products?.pagination?.totalPages,
@@ -89,6 +97,7 @@ export default function Products() {
   if (isError)
     return <p>Error loading Products: {error?.message || "Unknown error"}</p>;
 
+  console.log(products.data);
   return (
     <div>
       <Box
@@ -101,9 +110,8 @@ export default function Products() {
           marginY: 4,
         }}
       >
-        {products.data?.map((prd) => {
-        console.log("Mapping product:", prd._id); 
-        <ProductCard
+        {products?.map((prd) => (
+          <ProductCard
             key={prd._id}
             product={{
               thumbnail: prd.thumbnail,
@@ -117,13 +125,13 @@ export default function Products() {
             onToggleFavorite={(id) => toggleWishlist(id)}
             onProductClick={handleProductClick}
             sx={{ width: "290px", aspectRatio: "2/3", height: "66%" }}
-          />;
-        })}
+          />
+        ))}
       </Box>
 
       <PaginationComponent
         currentPage={page}
-        totalPages={products?.totalPages}
+        totalPages={products?.totalPages || 1}
         handlePagination={handlePagination}
       />
     </div>
