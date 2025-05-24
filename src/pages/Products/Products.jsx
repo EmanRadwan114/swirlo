@@ -2,21 +2,15 @@ import { useEffect, useState } from "react";
 import PaginationComponent from "../../components/Pagination/PaginationComp";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useNavigate } from "react-router";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import favoritesServices from "../../services/favorites";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { useProductsContext } from "../../context/ProductsContext";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import { fetchProducts } from "../../services/productsApi";
 
 export default function Products() {
-  const {
-    products ,
-    isLoading,
-    isError,
-    page,
-    setPage,
-  } = useProductsContext();
+  // const { products, isLoading, isError, page, setPage } = useProductsContext();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -24,11 +18,26 @@ export default function Products() {
     navigate(`/menu-items/${id}`);
   };
 
+  // * get products
+  const [page, setPage] = useState(1);
+  const limit = 12;
+
+  const {
+    data: {
+      data: { data: products = [], totalPages = 1, currentPage = 1 } = {},
+    } = {},
+    isLoading,
+    error: productErr,
+  } = useQuery({
+    queryKey: ["products", page],
+    queryFn: () => fetchProducts(page, limit),
+  });
+
   // Handle Favourites
   const {
     data: { favorites = [] } = {},
     isFetched,
-    error,
+    error: favError,
   } = useQuery({
     queryKey: ["favorites"],
     queryFn: () => favoritesServices.fetchAllFavorites(),
@@ -79,11 +88,11 @@ export default function Products() {
   }
 
   if (isLoading) return <LoadingSpinner />;
-  if (isError)
-    return toast.error(error.message || "Failed to fetch products");;
+  if (productErr || favError)
+    return toast.error(productErr.message || "Failed to fetch products");
 
   return (
-    <div>
+    <Container fixed>
       <Box
         sx={{
           display: "flex",
@@ -94,7 +103,7 @@ export default function Products() {
           marginY: 4,
         }}
       >
-        {products?.data?.map((prd) => (
+        {products?.map((prd) => (
           <ProductCard
             key={prd._id}
             product={{
@@ -114,10 +123,10 @@ export default function Products() {
       </Box>
 
       <PaginationComponent
-        currentPage={page}
-        totalPages={products?.totalPages}
+        currentPage={currentPage}
+        totalPages={totalPages}
         handlePagination={handlePagination}
       />
-    </div>
+    </Container>
   );
 }

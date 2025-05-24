@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import PaginationComponent from "../../components/Pagination/PaginationComp";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import favoritesServices from "../../services/favorites";
@@ -51,16 +51,16 @@ export default function Search() {
   const [favArr, setFavArr] = useState([]);
 
   useEffect(() => {
-    console.log("hi");
-
-    if (isFavFetched) {
+    if (isFavFetched && isFavFetched.length === 0) {
       setFavArr([...favorites.map((item) => item._id)]);
     }
 
     if (isProductsFetched && searchedPro.length === 0) {
+      console.log("hi");
+
       toast.error("No products found that match your search!");
     }
-  }, [isFavFetched]);
+  }, [isFavFetched, isProductsFetched]);
 
   const { mutateAsync: removeFromFavorites } = useMutation({
     mutationFn: (id) => favoritesServices.removeFromFavorites(id),
@@ -101,34 +101,41 @@ export default function Search() {
 
   if (isProductsFetched && searchedPro.length === 0) {
     return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh",
-          textAlign: "center",
-        }}
-      >
-        <Typography variant="h6" component="p">
-          No products found that match your search.
-        </Typography>
-      </Box>
+      <Container fixed>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="h6" component="p">
+            No products found that match your search.
+          </Typography>
+        </Box>
+      </Container>
     );
   }
 
   return (
-    <div>
-      <Box sx={{ display: "flex", justifyContent: "center", marginY: 4 }}>
+    <Container fixed sx={{ paddingTop: "70px", paddingBottom: "70px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginY: 4,
+        }}
+      >
         <Grid container spacing={2}>
           {searchedPro.map((item) => (
-            <Grid key={item._id}>
+            <Grid key={item._id} size={{ xs: 12, md: 6, lg: 4 }}>
               <ProductCard
                 product={item}
                 onAddToCart={(id) => console.log("Add to cart:", id)}
                 onToggleFavorite={(id) => toggleWishlist(id)}
                 onProductClick={handleProductClick}
-                sx={{ width: "250px", aspectRatio: "2/3", height: "66%" }}
               />
             </Grid>
           ))}
@@ -139,6 +146,6 @@ export default function Search() {
         totalPages={totalPages}
         handlePagination={handlePagination}
       ></PaginationComponent>
-    </div>
+    </Container>
   );
 }
