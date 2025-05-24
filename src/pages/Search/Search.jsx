@@ -62,19 +62,18 @@ export default function Search() {
     }
   }, [isFavFetched]);
 
-  const { mutateAsync: removeFromFavorites, isPending: isRemoving } =
-    useMutation({
-      mutationFn: (id) => favoritesServices.removeFromFavorites(id),
-      onSuccess: (data) => {
-        setFavArr([...data.favorites]);
-        queryClient.invalidateQueries(["favorites"]);
-        toast.success("Item removed from favorites!");
-      },
-      onError: (error) => {
-        toast.error(`Failed to remove: ${error.message}`);
-      },
-    });
-  const { mutateAsync: addToFavorites, isPending: isAdding } = useMutation({
+  const { mutateAsync: removeFromFavorites } = useMutation({
+    mutationFn: (id) => favoritesServices.removeFromFavorites(id),
+    onSuccess: (data) => {
+      setFavArr([...data.favorites]);
+      queryClient.invalidateQueries(["favorites"]);
+      toast.success("Item removed from favorites!");
+    },
+    onError: (error) => {
+      toast.error(`Failed to remove: ${error.message}`);
+    },
+  });
+  const { mutateAsync: addToFavorites } = useMutation({
     mutationFn: (id) => favoritesServices.addToFavorites(id),
     onSuccess: (data) => {
       setFavArr([...data.favorites]);
