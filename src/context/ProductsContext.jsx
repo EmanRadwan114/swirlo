@@ -10,7 +10,7 @@ export const ProductsContext = createContext();
 
 export default function ProductsContextProvider({ children }) {
   const [page, setPage] = useState(1);
-  const limit = 6;
+  const limit = 12;
 
   const {
     data: products,
@@ -20,7 +20,6 @@ export default function ProductsContextProvider({ children }) {
   } = useQuery({
     queryKey: ["products", page],
     queryFn: () => fetchProducts(page, limit),
-    keepPreviousData: false,
   });
 
   const getProductDetails = (id) => {
