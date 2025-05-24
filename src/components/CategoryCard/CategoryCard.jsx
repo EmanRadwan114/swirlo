@@ -1,11 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router";
 import { useCategoriesContext } from "../../context/CategoriesContext";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import { toast } from "react-toastify";
 
 export default function CategoryCard() {
   const { categories, isLoading, isError } = useCategoriesContext();
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error loading categories</p>;
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return toast.error("Error loading categories");
 
 
   return (
