@@ -25,7 +25,7 @@ export default function Products() {
   // }
 
   const handleProductClick = (id) => {
-    navigate(`/products/${id}`);
+    navigate(`/menu-items/${id}`);
   };
 
   // Handle Favourites

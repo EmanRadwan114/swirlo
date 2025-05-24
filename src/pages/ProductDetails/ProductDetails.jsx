@@ -1,11 +1,26 @@
 import { Typography, Box } from "@mui/material";
 import Review from "../../components/Review/Review";
 import RelatedProducts from "../../components/RelatedProducts/RelatedProducts";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { useProductsContext } from "../../context/ProductsContext";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import { toast } from "react-toastify";
 
 export default function ProductDetails() {
+  const { id } = useParams();
   const navigate = useNavigate();
 
+  const { getProductDetails } = useProductsContext();
+
+  const { data: product, isLoading, isError, error } = getProductDetails(id);
+
+  if (isLoading) return <LoadingSpinner />;
+  if (isError) return toast.error(`Error: ${error.message}`);
+  if (!product.data[0]) return toast.error(`product Not Found`);
+
+  const prd = product.data[0];
+  
+  console.log(product);
   return (
     <Box>
       <Box
@@ -26,7 +41,7 @@ export default function ProductDetails() {
           }}
         >
           <img
-            src="https://i.pinimg.com/736x/a9/9b/9a/a99b9a2edc3fa6ce6052c8bb96344522.jpg"
+            src={prd.thumbnail}
             alt="coffee shop"
             style={{
               width: "100%",
@@ -59,7 +74,7 @@ export default function ProductDetails() {
               fontFamily: "Pacifico, cursive",
             }}
           >
-            Lavender Matcha Frappe
+            {prd.title}
           </Typography>
 
           <Box
@@ -89,7 +104,7 @@ export default function ProductDetails() {
               color: "var(--main-text)",
             }}
           >
-            Matcha, lavender, and milk of choice blended with ice and topped with whipped cream.
+            {prd.description}
           </Typography>
 
           <Typography
@@ -101,7 +116,7 @@ export default function ProductDetails() {
               fontFamily: "Playpen Sans Hebrew",
             }}
           >
-            Price: 150 LE
+            Price: {prd.price}
           </Typography>
 
           <Box
@@ -133,7 +148,7 @@ export default function ProductDetails() {
         <RelatedProducts
           categoryId={"6812879bbcafe5c8e6084e62"}
           currentProductId={"6830e8a24b950461489ae1ca"}
-          onProductClick={(id) => navigate(`/products/${id}`)}
+          onProductClick={(id) => navigate(`/menu-items/${id}`)}
         />
       </Box>
     </Box>

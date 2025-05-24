@@ -20,6 +20,12 @@ export const addReview = async (id, details) => {
 
 
 export const searchProducts = async (query, page) => {
-  const res = await api.get(`products/search?q=${query}&page=${page}&limit=6`);
+  const res = await api.get(`/products/search?q=${query}&page=${page}&limit=6`);
   return res.data;
 };
+
+
+export const getProductByID = async(id)=>{
+  const response = await api.get(`products/${id}`)
+  return response.data;
+}
