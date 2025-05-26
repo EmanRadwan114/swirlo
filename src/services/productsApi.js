@@ -19,13 +19,13 @@ export const addReview = async (id, details) => {
 };
 
 export const searchProducts = async (query, page) => {
-  const res = await api.get(`/products/search?q=${query}&page=${page}&limit=6`);
+  const res = await api.get(`/products/search?q=${query}&page=${page}&limit=8`);
   return res.data;
 };
 
 export const filterProducts = async (query, page) => {
   const res = await api.get(
-    `/products/filter?title=${query.title}&price=${query.price}&page=${page}&limit=6`
+    `/products/filter?title=${query.title}&price=${query.price}&page=${page}&limit=8`
   );
   return res.data;
 };
@@ -35,22 +35,16 @@ export const getProductByID = async (id) => {
   return response.data;
 };
 
-
-export const getProductByCategory = async (
-    categoryName,
-    page ,
-    limit 
-  ) => {
-  
-    const path = `/products/category/${encodeURIComponent(categoryName)}`;  
-    try {
-      const response = await api.get(path, {
-        params: { page, limit },
-      });
-      console.log("→ Got response:", response.status, response.data);
-     return response.data;
-    } catch (err) {
-      console.error("getProductByCategory failed:", err);
-      throw err; 
-    }
-  };
+export const getProductByCategory = async (categoryName, page, limit) => {
+  const path = `/products/category/${encodeURIComponent(categoryName)}`;
+  try {
+    const response = await api.get(path, {
+      params: { page, limit },
+    });
+    console.log("→ Got response:", response.status, response.data);
+    return response.data;
+  } catch (err) {
+    console.error("getProductByCategory failed:", err);
+    throw err;
+  }
+};
