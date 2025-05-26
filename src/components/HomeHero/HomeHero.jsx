@@ -81,7 +81,8 @@ export default function HomeHero() {
         </Typography>
 
         <Typography
-          variant="body1"
+          variant="h6"
+          component="p"
           sx={{
             color: grey[900],
             maxWidth: { xs: "400px", lg: "500px" },
