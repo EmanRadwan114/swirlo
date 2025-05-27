@@ -217,6 +217,8 @@ export default function Checkout() {
           gap: 3,
           width: { xs: "100%", sm: "70%", lg: "80%" },
           height: "fit-content",
+          mt: { xs: 4, lg: 10 },
+          mx: "auto",
         }}
       >
         <Coupons onApplyCoupon={handleCouponApply} />
@@ -255,16 +257,7 @@ export default function Checkout() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{
-                backgroundColor: "var(--primary)",
-                color: "#fff",
-                fontWeight: "bold",
-                borderRadius: 2,
-                mt: 2,
-                "&:hover": {
-                  backgroundColor: "var(--secondary)",
-                },
-              }}
+              sx={{ textTransform: "none" }}
               onClick={handlePayNow}
               disabled={loading} // Disable button when loading
             >
