@@ -116,7 +116,6 @@ export default function Checkout() {
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
         minHeight: "100vh",
-        backgroundColor: "#f7f7f7",
         p: 2,
         gap: 2,
         alignItems: "start",
@@ -126,8 +125,6 @@ export default function Checkout() {
       <Box
         sx={{
           flex: 2,
-          backgroundColor: "#fff",
-          //  background: `linear-gradient(0deg, rgba(104, 58, 9, 1), rgba(255, 255, 255, 0.74)), url(${beans})`,
           borderRadius: 2,
           p: 4,
           display: "flex",
@@ -233,13 +230,13 @@ export default function Checkout() {
           gap: 3,
           width: { xs: "100%", sm: "70%", lg: "80%" },
           height: "fit-content",
-          mt: { xs: 4, lg: 10 },
+          mt: { xs: 4, lg: 8 },
           mx: "auto",
         }}
       >
         <Coupons onApplyCoupon={handleCouponApply} />
 
-        <Box sx={{ borderTop: "1px solid #ddd", pt: 2 }}>
+        <Box sx={{ pt: 2 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
             <Typography variant="body1">Subtotal:</Typography>
             <Typography variant="body1">EGP {subtotal}</Typography>
@@ -261,7 +258,6 @@ export default function Checkout() {
               justifyContent: "space-between",
               fontWeight: "bold",
               mt: 2,
-              borderTop: "1px solid #ccc",
               pt: 2,
             }}
           >
