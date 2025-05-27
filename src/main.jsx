@@ -132,7 +132,10 @@ const router = createBrowserRouter([
         ),
       },
       { path: "menu-items", element: <Products></Products> },
-      { path: "menu-items/:category/:id", element: <ProductDetails></ProductDetails> },
+      {
+        path: "menu-items/:category/:id",
+        element: <ProductDetails></ProductDetails>,
+      },
       { path: "menu-items/:category", element: <CategoryProducts /> },
       { path: "*", element: <NotFound></NotFound> },
     ],

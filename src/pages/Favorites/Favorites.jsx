@@ -239,8 +239,6 @@ const Favorites = () => {
                 {favorites.map((item) => (
                   <Grid key={item._id} size={{ xs: 12, md: 6, lg: 4 }}>
                     <Card
-                      component={Link}
-                      to={`/menu-items/all/${item._id}`}
                       sx={{
                         borderRadius: 4,
                         transition: "transform 0.3s, box-shadow 0.3s",
@@ -251,6 +249,9 @@ const Favorites = () => {
                         },
                       }}
                     >
+                      <Box  component={Link}
+                      to={`/menu-items/all/${item._id}`}>
+
                       <CardMedia
                         sx={{
                           height: 0,
@@ -339,6 +340,7 @@ const Favorites = () => {
                           </Typography>
                         </Box>
                       </CardContent>
+                      </Box>
 
                       <Divider />
 

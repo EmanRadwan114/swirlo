@@ -88,7 +88,8 @@ const Navbar = () => {
               : "0 2px 10px rgba(0,0,0,0.1)",
           zIndex: 10,
           overflowX: "hidden",
-        }}>
+        }}
+      >
         <Toolbar
           sx={{
             maxWidth: "1450px",
@@ -97,7 +98,8 @@ const Navbar = () => {
             justifyContent: "space-between",
             display: "flex",
             paddingX: { xs: "20px", lg: "40px" },
-          }}>
+          }}
+        >
           {/* Left: Logo */}
           <Box
             component={RouterLink}
@@ -106,7 +108,8 @@ const Navbar = () => {
               display: "flex",
               alignItems: "center",
               textDecoration: "none",
-            }}>
+            }}
+          >
             <Box
               component="img"
               src={logoImg}
@@ -133,7 +136,8 @@ const Navbar = () => {
                     "&:hover, &:active": {
                       color: "var(--primary)",
                     },
-                  }}>
+                  }}
+                >
                   {label}
                 </Typography>
               ))}
@@ -157,7 +161,8 @@ const Navbar = () => {
                   width: { sm: "240px", lg: "300px" },
                 }}
                 component="form"
-                onSubmit={handleSubmit}>
+                onSubmit={handleSubmit}
+              >
                 <SearchIcon
                   fontSize="small"
                   sx={{ color: "var(--tertiary)" }}
@@ -183,7 +188,8 @@ const Navbar = () => {
                   "&:hover, &:active": {
                     color: "var(--primary)",
                   },
-                }}>
+                }}
+              >
                 <AccountCircleIcon />
               </IconButton>
 
@@ -198,7 +204,8 @@ const Navbar = () => {
                   "&:hover, &:active": {
                     color: "var(--primary)",
                   },
-                }}>
+                }}
+              >
                 <Badge
                   badgeContent={favorites.length}
                   color="error"
@@ -212,7 +219,8 @@ const Navbar = () => {
                       height: "18px",
                       minWidth: "18px",
                     },
-                  }}>
+                  }}
+                >
                   <FavoriteBorderIcon />
                 </Badge>
               </IconButton>
@@ -228,7 +236,8 @@ const Navbar = () => {
                   "&:hover, &:active": {
                     color: "var(--primary)",
                   },
-                }}>
+                }}
+              >
                 <Badge
                   badgeContent={totalCartItems}
                   color="error"
@@ -242,7 +251,8 @@ const Navbar = () => {
                       height: "18px",
                       minWidth: "18px",
                     },
-                  }}>
+                  }}
+                >
                   <ShoppingCartIcon />
                 </Badge>
               </IconButton>
@@ -257,7 +267,8 @@ const Navbar = () => {
                   color: "var(--primary)",
                 },
               }}
-              onClick={() => setDrawerOpen(true)}>
+              onClick={() => setDrawerOpen(true)}
+            >
               <MenuIcon />
             </IconButton>
           )}
@@ -273,7 +284,8 @@ const Navbar = () => {
           "& .MuiDrawer-paper": {
             backgroundColor: "var(--light-bg)",
           },
-        }}>
+        }}
+      >
         <Box sx={{ width: 250, p: 2 }}>
           <Box
             sx={{
@@ -289,7 +301,8 @@ const Navbar = () => {
               mb: 1,
             }}
             component="form"
-            onSubmit={handleSubmit}>
+            onSubmit={handleSubmit}
+          >
             <SearchIcon fontSize="small" sx={{ color: "var(--tertiary)" }} />
             <InputBase
               placeholder="Search…"
@@ -316,7 +329,8 @@ const Navbar = () => {
                     color: "var(--primary)",
                   },
                 }}
-                onClick={() => setDrawerOpen(false)}>
+                onClick={() => setDrawerOpen(false)}
+              >
                 <ListItemText primary={label} />
               </ListItem>
             ))}
