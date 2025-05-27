@@ -46,7 +46,7 @@ export default function Coupons({ onApplyCoupon }) {
         resetForm();
       } catch (error) {
         setFeedback({
-         message: error.response?.message || "Invalid coupon",
+          message: error.response?.message || "Invalid coupon",
           success: false,
         });
       } finally {
@@ -55,7 +55,8 @@ export default function Coupons({ onApplyCoupon }) {
     },
   });
 
-  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = formik;
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    formik;
 
   return (
     <Box
@@ -88,6 +89,12 @@ export default function Coupons({ onApplyCoupon }) {
               "&.Mui-focused fieldset": {
                 borderColor: "var(--secondary)",
                 borderWidth: "2px",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              color: "var(--green-color)",
+              "&.Mui-focused": {
+                color: "var(--green-color)",
               },
             },
             input: { color: "var(--text)" },

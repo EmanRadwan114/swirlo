@@ -178,6 +178,14 @@ export default function Checkout() {
             onBlur={formik.handleBlur}
             error={formik.touched.address && Boolean(formik.errors.address)}
             helperText={formik.touched.address && formik.errors.address}
+            sx={{
+              "& .MuiInputLabel-root": {
+                color: "var(--green-color)",
+                "&.Mui-focused": {
+                  color: "var(--green-color)",
+                },
+              },
+            }}
           />
 
           <TextField
@@ -196,6 +204,14 @@ export default function Checkout() {
             helperText={
               formik.touched.paymentMethod && formik.errors.paymentMethod
             }
+            sx={{
+              "& .MuiInputLabel-root": {
+                color: "var(--green-color)",
+                "&.Mui-focused": {
+                  color: "var(--green-color)",
+                },
+              },
+            }}
           >
             <MenuItem value="cash">Cash on Delivery</MenuItem>
             <MenuItem value="online">Online Payment</MenuItem>
