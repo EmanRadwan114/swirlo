@@ -4,8 +4,9 @@ import {
   TextField,
   Button,
   Typography,
-
   MenuItem,
+  ThemeProvider,
+  createTheme,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -24,6 +25,14 @@ export default function Checkout() {
   const navigate = useNavigate();
   const shippingPrice = getShippingPrice();
   const [cart, setCartItems] = useState([]);
+
+  const themeC = createTheme({
+    palette: {
+      primary: {
+        main: "#4b2a19",
+      },
+    },
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -110,6 +119,7 @@ export default function Checkout() {
         backgroundColor: "#f7f7f7",
         p: 2,
         gap: 2,
+        alignItems: "start",
       }}
     >
       {/* LEFT SIDE */}
@@ -156,8 +166,6 @@ export default function Checkout() {
             display: "flex",
             flexDirection: "column",
             gap: 2,
-            mx: "auto",
-            width: "80%",
           }}
         >
           <TextField
@@ -199,14 +207,16 @@ export default function Checkout() {
       <Box
         sx={{
           flex: 1,
-
-          background:
-            "linear-gradient(0deg, rgb(171, 132, 90), rgba(255, 255, 255, 0.74))",
+          background: "var(--secondary)",
+          position: "sticky",
+          top: 80,
           borderRadius: 2,
           p: 4,
           display: "flex",
           flexDirection: "column",
           gap: 3,
+          width: { xs: "100%", sm: "70%", lg: "80%" },
+          height: "fit-content",
         }}
       >
         <Coupons onApplyCoupon={handleCouponApply} />
@@ -240,27 +250,28 @@ export default function Checkout() {
             <Typography variant="h6">Total:</Typography>
             <Typography variant="h6">EGP {totalPrice}</Typography>
           </Box>
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{
-              backgroundColor: "var(--primary)",
-              color: "#fff",
-              fontWeight: "bold",
-              borderRadius: 2,
-              mt: 2,
-              "&:hover": {
-                backgroundColor: "var(--secondary)",
-              },
-            }}
-            onClick={handlePayNow}
-            disabled={loading} // Disable button when loading
-          >
-            {loading ? "Processing..." : "Pay Now"}{" "}
-            {/* Show loading text when in loading state */}
-          </Button>
+          <ThemeProvider theme={themeC}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{
+                backgroundColor: "var(--primary)",
+                color: "#fff",
+                fontWeight: "bold",
+                borderRadius: 2,
+                mt: 2,
+                "&:hover": {
+                  backgroundColor: "var(--secondary)",
+                },
+              }}
+              onClick={handlePayNow}
+              disabled={loading} // Disable button when loading
+            >
+              {loading ? "Processing..." : "Pay Now"}{" "}
+              {/* Show loading text when in loading state */}
+            </Button>
+          </ThemeProvider>
 
           <Box
             sx={{
