@@ -29,7 +29,7 @@ export default function Products() {
     navigate(`/menu-items/${categoryPath}/${id}`);
   };
 
-  const limit = 6;
+  const limit = 8;
 
   // check user is logged ?
   const user = localStorage.getItem("user");
@@ -216,8 +216,7 @@ export default function Products() {
               flexDirection: "row",
               flexWrap: "wrap",
               justifyContent: {
-                xs: "center", // center on small screens
-                // default to left on medium and above
+                xs: "center",
               },
               gap: 4,
               marginY: 4,
