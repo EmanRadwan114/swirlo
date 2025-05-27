@@ -29,7 +29,7 @@ export default function Products() {
     navigate(`/menu-items/${categoryPath}/${id}`);
   };
 
-  const limit = 9;
+  const limit = 6;
 
   // check user is logged ?
   const user = localStorage.getItem("user");
