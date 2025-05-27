@@ -68,6 +68,7 @@ export default function AuthProvider({ children }) {
         email: decoded.email,
         picture: decoded.picture,
         token,
+        iss: decoded.iss,
       });
       await PostUserByGoogle({ token });
       localStorage.setItem("user", JSON.stringify(decoded));
