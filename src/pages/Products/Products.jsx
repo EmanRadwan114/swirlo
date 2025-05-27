@@ -215,10 +215,7 @@ export default function Products() {
               display: "flex",
               flexDirection: "row",
               flexWrap: "wrap",
-              justifyContent: {
-                xs: "center", // center on small screens
-                 // default to left on medium and above
-              },
+              justifyContent: "center", 
               gap: 4,
               marginY: 4,
             }}
