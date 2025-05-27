@@ -53,7 +53,6 @@ export default function Coupons({ onApplyCoupon }) {
           success: true,
         });
 
-        resetForm();
       } catch (error) {
         setFeedback({
           message: error.response?.message || "Invalid coupon",
