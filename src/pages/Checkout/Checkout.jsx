@@ -75,6 +75,8 @@ export default function Checkout() {
 
       try {
         const res = await createOrder(orderData);
+        // console.log("Order created successfully:", res.data);
+
 
         if (values.paymentMethod === "online") {
           const { sessionId } = res.data; // Get session ID from the backend
@@ -82,7 +84,10 @@ export default function Checkout() {
           await checkout(sessionId); // Handle online payment via Stripe
         } else {
           toast.success("Order placed successfully!");
-          navigate("/profile"); // Redirect to orders page
+           navigate(`/order-confirmation/${res.data.data._id}`);
+          
+          // console.log("🟢Order cash  placed successfully:", res.data);
+          // console.log("🎇Order data:", res.data);
         }
       } catch (error) {
         console.error("Error placing order:", error);
