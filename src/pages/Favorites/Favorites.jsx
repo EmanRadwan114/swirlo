@@ -249,18 +249,17 @@ const Favorites = () => {
                         },
                       }}
                     >
-                      <Box  component={Link}
-                      to={`/menu-items/all/${item._id}`}>
-
-                      <CardMedia
-                        sx={{
-                          height: 0,
-                          pt: "50%",
-                          backgroundSize: "cover",
-                        }}
-                        image={item.thumbnail}
-                        title={item.title}
-                      />
+                      <Box component={Link} to={`/menu-items/all/${item._id}`}>
+                        <CardMedia
+                          sx={{
+                            height: 0,
+                            pt: "50%",
+                            backgroundSize: "cover",
+                          }}
+                          image={item.thumbnail}
+                          title={item.title}
+                        />
+                      </Box>
                       <CardContent sx={{ minHeight: { md: "190px" } }}>
                         <Box
                           sx={{
@@ -270,14 +269,19 @@ const Favorites = () => {
                             marginBottom: "0px",
                           }}
                         >
-                          <Typography
-                            variant="h6"
-                            component="h3"
-                            gutterBottom
-                            sx={{ color: "var(--main-text)" }}
+                          <Box
+                            component={Link}
+                            to={`/menu-items/all/${item._id}`}
                           >
-                            {item.title}
-                          </Typography>
+                            <Typography
+                              variant="h6"
+                              component="h3"
+                              gutterBottom
+                              sx={{ color: "var(--main-text)" }}
+                            >
+                              {item.title}
+                            </Typography>
+                          </Box>
                           <IconButton
                             aria-label="remove from favorites"
                             onClick={() => {
@@ -340,7 +344,6 @@ const Favorites = () => {
                           </Typography>
                         </Box>
                       </CardContent>
-                      </Box>
 
                       <Divider />
 
