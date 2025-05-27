@@ -130,6 +130,8 @@ export default function Checkout() {
           display: "flex",
           flexDirection: "column",
           gap: 3,
+          width: { xs: "100%", sm: "80%", md: "70%", lg: "700px" },
+          mt: 2,
         }}
       >
         <Typography
