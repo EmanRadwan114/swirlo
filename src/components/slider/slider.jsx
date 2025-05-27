@@ -37,8 +37,9 @@ export default function MultiCardSlider() {
         }}
         breakpoints={{
           0: { slidesPerView: 1 },
-          600: { slidesPerView: 2 },
-          960: { slidesPerView: 3 },
+          600: { slidesPerView: 1.5 },
+          960: { slidesPerView: 2 },
+          1200: { slidesPerView: 2.5 },
         }}
       >
         {cartItems.map((item, index) => (
