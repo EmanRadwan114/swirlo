@@ -60,6 +60,7 @@ import { deepOrange, green, red } from "@mui/material/colors";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { Link, useNavigate } from "react-router";
 import { useFormik } from "formik";
+import { useAuth } from "../../context/AuthContext";
 
 const Profile = () => {
   const theme = useTheme();
@@ -70,6 +71,8 @@ const Profile = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [expandedOrder, setExpandedOrder] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const { user } = useAuth();
 
   const [showPassword, setShowPassword] = useState({
     old: false,
@@ -445,37 +448,45 @@ const Profile = () => {
               ""
             )}
           </Grid>
-          <Grid container spacing={2}>
-            <Grid size={{ xs: 12 }}>
-              <Divider sx={{ mb: 4 }} />
-              <Box
-                sx={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}
-              >
-                <PasswordIcon color="action" sx={{ mr: 1 }} />
-                <Typography
-                  variant={isMobile ? "body2" : "body1"}
-                  sx={{ mr: 2 }}
-                >
-                  Password
-                </Typography>
-                <Button
-                  variant="outlined"
-                  size={isMobile ? "small" : "medium"}
-                  onClick={handlePasswordDialogOpen}
+          {!user?.iss ? (
+            <Grid container spacing={2}>
+              <Grid size={{ xs: 12 }}>
+                <Divider sx={{ mb: 4 }} />
+                <Box
                   sx={{
-                    mt: isMobile ? 1 : 0,
-                    border: "2px solid var(--primary)",
-                    color: "var(--primary)",
-                    "&:hover": {
-                      backgroundColor: "var(--main-background)",
-                    },
+                    display: "flex",
+                    alignItems: "center",
+                    flexWrap: "wrap",
                   }}
                 >
-                  Change Password
-                </Button>
-              </Box>
+                  <PasswordIcon color="action" sx={{ mr: 1 }} />
+                  <Typography
+                    variant={isMobile ? "body2" : "body1"}
+                    sx={{ mr: 2 }}
+                  >
+                    Password
+                  </Typography>
+                  <Button
+                    variant="outlined"
+                    size={isMobile ? "small" : "medium"}
+                    onClick={handlePasswordDialogOpen}
+                    sx={{
+                      mt: isMobile ? 1 : 0,
+                      border: "2px solid var(--primary)",
+                      color: "var(--primary)",
+                      "&:hover": {
+                        backgroundColor: "var(--main-background)",
+                      },
+                    }}
+                  >
+                    Change Password
+                  </Button>
+                </Box>
+              </Grid>
             </Grid>
-          </Grid>
+          ) : (
+            <></>
+          )}
         </CardContent>
       )}
     </Card>
@@ -880,218 +891,230 @@ const Profile = () => {
           </Grid>
 
           {/* Change Password Dialog */}
-          <Dialog
-            open={openPasswordDialog}
-            onClose={handlePasswordDialogClose}
-            fullScreen={isMobile}
-          >
-            <DialogTitle>Change Password</DialogTitle>
-            <DialogContent>
-              {/* Current Password Field */}
-              <TextField
-                autoFocus
-                margin="dense"
-                label="Current Password"
-                type={showPassword.old ? "text" : "password"}
-                name="oldPassword"
-                fullWidth
-                variant="outlined"
-                value={passwordForm.values.oldPassword}
-                onChange={passwordForm.handleChange}
-                onBlur={passwordForm.handleBlur}
-                error={
-                  passwordForm.touched.oldPassword &&
-                  passwordForm.errors.oldPassword
-                }
-                helperText={
-                  passwordForm.touched.oldPassword &&
-                  passwordForm.errors.oldPassword
-                }
-                size={isMobile ? "small" : "medium"}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => toggleShowPassword("old")}
-                        edge="end"
-                      >
-                        {showPassword.old ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{
-                  mb: 2,
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: "var(--green-color)",
+          {!user?.iss ? (
+            <Dialog
+              open={openPasswordDialog}
+              onClose={handlePasswordDialogClose}
+              fullScreen={isMobile}
+            >
+              <DialogTitle>Change Password</DialogTitle>
+              <DialogContent>
+                {/* Current Password Field */}
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  label="Current Password"
+                  type={showPassword.old ? "text" : "password"}
+                  name="oldPassword"
+                  fullWidth
+                  variant="outlined"
+                  value={passwordForm.values.oldPassword}
+                  onChange={passwordForm.handleChange}
+                  onBlur={passwordForm.handleBlur}
+                  error={
+                    passwordForm.touched.oldPassword &&
+                    passwordForm.errors.oldPassword
+                  }
+                  helperText={
+                    passwordForm.touched.oldPassword &&
+                    passwordForm.errors.oldPassword
+                  }
+                  size={isMobile ? "small" : "medium"}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => toggleShowPassword("old")}
+                          edge="end"
+                        >
+                          {showPassword.old ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  sx={{
+                    mb: 2,
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "var(--green-color)",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "var(--green-color)",
+                      },
                     },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "var(--green-color)",
-                    },
-                  },
-                  "& .MuiInputLabel-root": {
-                    color: "var(--green-color)",
-                    "&.Mui-focused": {
+                    "& .MuiInputLabel-root": {
                       color: "var(--green-color)",
+                      "&.Mui-focused": {
+                        color: "var(--green-color)",
+                      },
                     },
-                  },
-                }}
-              />
+                  }}
+                />
 
-              {/* New Password Field */}
-              <TextField
-                margin="dense"
-                label="New Password"
-                type={showPassword.new ? "text" : "password"}
-                name="newPassword"
-                fullWidth
-                variant="outlined"
-                value={passwordForm.values.newPassword}
-                onChange={passwordForm.handleChange}
-                onBlur={passwordForm.handleBlur}
-                error={
-                  passwordForm.touched.newPassword &&
-                  passwordForm.errors.newPassword
-                }
-                helperText={
-                  passwordForm.touched.newPassword &&
-                  passwordForm.errors.newPassword
-                }
-                size={isMobile ? "small" : "medium"}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => toggleShowPassword("new")}
-                        edge="end"
-                      >
-                        {showPassword.new ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{
-                  mb: 2,
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: "var(--green-color)",
+                {/* New Password Field */}
+                <TextField
+                  margin="dense"
+                  label="New Password"
+                  type={showPassword.new ? "text" : "password"}
+                  name="newPassword"
+                  fullWidth
+                  variant="outlined"
+                  value={passwordForm.values.newPassword}
+                  onChange={passwordForm.handleChange}
+                  onBlur={passwordForm.handleBlur}
+                  error={
+                    passwordForm.touched.newPassword &&
+                    passwordForm.errors.newPassword
+                  }
+                  helperText={
+                    passwordForm.touched.newPassword &&
+                    passwordForm.errors.newPassword
+                  }
+                  size={isMobile ? "small" : "medium"}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => toggleShowPassword("new")}
+                          edge="end"
+                        >
+                          {showPassword.new ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  sx={{
+                    mb: 2,
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "var(--green-color)",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "var(--green-color)",
+                      },
                     },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "var(--green-color)",
-                    },
-                  },
-                  "& .MuiInputLabel-root": {
-                    color: "var(--green-color)",
-                    "&.Mui-focused": {
+                    "& .MuiInputLabel-root": {
                       color: "var(--green-color)",
+                      "&.Mui-focused": {
+                        color: "var(--green-color)",
+                      },
                     },
-                  },
-                }}
-              />
+                  }}
+                />
 
-              {/* Confirm Password Field */}
-              <TextField
-                margin="dense"
-                label="Confirm New Password"
-                type={showPassword.confirm ? "text" : "password"}
-                name="confirmPassword"
-                fullWidth
-                variant="outlined"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                onBlur={() => setConfirmPasswordTouched(true)}
-                error={
-                  confirmPasswordTouched &&
-                  confirmPassword !== passwordForm.values.newPassword
-                }
-                helperText={
-                  confirmPasswordTouched &&
-                  confirmPassword !== passwordForm.values.newPassword
-                    ? "Passwords do not match"
-                    : ""
-                }
-                size={isMobile ? "small" : "medium"}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => toggleShowPassword("confirm")}
-                        edge="end"
-                      >
-                        {showPassword.confirm ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{
-                  mb: 2,
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: "var(--green-color)",
+                {/* Confirm Password Field */}
+                <TextField
+                  margin="dense"
+                  label="Confirm New Password"
+                  type={showPassword.confirm ? "text" : "password"}
+                  name="confirmPassword"
+                  fullWidth
+                  variant="outlined"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onBlur={() => setConfirmPasswordTouched(true)}
+                  error={
+                    confirmPasswordTouched &&
+                    confirmPassword !== passwordForm.values.newPassword
+                  }
+                  helperText={
+                    confirmPasswordTouched &&
+                    confirmPassword !== passwordForm.values.newPassword
+                      ? "Passwords do not match"
+                      : ""
+                  }
+                  size={isMobile ? "small" : "medium"}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => toggleShowPassword("confirm")}
+                          edge="end"
+                        >
+                          {showPassword.confirm ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  sx={{
+                    mb: 2,
+                    "& .MuiOutlinedInput-root": {
+                      "& fieldset": {
+                        borderColor: "var(--green-color)",
+                      },
+                      "&.Mui-focused fieldset": {
+                        borderColor: "var(--green-color)",
+                      },
                     },
-                    "&.Mui-focused fieldset": {
-                      borderColor: "var(--green-color)",
-                    },
-                  },
-                  "& .MuiInputLabel-root": {
-                    color: "var(--green-color)",
-                    "&.Mui-focused": {
+                    "& .MuiInputLabel-root": {
                       color: "var(--green-color)",
+                      "&.Mui-focused": {
+                        color: "var(--green-color)",
+                      },
                     },
-                  },
-                }}
-              />
-            </DialogContent>
-            <DialogActions sx={{ p: 2 }}>
-              <Button
-                onClick={handlePasswordDialogClose}
-                size={isMobile ? "small" : "medium"}
-                sx={{
-                  color: "var(--green-color)",
-                  "&:hover": {
-                    backgroundColor: "var(--main-background)",
-                  },
-                }}
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={(e) => {
-                  e.preventDefault;
-                  passwordForm.handleSubmit();
-                }}
-                variant="contained"
-                disabled={
-                  isProfileLoading || isOrdersLoading || !confirmPassword
-                }
-                size={isMobile ? "small" : "medium"}
-                sx={{
-                  color: "white",
-                  backgroundColor: "var(--primary)",
-                  "&:hover": {
-                    backgroundColor: "var(--light-color)",
-                  },
-                }}
-              >
-                {isPending ? (
-                  <CircularProgress
-                    size={24}
-                    sx={{ color: "var(--main-background)" }}
-                  />
-                ) : (
-                  "Change Password"
-                )}
-              </Button>
-            </DialogActions>
-          </Dialog>
+                  }}
+                />
+              </DialogContent>
+              <DialogActions sx={{ p: 2 }}>
+                <Button
+                  onClick={handlePasswordDialogClose}
+                  size={isMobile ? "small" : "medium"}
+                  sx={{
+                    color: "var(--green-color)",
+                    "&:hover": {
+                      backgroundColor: "var(--main-background)",
+                    },
+                  }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={(e) => {
+                    e.preventDefault;
+                    passwordForm.handleSubmit();
+                  }}
+                  variant="contained"
+                  disabled={
+                    isProfileLoading || isOrdersLoading || !confirmPassword
+                  }
+                  size={isMobile ? "small" : "medium"}
+                  sx={{
+                    color: "white",
+                    backgroundColor: "var(--primary)",
+                    "&:hover": {
+                      backgroundColor: "var(--light-color)",
+                    },
+                  }}
+                >
+                  {isPending ? (
+                    <CircularProgress
+                      size={24}
+                      sx={{ color: "var(--main-background)" }}
+                    />
+                  ) : (
+                    "Change Password"
+                  )}
+                </Button>
+              </DialogActions>
+            </Dialog>
+          ) : (
+            <></>
+          )}
         </>
       )}
     </Container>
