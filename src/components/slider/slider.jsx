@@ -27,7 +27,7 @@ export default function MultiCardSlider() {
     <Box
       sx={{
         maxHeight: 900,
-        maxWidth: { lg: "800px", xl: "1200px" },
+        maxWidth: { lg: "800px", xl: "1000px" },
         mt: 4,
         px: 2,
       }}
