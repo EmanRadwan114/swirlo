@@ -60,7 +60,7 @@ import { deepOrange, green, red } from "@mui/material/colors";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { Link, useNavigate } from "react-router";
 import { useFormik } from "formik";
-import { useAuth, logout } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const Profile = () => {
   const theme = useTheme();
@@ -72,7 +72,7 @@ const Profile = () => {
   const [expandedOrder, setExpandedOrder] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   const [showPassword, setShowPassword] = useState({
     old: false,
@@ -186,15 +186,6 @@ const Profile = () => {
       toast.error(
         error.response.data.errors?.[0].message || error.response.data.message
       );
-    },
-  });
-
-  // * logout
-
-  const { mutateAsync: logout } = useMutation({
-    mutationFn: () => logout,
-    onError: (error) => {
-      toast.error(`Failed to logout: ${error.response.data.message}`);
     },
   });
 
@@ -824,7 +815,7 @@ const Profile = () => {
                     onClick={async () => {
                       await logout();
                       toast.success("Logged Out Successfully!");
-                      navigate("/login");
+                      navigate("/");
                     }}
                     sx={{
                       border: `2px solid ${red[700]}`,
