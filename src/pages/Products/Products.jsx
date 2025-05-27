@@ -36,10 +36,10 @@ export default function Products() {
   // add to cart
   const handleAddToCart = (id) => {
     if (!user) {
-      toast.error("Please log in to add items to cart");
+      toast.error("Please log in to add items to cart!");
       return;
     }
-    toast.success("item added to cart successfully");
+    toast.success("item added to cart successfully!");
     addToCart(id);
   };
 
@@ -82,6 +82,10 @@ export default function Products() {
   });
 
   const toggleWishlist = (id) => {
+    if (!user) {
+      toast.error("Please log in to add items to your favorites!");
+      return;
+    }
     if (favArr.includes(id)) {
       removeFromFavorites(id);
     } else {

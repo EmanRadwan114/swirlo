@@ -26,7 +26,7 @@ export default function Coupons({ onApplyCoupon }) {
   });
 
   const CouponSchema = Yup.object().shape({
-    coupon: Yup.string().required("Coupon code is required"),
+    coupon: Yup.string().min("Coupon should be at least 3 characters"),
   });
 
   const formik = useFormik({

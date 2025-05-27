@@ -90,6 +90,7 @@ export default function Checkout() {
           console.log("Session ID for Stripe:", sessionId);
           await checkout(sessionId); // Handle online payment via Stripe
         } else {
+          setCartItems([]);
           toast.success("Order placed successfully!");
           navigate("/profile"); // Redirect to orders page
         }
