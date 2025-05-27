@@ -25,7 +25,7 @@ export const searchProducts = async (query, page) => {
 
 export const filterProducts = async (query, page) => {
   const res = await api.get(
-    `/products/filter?title=${query.title}&price=${query.price}&page=${page}&limit=8`
+    `/products/filter?title=${query.title}&price=${query.price}&page=${page}&limit=9`
   );
   return res.data;
 };
