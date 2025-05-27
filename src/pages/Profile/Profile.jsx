@@ -60,7 +60,7 @@ import { deepOrange, green, red } from "@mui/material/colors";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { Link, useNavigate } from "react-router";
 import { useFormik } from "formik";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth, logout } from "../../context/AuthContext";
 
 const Profile = () => {
   const theme = useTheme();
@@ -192,7 +192,7 @@ const Profile = () => {
   // * logout
 
   const { mutateAsync: logout } = useMutation({
-    mutationFn: () => userServices.logout(),
+    mutationFn: () => logout,
     onError: (error) => {
       toast.error(`Failed to logout: ${error.response.data.message}`);
     },
