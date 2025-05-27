@@ -6,6 +6,8 @@ import {
   Typography,
   CircularProgress,
   Alert,
+  createTheme,
+  ThemeProvider,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -14,6 +16,14 @@ import { applyCoupon } from "../../services/couponApi";
 export default function Coupons({ onApplyCoupon }) {
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState({ message: "", success: null });
+
+  const themeC = createTheme({
+    palette: {
+      primary: {
+        main: "#4b2a19",
+      },
+    },
+  });
 
   const CouponSchema = Yup.object().shape({
     coupon: Yup.string().required("Coupon code is required"),
@@ -65,7 +75,6 @@ export default function Coupons({ onApplyCoupon }) {
       noValidate
       sx={{
         width: "100%",
-        maxWidth: "400px",
         display: "flex",
         flexDirection: "column",
         gap: 2,
@@ -81,46 +90,45 @@ export default function Coupons({ onApplyCoupon }) {
           onBlur={handleBlur}
           error={touched.coupon && Boolean(errors.coupon)}
           helperText={touched.coupon && errors.coupon}
+          size="medium"
           sx={{
             flex: 1,
             "& .MuiOutlinedInput-root": {
               "& fieldset": { borderColor: "var(--primary)" },
-              "&:hover fieldset": { borderColor: "var(--accent)" },
+              "&:hover fieldset": { borderColor: "var(--primary)" },
               "&.Mui-focused fieldset": {
-                borderColor: "var(--secondary)",
+                borderColor: "var(--primary)",
                 borderWidth: "2px",
               },
             },
             "& .MuiInputLabel-root": {
-              color: "var(--green-color)",
+              color: "var(--primary)",
               "&.Mui-focused": {
-                color: "var(--green-color)",
+                color: "var(--primary)",
               },
             },
             input: { color: "var(--text)" },
             label: { color: "var(--primary)" },
           }}
         />
-
-        <Button
-          type="submit"
-          variant="contained"
-          disabled={loading}
-          sx={{
-            height: "56px",
-            backgroundColor: "var(--primary)",
-            whiteSpace: "nowrap",
-            "&:hover": {
-              backgroundColor: "var(--secondary)",
-            },
-          }}
-        >
-          {loading ? (
-            <CircularProgress size={24} sx={{ color: "white" }} />
-          ) : (
-            "Apply"
-          )}
-        </Button>
+        <ThemeProvider theme={themeC}>
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={loading}
+            sx={{
+              height: "60px",
+              backgroundColor: "var(--primary)",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {loading ? (
+              <CircularProgress size={24} sx={{ color: "white" }} />
+            ) : (
+              "Apply"
+            )}
+          </Button>
+        </ThemeProvider>
       </Box>
 
       {feedback.message && (

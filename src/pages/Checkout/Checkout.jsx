@@ -114,28 +114,31 @@ export default function Checkout() {
     <Box
       sx={{
         display: "flex",
-        flexDirection: { xs: "column", md: "row" },
+        flexDirection: { xs: "column", lg: "row" },
         minHeight: "100vh",
-        p: 2,
+        px: 4,
         gap: 2,
         alignItems: "start",
+        position: "relative",
       }}
     >
       {/* LEFT SIDE */}
       <Box
         sx={{
-          flex: 2,
+          flex: 1,
           borderRadius: 2,
-          p: 4,
           display: "flex",
           flexDirection: "column",
           gap: 3,
-          width: { xs: "100%", sm: "80%", md: "70%", lg: "700px" },
           mt: 2,
+          mx: "auto",
+          width: { xs: "100%", sm: "80%" },
+          py: 4,
         }}
       >
         <Typography
-          variant="h3"
+          variant="h4"
+          component="h2"
           sx={{
             mb: 2,
             color: "var(--primary)",
@@ -150,11 +153,11 @@ export default function Checkout() {
             background: "var(--custom-gradient)",
             height: "5px",
             width: { xs: "80%", md: "18rem" },
-            mb: 4,
+            mb: 0,
           }}
         />
 
-        <Box sx={{ width: "100%", padding: 2 }}>
+        <Box sx={{ width: "100%" }}>
           <MultiCardSlider />
         </Box>
 
@@ -221,19 +224,20 @@ export default function Checkout() {
       {/* RIGHT SIDE */}
       <Box
         sx={{
-          flex: 1,
+          flex: { xs: 1, sm: 0.4 },
           background: "var(--secondary)",
           position: "sticky",
           top: 80,
+          mx: "auto",
           borderRadius: 2,
-          p: 4,
+          p: 3,
           display: "flex",
           flexDirection: "column",
           gap: 3,
-          width: { xs: "100%", sm: "70%", lg: "80%" },
+          width: { xs: "100%", sm: "80%" },
           height: "fit-content",
           mt: { xs: 4, lg: 8 },
-          mx: "auto",
+          mb: 4,
         }}
       >
         <Coupons onApplyCoupon={handleCouponApply} />
