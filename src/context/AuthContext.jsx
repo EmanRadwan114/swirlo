@@ -1,12 +1,9 @@
 import { createContext, useContext, useState } from "react";
-import {  useMutation, useQueryClient } from "@tanstack/react-query";
-import {
-  login,
-  logout,
-  register,
-  PostUserByGoogle,
-} from "../services/authApi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { login, register, PostUserByGoogle } from "../services/authApi";
+
 import { toast } from "react-toastify";
+import userServices from "./../services/userApi";
 
 const AuthContext = createContext();
 
@@ -56,7 +53,7 @@ export default function AuthProvider({ children }) {
   });
 
   const logoutMutation = useMutation({
-    mutationFn: logout,
+    mutationFn: userServices.logout,
     onSuccess: () => {
       queryClient.removeQueries(["auth", "user"]);
       localStorage.removeItem("user");
@@ -80,7 +77,6 @@ export default function AuthProvider({ children }) {
       console.error("Error during login:", error);
     }
   };
-
 
   const handelLoginError = () => {
     console.log("error in login with google api ");
