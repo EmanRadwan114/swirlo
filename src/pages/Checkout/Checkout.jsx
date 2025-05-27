@@ -14,6 +14,7 @@ import MultiCardSlider from "../../components/slider/slider";
 import { useOrders } from "../../context/OrdersContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import coup from "../../assets/coup.png";
 // import beans from "../../assets/beans.png";
 export default function Checkout() {
   // const isMobile = useMediaQuery("(max-width:600px)");
@@ -276,7 +277,7 @@ export default function Checkout() {
             }}
           >
             <img
-              src="src/assets/coup.png"
+              src={coup}
               alt="Coupon"
               style={{ width: "100%", maxWidth: "320px", height: "auto" }}
             />
