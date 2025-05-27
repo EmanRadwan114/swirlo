@@ -85,9 +85,7 @@ export default function Footer() {
             <Box component={RouterLink} to="/about" sx={styles.linkStyle}>
               About
             </Box>
-            <Box component={RouterLink} to="/menu-items" sx={styles.linkStyle}>
-              Menu
-            </Box>
+            
           </Box>
         </Grid>
 
@@ -103,9 +101,15 @@ export default function Footer() {
             For You
           </Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-            <Box sx={styles.linkStyle}>New Arrival</Box>
-            <Box sx={styles.linkStyle}>Best Selling</Box>
-            <Box sx={styles.linkStyle}>50% Off</Box>
+       
+           
+           <Box component={RouterLink} to="/menu-items" sx={styles.linkStyle}>
+              Menu
+            </Box>
+           <Box component={RouterLink} to="/search" sx={styles.linkStyle}>
+            search
+            </Box>
+            {/* <Box sx={styles.linkStyle}>50% Off</Box> */}
           </Box>
         </Grid>
 

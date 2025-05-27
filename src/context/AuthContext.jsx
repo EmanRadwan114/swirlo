@@ -1,10 +1,9 @@
 import { createContext, useContext, useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {  useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   login,
   logout,
   register,
-  getCurrentUser,
   PostUserByGoogle,
 } from "../services/authApi";
 import { toast } from "react-toastify";
@@ -21,15 +20,15 @@ export default function AuthProvider({ children }) {
   const queryClient = useQueryClient();
 
   // useQuery fetches current user data
-  const {
-    data: user,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["auth", "user"],
-    queryFn: getCurrentUser,
-    retry: false,
-  });
+  // const {
+  //   data: user,
+  //   isLoading,
+  //   isError,
+  // } = useQuery({
+  //   queryKey: ["auth", "user"],
+  //   queryFn: getCurrentUser,
+  //   retry: false,
+  // });
 
   const loginMutation = useMutation({
     mutationFn: login,
@@ -62,7 +61,6 @@ export default function AuthProvider({ children }) {
       queryClient.removeQueries(["auth", "user"]);
       localStorage.removeItem("user");
       setUserState(null);
-      navigate("/");
     },
   });
 
@@ -83,16 +81,14 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  const handleLogout = (navigate) => {};
 
   const handelLoginError = () => {
     console.log("error in login with google api ");
   };
 
   const value = {
-    user: userState || user,
-    isLoading,
-    isAuthenticated: !!user && !isError,
+    user: userState,
+    isAuthenticated: !!userState,
     login: loginMutation.mutateAsync,
     isLoggingIn: loginMutation.isLoading,
     register: registerMutation.mutateAsync,
@@ -100,9 +96,8 @@ export default function AuthProvider({ children }) {
     logout: logoutMutation.mutateAsync,
     isLoggingOut: logoutMutation.isLoading,
     error: loginMutation.error || registerMutation.error,
-    role: (userState || user)?.role,
+    role: userState?.role,
     handleLoginSuccess,
-    handleLogout,
     handelLoginError,
   };
 

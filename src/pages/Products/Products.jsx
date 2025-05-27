@@ -22,8 +22,11 @@ export default function Products() {
   const queryClient = useQueryClient();
   const { addToCart } = useCart();
   let { categoryName } = useParams();
+
+  //  Handle Product Click To Show Product Details
   const handleProductClick = (id, category) => {
-    navigate(`/menu-items/${encodeURIComponent(category)}/${id}`);
+    const categoryPath = category || "all";
+    navigate(`/menu-items/${categoryPath}/${id}`);
   };
 
   const limit = 8;
@@ -187,7 +190,7 @@ export default function Products() {
 
   return (
     <div>
-      <FilterationSideNav onFilterChange={handleFilterChange} />
+      <FilterationSideNav  onFilterChange={handleFilterChange} />
       {loading ? (
         <LoadingSpinner />
       ) : displayProducts.length === 0 ? (
@@ -212,6 +215,10 @@ export default function Products() {
               display: "flex",
               flexDirection: "row",
               flexWrap: "wrap",
+              justifyContent: {
+                xs: "center", // center on small screens
+                 // default to left on medium and above
+              },
               gap: 4,
               marginY: 4,
             }}
@@ -225,7 +232,11 @@ export default function Products() {
                 onProductClick={() =>
                   handleProductClick(prd._id, prd.categoryID?.name)
                 }
-                sx={{ width: "290px", aspectRatio: "2/3", height: "66%" }}
+                sx={{
+                  width: { xs: "90%", sm: "290px" },
+                  aspectRatio: {xs:"1.80/3",sm:"2/3"},
+                  height: "66%",
+                }}
               />
             ))}
           </Box>

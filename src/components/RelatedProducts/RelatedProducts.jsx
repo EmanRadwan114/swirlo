@@ -26,7 +26,7 @@ export default function RelatedProducts({
     const width = window.innerWidth;
     if (width >= 1200) setCardsPerView(4);
     else if (width >= 900) setCardsPerView(3);
-    else if (width >= 600) setCardsPerView(2);
+    else if (width >= 650) setCardsPerView(2);
     else setCardsPerView(1);
   };
 
@@ -71,7 +71,13 @@ export default function RelatedProducts({
   return (
     <Box
       mt={6}
-      sx={{ maxWidth: "1200px", mx: "auto", px: 2, textAlign: "center" }}>
+      sx={{
+        maxWidth: "1200px",
+        mx: "auto",
+        px: 2,
+        my: 12,
+        textAlign: "center",
+      }}>
       <Typography
         variant="h5"
         color="var(--primary)"
@@ -90,6 +96,7 @@ export default function RelatedProducts({
           padding: "0 20px 20px",
           display: "flex",
           alignItems: "center",
+          margin: 0,
         }}>
         {relatedProducts.map((product) => (
           <SwiperSlide key={product._id}>
@@ -111,7 +118,11 @@ export default function RelatedProducts({
                     product._id
                   )
                 }
-                sx={{ width: "250px", aspectRatio: "2/3", height: "66%" }}
+                sx={{
+                  width: { xs: "280px", md: "250px" },
+                  aspectRatio: "2/3",
+                  height: "66%",
+                }}
               />
             </Box>
           </SwiperSlide>

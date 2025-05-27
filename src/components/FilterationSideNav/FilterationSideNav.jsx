@@ -169,12 +169,12 @@ const FilterationSideNav = ({ onFilterChange }) => {
           [`& .MuiDrawer-paper`]: {
             position: !isMobile ? "absolute" : "fixed",
             zIndex: !isMobile ? "5" : "200000",
-            width: isMobile ? "80%" : "280px",
+            width: isMobile ? { xs: "80%", md: "50%" } : "280px",
             boxSizing: "border-box",
             backgroundColor: "var(--light-bg)",
             padding: "16px",
             marginTop: isMobile ? 0 : "100px",
-            height: isMobile ? "100%" : "calc(100% - 120px)",
+            height: "100%",
             ...(!isMobile && {
               boxShadow: "2px 0 10px 0px rgba(0, 0, 0, 0.2)",
             }),
@@ -226,8 +226,8 @@ const FilterationSideNav = ({ onFilterChange }) => {
             value={localFilters.price}
             onChange={handlePriceChange}
             onChangeCommitted={(e, val) => handlePriceChange(e, val)}
-            min={0}
-            max={1000}
+            min={25}
+            max={600}
             step={10}
             valueLabelDisplay="auto"
             aria-labelledby="price-slider"

@@ -9,6 +9,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { filterProducts } from "../../services/productsApi";
 import FilterationSideNav from "../../components/FilterationSideNav/FilterationSideNav";
+import { useCart } from "../../context/CartContext";
 
 function Search() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,6 +21,7 @@ function Search() {
     title: query || "",
     price: 200,
   });
+  const { addToCart } = useCart();
 
   // Filter query with automatic refetch on dependencies change
   const {
@@ -48,6 +50,19 @@ function Search() {
     queryKey: ["favorites"],
     queryFn: favoritesServices.fetchAllFavorites,
   });
+
+  // check user is logged ?
+  const user = localStorage.getItem("user");
+
+  // add to cart
+  const handleAddToCart = (id) => {
+    if (!user) {
+      toast.error("Please log in to add items to cart");
+      return;
+    }
+    toast.success("item added to cart successfully");
+    addToCart(id);
+  };
 
   const [favArr, setFavArr] = useState([]);
 
@@ -99,8 +114,9 @@ function Search() {
   };
 
   // Handle product click
-  const handleProductClick = (id) => {
-    navigate(`/products/${id}`);
+  const handleProductClick = (id, category) => {
+    const categoryPath = category || "all";
+    navigate(`/menu-items/${categoryPath}/${id}`);
   };
 
   // Main render
@@ -162,8 +178,8 @@ function Search() {
                 <Grid key={product._id} size={{ xs: 12, sm: 6, lg: 4 }}>
                   <ProductCard
                     product={product}
-                    onAddToCart={(id) => console.log("Add to cart:", id)}
-                    onToggleFavorite={toggleWishlist}
+                    onAddToCart={() => handleAddToCart(product._id)}
+                    onToggleFavorite={(id) => toggleWishlist(id)}
                     onProductClick={handleProductClick}
                     sx={{ width: "290px", aspectRatio: "2/3", height: "66%" }}
                   />
