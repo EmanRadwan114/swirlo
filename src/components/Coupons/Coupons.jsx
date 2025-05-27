@@ -54,7 +54,7 @@ export default function Coupons({ onApplyCoupon }) {
         });
       } catch (error) {
         setFeedback({
-          message: error.response?.message || "Invalid coupon",
+          message: error.response?.data.message || "Invalid coupon",
           success: false,
         });
       } finally {
