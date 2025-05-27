@@ -164,14 +164,7 @@ function Search() {
           </Typography>
         </Box>
       ) : (
-        <Container
-          fixed
-          sx={{
-            paddingTop: "70px",
-            paddingBottom: "70px",
-            paddingLeft: { md: "290px" },
-          }}
-        >
+        <Box sx={{ paddingLeft: { md: "290px" } }}>
           <Box
             sx={{
               display: "flex",
@@ -201,13 +194,12 @@ function Search() {
               />
             ))}
           </Box>
-
           <PaginationComponent
             currentPage={currentPage}
             totalPages={totalPages}
             handlePagination={handlePagination}
           />
-        </Container>
+        </Box>
       )}
     </Box>
   );
