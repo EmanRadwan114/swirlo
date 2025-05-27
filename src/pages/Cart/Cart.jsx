@@ -1,4 +1,13 @@
-import { Box, Button, createTheme, Divider, Skeleton, Stack, ThemeProvider, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  createTheme,
+  Divider,
+  Skeleton,
+  Stack,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
 import PaginationComponent from "../../components/Pagination/PaginationComp";
 import { useNavigate } from "react-router";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
@@ -8,7 +17,8 @@ import image from "../../assets/emptyCart.png";
 
 export default function Cart() {
   let navigate = useNavigate();
-  let { data, page, setPage, isLoading, handleCartRemoval, handleQuantity } = useCart();
+  let { data, page, setPage, isLoading, handleCartRemoval, handleQuantity } =
+    useCart();
   function handlePagination(value) {
     setPage(value);
   }
@@ -33,7 +43,10 @@ export default function Cart() {
             {/* LEFT COLUMN - Cart */}
             <Stack flex={1} spacing={1} alignItems="center">
               {/* Title and Remove Button */}
-              <Stack width={{ xs: "100%", sm: "80%", md: "70%", lg: "700px" }} mt={2}>
+              <Stack
+                width={{ xs: "100%", sm: "80%", md: "70%", lg: "700px" }}
+                mt={2}
+              >
                 <Typography variant="h4" sx={{ color: "var(--gold)" }}>
                   Shopping Cart
                 </Typography>
@@ -41,9 +54,13 @@ export default function Cart() {
                   variant="outlined"
                   color="error"
                   onClick={() => handleCartRemoval()}
-                  sx={{ textTransform: "none", width: "fit-content", alignSelf: "end" }}
+                  sx={{
+                    textTransform: "none",
+                    width: "fit-content",
+                    alignSelf: "end",
+                  }}
                 >
-                  Remove Cart
+                  Clear Cart
                 </Button>
               </Stack>
 
@@ -74,33 +91,77 @@ export default function Cart() {
                     {/* Product Details */}
                     <Stack flex={1} gap={1}>
                       <Button
-                        sx={{ alignSelf: "flex-end", color: "var(--primary)", minWidth: 0 }}
+                        sx={{
+                          alignSelf: "flex-end",
+                          color: "var(--primary)",
+                          minWidth: 0,
+                        }}
                         onClick={() => handleCartRemoval(item.productId._id)}
                       >
                         <ClearIcon />
                       </Button>
-                      <Stack flexDirection="row" justifyContent="space-between" alignItems="baseline" my={2} flexWrap="wrap" gap={2}>
-                        <Typography variant="h6" fontSize={{ xs: "1rem", md: "1.2rem" }}>
+                      <Stack
+                        flexDirection="row"
+                        justifyContent="space-between"
+                        alignItems="baseline"
+                        my={2}
+                        flexWrap="wrap"
+                        gap={2}
+                      >
+                        <Typography
+                          variant="h6"
+                          fontSize={{ xs: "1rem", md: "1.2rem" }}
+                        >
                           {item.productId.title}
                         </Typography>
                         <Box display="flex" alignItems="center" gap={1}>
                           <ThemeProvider theme={themeC}>
-                            <Button variant="outlined" size="small" onClick={() => handleQuantity(item.productId._id, item.quantity - 1)}>
+                            <Button
+                              variant="outlined"
+                              size="small"
+                              onClick={() =>
+                                handleQuantity(
+                                  item.productId._id,
+                                  item.quantity - 1
+                                )
+                              }
+                            >
                               -
                             </Button>
-                            <Typography color="var(--primary)" minWidth="30px" textAlign="center">
+                            <Typography
+                              color="var(--primary)"
+                              minWidth="30px"
+                              textAlign="center"
+                            >
                               {item.quantity}
                             </Typography>
-                            <Button variant="outlined" size="small" onClick={() => handleQuantity(item.productId._id, item.quantity + 1)}>
+                            <Button
+                              variant="outlined"
+                              size="small"
+                              onClick={() =>
+                                handleQuantity(
+                                  item.productId._id,
+                                  item.quantity + 1
+                                )
+                              }
+                            >
                               +
                             </Button>
                           </ThemeProvider>
                         </Box>
                       </Stack>
-                      <Typography alignSelf="flex-end" color="var(--primary)" fontSize="1rem">
+                      <Typography
+                        alignSelf="flex-end"
+                        color="var(--primary)"
+                        fontSize="1rem"
+                      >
                         EGP{item.productId.price}.00
                       </Typography>
-                      <Typography alignSelf="flex-end" fontWeight={700} color="var(--primary)">
+                      <Typography
+                        alignSelf="flex-end"
+                        fontWeight={700}
+                        color="var(--primary)"
+                      >
                         Total: EGP{item.productId.price * item.quantity}.00
                       </Typography>
                     </Stack>
@@ -108,7 +169,11 @@ export default function Cart() {
                 ))}
               </Stack>
 
-              <PaginationComponent totalPages={data?.totalPages} currentPage={page} handlePagination={handlePagination} />
+              <PaginationComponent
+                totalPages={data?.totalPages}
+                currentPage={page}
+                handlePagination={handlePagination}
+              />
             </Stack>
             <Stack
               flex={{ xs: 1, sm: 0.4 }}
@@ -137,14 +202,24 @@ export default function Cart() {
                   Total:
                 </Typography>
                 <Stack>
-                  <Typography fontSize="1.1rem">EGP {data?.subtotal + 50}.00</Typography>
-                  <Typography fontSize="0.8rem" color="text.secondary" alignSelf="end">
+                  <Typography fontSize="1.1rem">
+                    EGP {data?.subtotal + 50}.00
+                  </Typography>
+                  <Typography
+                    fontSize="0.8rem"
+                    color="text.secondary"
+                    alignSelf="end"
+                  >
                     including VAT
                   </Typography>
                 </Stack>
               </Stack>
               <ThemeProvider theme={themeC}>
-                <Button variant="contained" sx={{ textTransform: "none" }} onClick={() => navigate("/checkout")}>
+                <Button
+                  variant="contained"
+                  sx={{ textTransform: "none" }}
+                  onClick={() => navigate("/checkout")}
+                >
                   Checkout
                 </Button>
               </ThemeProvider>
@@ -152,7 +227,13 @@ export default function Cart() {
           </Stack>
         </Stack>
       ) : (
-        <Stack minHeight={"80vh"} p={5} flexDirection={"row"} alignItems={"center"} justifyContent={"center"}>
+        <Stack
+          minHeight={"80vh"}
+          p={5}
+          flexDirection={"row"}
+          alignItems={"center"}
+          justifyContent={"center"}
+        >
           <Stack alignItems="center" gap={2}>
             <Box
               component="img"
@@ -166,11 +247,19 @@ export default function Cart() {
                 },
               }}
             />
-            <Typography fontSize={{ xs: "1.2rem", md: "1.5rem" }} color="var(--gold)" textAlign="center">
+            <Typography
+              fontSize={{ xs: "1.2rem", md: "1.5rem" }}
+              color="var(--gold)"
+              textAlign="center"
+            >
               Oops! Your cart is lonely. Let’s fix that!
             </Typography>
             <ThemeProvider theme={themeC}>
-              <Button variant="contained" sx={{ textTransform: "none" }} onClick={() => navigate("/menu-items")}>
+              <Button
+                variant="contained"
+                sx={{ textTransform: "none" }}
+                onClick={() => navigate("/menu-items")}
+              >
                 Start adding!
               </Button>
             </ThemeProvider>

@@ -25,6 +25,7 @@ import { useFavoritesContext } from "../../context/FavoritesContext";
 import { useCart } from "../../context/CartContext";
 
 import logoImg from "../../assets/logo3.png";
+import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -38,6 +39,7 @@ const Navbar = () => {
   const { favorites } = useFavoritesContext();
   const { data } = useCart();
   const totalCartItems = data?.totalItems;
+  const { user } = useAuth();
 
   const navigate = useNavigate();
 
@@ -179,7 +181,7 @@ const Navbar = () => {
             <Box>
               <IconButton
                 component={RouterLink}
-                to={localStorage.getItem("user") ? "/profile" : "/login"}
+                to={user ? "/profile" : "/login"}
                 sx={{
                   color:
                     location.pathname === "/profile"

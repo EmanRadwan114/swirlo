@@ -2,6 +2,7 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
+import "@fontsource/nunito-sans"; // Defaults to weight 400
 
 // ^ react query imports
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

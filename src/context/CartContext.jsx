@@ -1,7 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createContext, use, useContext, useEffect, useMemo, useState } from "react";
-import { editQuantity, getCartItems, removeCart, addToCartApi } from "../services/cartApi";
-import { toast } from "react-toastify";
+import { createContext, useContext, useState } from "react";
+import {
+  editQuantity,
+  getCartItems,
+  removeCart,
+  addToCartApi,
+} from "../services/cartApi";
+import { useAuth } from "./AuthContext";
 // import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 // import { createContext, useContext, useEffect, useState } from "react";
 // import { editQuantity, getCartItems, removeCart } from "../services/cartApi";
@@ -11,8 +16,7 @@ export const CartContext = createContext();
 export default function CartContextProvider({ children }) {
   const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
-
-  const user = localStorage.getItem("user");
+  const { user } = useAuth();
 
   // Run cart logic only if user is logged in
   const { data, isLoading, refetch } = useQuery({
@@ -74,7 +78,7 @@ export default function CartContextProvider({ children }) {
         page,
         setPage,
         handleQuantity,
-        addToCart: addToCartMutation.mutate, 
+        addToCart: addToCartMutation.mutate,
       }}
     >
       {children}

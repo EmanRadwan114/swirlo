@@ -16,10 +16,12 @@ import { useOrders } from "../../context/OrdersContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import coup from "../../assets/coup.png";
+import { useCart } from "../../context/CartContext";
 // import beans from "../../assets/beans.png";
 export default function Checkout() {
   // const isMobile = useMediaQuery("(max-width:600px)");
   const { getCartItems, createOrder, getShippingPrice, checkout } = useOrders();
+  const { handleCartRemoval } = useCart();
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [couponCode, setCouponCode] = useState("");
   const [loading, setLoading] = useState(false); // Add loading state
@@ -85,20 +87,14 @@ export default function Checkout() {
 
       try {
         const res = await createOrder(orderData);
-        // console.log("Order created successfully:", res.data);
-
 
         if (values.paymentMethod === "online") {
           const { sessionId } = res.data; // Get session ID from the backend
-          console.log("Session ID for Stripe:", sessionId);
           await checkout(sessionId); // Handle online payment via Stripe
         } else {
-          setCartItems([]);
+          handleCartRemoval();
           toast.success("Order placed successfully!");
-           navigate(`/order-confirmation/${res.data.data._id}`);
-          
-          // console.log("🟢Order cash  placed successfully:", res.data);
-          // console.log("🎇Order data:", res.data);
+          navigate(`/order-confirmation/${res.data.data._id}`);
         }
       } catch (error) {
         console.error("Error placing order:", error);

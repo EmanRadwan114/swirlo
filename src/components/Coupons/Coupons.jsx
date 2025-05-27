@@ -26,7 +26,7 @@ export default function Coupons({ onApplyCoupon }) {
   });
 
   const CouponSchema = Yup.object().shape({
-    coupon: Yup.string().min("Coupon should be at least 3 characters"),
+    coupon: Yup.string().min(3, "Coupon should be at least 3 characters"),
   });
 
   const formik = useFormik({
@@ -52,7 +52,6 @@ export default function Coupons({ onApplyCoupon }) {
           message: response.message || "Coupon applied successfully!",
           success: true,
         });
-
       } catch (error) {
         setFeedback({
           message: error.response?.message || "Invalid coupon",
