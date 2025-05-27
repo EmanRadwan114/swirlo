@@ -501,7 +501,14 @@ const Profile = () => {
             </Typography>
             <Button
               variant="contained"
-              sx={{ mt: 3 }}
+              sx={{
+                mt: 3,
+                color: "white",
+                backgroundColor: "var(--primary)",
+                "&:hover": {
+                  backgroundColor: "var(--light-color)",
+                },
+              }}
               size={isMobile ? "small" : "medium"}
             >
               Browse Menu
