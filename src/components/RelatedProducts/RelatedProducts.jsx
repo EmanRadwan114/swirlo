@@ -43,6 +43,10 @@ export default function RelatedProducts({
   };
 
   const handleToggleFavorite = (productId) => {
+    if (!user) {
+      toast.error("Please log in to add items to your favorites!");
+      return;
+    }
     isFavorited(productId) ? removeFromFav(productId) : addToFav(productId);
   };
 
