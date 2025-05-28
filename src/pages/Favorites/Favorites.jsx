@@ -249,11 +249,7 @@ const Favorites = () => {
                         },
                       }}
                     >
-                      <Box
-                        component={Link}
-                        to={`/menu-items/all/${item._id}`}
-                        sx={{ textDecoration: "none" }}
-                      >
+                      <Box component={Link} to={`/menu-items/all/${item._id}`}>
                         <CardMedia
                           sx={{
                             height: 0,
@@ -276,6 +272,7 @@ const Favorites = () => {
                           <Box
                             component={Link}
                             to={`/menu-items/all/${item._id}`}
+                            sx={{ textDecoration: "none" }}
                           >
                             <Typography
                               variant="h6"
