@@ -43,8 +43,7 @@ const HomeSecTwo = () => {
           position: "relative",
           overflow: "hidden",
           paddingBottom: { xs: "150px", sm: "10px" },
-        }}
-      >
+        }}>
         <Container>
           <Grid
             container
@@ -54,16 +53,14 @@ const HomeSecTwo = () => {
               justifyContent: "center",
               alignItems: "center",
               verticalAlign: "middle",
-            }}
-          >
+            }}>
             <Grid
               size={{ xs: 12, md: 6 }}
               sx={{
                 display: "flex",
                 justifyContent: { xs: "center", lg: "left" },
                 alignItems: "center",
-              }}
-            >
+              }}>
               <Box
                 sx={{
                   display: "flex",
@@ -71,8 +68,7 @@ const HomeSecTwo = () => {
                   alignItems: "center",
                   justifyContent: "center",
                   position: "relative",
-                }}
-              >
+                }}>
                 <Box
                   component="img"
                   src={milk}
@@ -112,13 +108,11 @@ const HomeSecTwo = () => {
                 alignItems: "center",
                 gap: { xs: 2.5, md: 4 },
                 textAlign: { xs: "center", md: "left" },
-              }}
-            >
+              }}>
               <Typography
                 variant="h4"
                 color="white"
-                sx={{ fontSize: { xs: "2rem", md: "3rem" } }}
-              >
+                sx={{ fontSize: { xs: "2rem", md: "3rem" } }}>
                 Welcome to <strong>Swirlo</strong> — where every sip tells a
                 story
               </Typography>
@@ -129,8 +123,7 @@ const HomeSecTwo = () => {
                   fontWeight: "700",
                   mb: 2,
                   fontSize: { xs: "1.1rem", md: "1.3rem" },
-                }}
-              >
+                }}>
                 Discover rich, freshly brewed coffee crafted with passion.
                 Whether you're a casual sipper or a devoted espresso lover,
                 we’re here to elevate your coffee experience.
@@ -144,11 +137,10 @@ const HomeSecTwo = () => {
                   backgroundColor: "var(--gold)",
                   color: "white",
                   "&:hover": {
-                    backgroundColor: "var(--light-color)",
+                    backgroundColor: "rgb(173, 119, 38)",
                   },
                   marginBottom: 10,
-                }}
-              >
+                }}>
                 Explore Our Menu
               </Button>
             </Grid>
