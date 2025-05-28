@@ -43,8 +43,15 @@ export default function ProductDetails() {
 
   const prd = product.data[0];
 
+  // check user is logged ?
+  const user = localStorage.getItem("user");
+
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
+    if (!user) {
+      toast.error("Please log in to add items to your favorites!");
+      return;
+    }
     if (isFavorited(id)) {
       removeFromFav(id);
       setFavorited(false);
@@ -53,8 +60,6 @@ export default function ProductDetails() {
       setFavorited(true);
     }
   };
-  // check user is logged ?
-  const user = localStorage.getItem("user");
 
   // add to cart
   const handleAddToCart = () => {
@@ -75,8 +80,7 @@ export default function ProductDetails() {
           flexDirection: { xs: "column", md: "row" },
           p: { xs: 2, md: 6 },
           overflowX: "hidden",
-        }}
-      >
+        }}>
         {/* Image Section */}
         <Box
           sx={{
@@ -84,8 +88,7 @@ export default function ProductDetails() {
             flex: 1,
             width: "100%",
             height: { xs: "60vh", sm: "430px", md: "75vh", lg: "75vh" },
-          }}
-        >
+          }}>
           <img
             src={prd.thumbnail}
             alt="coffee shop"
@@ -110,8 +113,7 @@ export default function ProductDetails() {
             py: { xs: 2, md: 4 },
             alignItems: { xs: "center", md: "flex-start" },
             textAlign: { xs: "center", md: "left" },
-          }}
-        >
+          }}>
           <Box
             sx={{
               display: "flex",
@@ -119,8 +121,7 @@ export default function ProductDetails() {
               justifyContent: "space-between",
               alignItems: "center",
               width: "100%",
-            }}
-          >
+            }}>
             <Typography
               variant="h3"
               sx={{
@@ -128,8 +129,7 @@ export default function ProductDetails() {
                 fontSize: { xs: "1.75rem", sm: "2rem", md: "2.5rem" },
                 color: "var(--primary)",
                 fontFamily: "Pacifico, cursive",
-              }}
-            >
+              }}>
               {prd.title}
             </Typography>
 
@@ -161,8 +161,7 @@ export default function ProductDetails() {
             sx={{
               mb: 2,
               color: "var(--tertiary)",
-            }}
-          >
+            }}>
             Ingredients
           </Typography>
 
@@ -171,8 +170,7 @@ export default function ProductDetails() {
             sx={{
               mb: 4,
               color: "var(--main-text)",
-            }}
-          >
+            }}>
             {prd.description}
           </Typography>
 
@@ -183,8 +181,7 @@ export default function ProductDetails() {
               fontWeight: "700",
               color: "var(--primary)",
               fontFamily: "Playpen Sans Hebrew",
-            }}
-          >
+            }}>
             Price: {prd.price} EGP
           </Typography>
 
@@ -208,8 +205,7 @@ export default function ProductDetails() {
               "&:hover": {
                 bgcolor: "var(--main-text)",
               },
-            }}
-          >
+            }}>
             <ShoppingCartIcon />
             Add To Cart
           </Button>
