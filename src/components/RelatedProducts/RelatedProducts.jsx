@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -16,25 +15,13 @@ export default function RelatedProducts({
   currentProductId,
   onProductClick,
 }) {
+  const theme = useTheme();
+
   const { addToCart } = useCart();
   const { products, isLoading, isError } = useProductsContext();
   const { addToFav, removeFromFav, isFavorited } = useFavoritesContext();
 
-  const [cardsPerView, setCardsPerView] = useState(1);
-
-  const updateCardsPerView = () => {
-    const width = window.innerWidth;
-    if (width >= 1200) setCardsPerView(4);
-    else if (width >= 900) setCardsPerView(3);
-    else if (width >= 650) setCardsPerView(2);
-    else setCardsPerView(1);
-  };
-
-  useEffect(() => {
-    updateCardsPerView();
-    window.addEventListener("resize", updateCardsPerView);
-    return () => window.removeEventListener("resize", updateCardsPerView);
-  }, []);
+  const user = localStorage.getItem("user");
 
   if (isLoading) return <Typography>Loading related products...</Typography>;
   if (isError) return <Typography>Error loading related products.</Typography>;
@@ -46,88 +33,97 @@ export default function RelatedProducts({
 
   if (!relatedProducts?.length) return null;
 
-  const slidesToShow = Math.min(cardsPerView, relatedProducts.length);
-
-  // check user is logged ?
-  const user = localStorage.getItem("user");
-
   const handleAddToCart = (productId) => {
     if (!user) {
       toast.error("Please log in to add items to cart");
       return;
     }
-    toast.success("item added to cart successfully");
+    toast.success("Item added to cart successfully");
     addToCart(productId);
   };
 
   const handleToggleFavorite = (productId) => {
-    if (isFavorited(productId)) {
-      removeFromFav(productId);
-    } else {
-      addToFav(productId);
-    }
+    isFavorited(productId) ? removeFromFav(productId) : addToFav(productId);
   };
 
   return (
     <Box
       mt={6}
       sx={{
-        maxWidth: "1200px",
+        maxWidth: "100%",
         mx: "auto",
-        px: 2,
+        px: { xs: 1, sm: 2 },
         my: 12,
         textAlign: "center",
+        overflow: "hidden",
       }}>
       <Typography
         variant="h5"
         color="var(--primary)"
         gutterBottom
-        sx={{ fontWeight: "700", mb: 6, fontSize: "2.5rem" }}>
+        sx={{ fontWeight: 700, mb: 6, fontSize: "2.5rem" }}>
         Related Products
       </Typography>
 
-      <Swiper
-        className="related-swiper"
-        spaceBetween={20}
-        slidesPerView={slidesToShow}
-        navigation={true}
-        modules={[Navigation]}
-        style={{
-          padding: "0 20px 20px",
-          display: "flex",
-          alignItems: "center",
-          margin: 0,
-        }}>
-        {relatedProducts.map((product) => (
-          <SwiperSlide key={product._id}>
-            <Box
-              display="grid"
-              justifyContent="center"
-              sx={{
-                width: "100%",
-                height: "100%",
-                placeItems: "center",
-              }}>
-              <ProductCard
-                product={product}
-                onAddToCart={() => handleAddToCart(product._id)}
-                onToggleFavorite={() => handleToggleFavorite(product._id)}
-                onProductClick={() =>
-                  onProductClick(
-                    product.categoryID?.name || "category",
-                    product._id
-                  )
-                }
+      <Box sx={{ position: "relative", width: "100%" }}>
+        <Swiper
+          className="related-swiper"
+          spaceBetween={24}
+          navigation
+          modules={[Navigation]}
+          breakpoints={{
+            0: {
+              slidesPerView: 1,
+            },
+            600: {
+              slidesPerView: 2,
+            },
+            900: {
+              slidesPerView: 3,
+            },
+            1200: {
+              slidesPerView: 4,
+            },
+            1600: {
+              slidesPerView: 5,
+            },
+          }}
+          style={{
+            padding: "0 20px 40px",
+            boxSizing: "border-box",
+          }}>
+          {relatedProducts.map((product) => (
+            <SwiperSlide key={product._id}>
+              <Box
                 sx={{
-                  width: { xs: "280px", md: "250px" },
-                  aspectRatio: "2/3",
-                  height: "66%",
-                }}
-              />
-            </Box>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+                  display: "flex",
+                  justifyContent: "center",
+                  px: 1,
+                  boxSizing: "border-box",
+                }}>
+                <ProductCard
+                  product={product}
+                  onAddToCart={() => handleAddToCart(product._id)}
+                  onToggleFavorite={() => handleToggleFavorite(product._id)}
+                  onProductClick={() =>
+                    onProductClick(
+                      product.categoryID?.name || "category",
+                      product._id
+                    )
+                  }
+                  sx={{
+                    width: { xs: "240px", sm: "100%" },
+                    aspectRatio: "1.9/3",
+                    height: { xs: "55%", md: "62%" },
+                    boxShadow: theme.shadows[3],
+                    borderRadius: 2,
+                  }}
+                />
+              </Box>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </Box>
     </Box>
   );
 }

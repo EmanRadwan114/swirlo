@@ -188,7 +188,7 @@ const ProductCard = ({
         )}
       </Box>
 
-      <CardContent sx={{ textAlign: "center", padding: isSmallScreen ? 0 : 2 }}>
+      <CardContent sx={{ textAlign: "center", padding: isSmallScreen ? 1 : 2 }}>
         {isSmallScreen && (
           <Stack
             divider={
