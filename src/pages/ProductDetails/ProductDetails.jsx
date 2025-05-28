@@ -43,6 +43,9 @@ export default function ProductDetails() {
 
   const prd = product.data[0];
 
+  // check user is logged ?
+  const user = localStorage.getItem("user");
+
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
     if (!user) {
@@ -57,8 +60,6 @@ export default function ProductDetails() {
       setFavorited(true);
     }
   };
-  // check user is logged ?
-  const user = localStorage.getItem("user");
 
   // add to cart
   const handleAddToCart = () => {
