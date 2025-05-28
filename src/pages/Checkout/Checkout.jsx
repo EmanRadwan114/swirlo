@@ -4,8 +4,9 @@ import {
   TextField,
   Button,
   Typography,
-
   MenuItem,
+  ThemeProvider,
+  createTheme,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -14,16 +15,27 @@ import MultiCardSlider from "../../components/slider/slider";
 import { useOrders } from "../../context/OrdersContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import coup from "../../assets/coup.png";
+import { useCart } from "../../context/CartContext";
 // import beans from "../../assets/beans.png";
 export default function Checkout() {
   // const isMobile = useMediaQuery("(max-width:600px)");
   const { getCartItems, createOrder, getShippingPrice, checkout } = useOrders();
+  const { handleCartRemoval } = useCart();
   const [couponDiscount, setCouponDiscount] = useState(0);
   const [couponCode, setCouponCode] = useState("");
   const [loading, setLoading] = useState(false); // Add loading state
   const navigate = useNavigate();
   const shippingPrice = getShippingPrice();
   const [cart, setCartItems] = useState([]);
+
+  const themeC = createTheme({
+    palette: {
+      primary: {
+        main: "#4b2a19",
+      },
+    },
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,11 +90,11 @@ export default function Checkout() {
 
         if (values.paymentMethod === "online") {
           const { sessionId } = res.data; // Get session ID from the backend
-          console.log("Session ID for Stripe:", sessionId);
           await checkout(sessionId); // Handle online payment via Stripe
         } else {
+          handleCartRemoval();
           toast.success("Order placed successfully!");
-          navigate("/profile"); // Redirect to orders page
+          navigate(`/order-confirmation/${res.data.data._id}`);
         }
       } catch (error) {
         console.error("Error placing order:", error);
@@ -105,28 +117,31 @@ export default function Checkout() {
     <Box
       sx={{
         display: "flex",
-        flexDirection: { xs: "column", md: "row" },
+        flexDirection: { xs: "column", lg: "row" },
         minHeight: "100vh",
-        backgroundColor: "#f7f7f7",
-        p: 2,
+        px: 4,
         gap: 2,
+        alignItems: "start",
+        position: "relative",
       }}
     >
       {/* LEFT SIDE */}
       <Box
         sx={{
-          flex: 2,
-          backgroundColor: "#fff",
-          //  background: `linear-gradient(0deg, rgba(104, 58, 9, 1), rgba(255, 255, 255, 0.74)), url(${beans})`,
+          flex: 1,
           borderRadius: 2,
-          p: 4,
           display: "flex",
           flexDirection: "column",
           gap: 3,
+          mt: 2,
+          mx: "auto",
+          width: { xs: "100%", sm: "80%" },
+          py: 4,
         }}
       >
         <Typography
-          variant="h3"
+          variant="h4"
+          component="h2"
           sx={{
             mb: 2,
             color: "var(--primary)",
@@ -141,11 +156,11 @@ export default function Checkout() {
             background: "var(--custom-gradient)",
             height: "5px",
             width: { xs: "80%", md: "18rem" },
-            mb: 4,
+            mb: 0,
           }}
         />
 
-        <Box sx={{ width: "100%", padding: 2 }}>
+        <Box sx={{ width: "100%" }}>
           <MultiCardSlider />
         </Box>
 
@@ -155,9 +170,7 @@ export default function Checkout() {
           sx={{
             display: "flex",
             flexDirection: "column",
-            gap: 2,
-            mx: "auto",
-            width: "80%",
+            gap: 4,
           }}
         >
           <TextField
@@ -170,6 +183,14 @@ export default function Checkout() {
             onBlur={formik.handleBlur}
             error={formik.touched.address && Boolean(formik.errors.address)}
             helperText={formik.touched.address && formik.errors.address}
+            sx={{
+              "& .MuiInputLabel-root": {
+                color: "var(--green-color)",
+                "&.Mui-focused": {
+                  color: "var(--green-color)",
+                },
+              },
+            }}
           />
 
           <TextField
@@ -188,6 +209,14 @@ export default function Checkout() {
             helperText={
               formik.touched.paymentMethod && formik.errors.paymentMethod
             }
+            sx={{
+              "& .MuiInputLabel-root": {
+                color: "var(--green-color)",
+                "&.Mui-focused": {
+                  color: "var(--green-color)",
+                },
+              },
+            }}
           >
             <MenuItem value="cash">Cash on Delivery</MenuItem>
             <MenuItem value="online">Online Payment</MenuItem>
@@ -198,20 +227,25 @@ export default function Checkout() {
       {/* RIGHT SIDE */}
       <Box
         sx={{
-          flex: 1,
-
-          background:
-            "linear-gradient(0deg, rgb(171, 132, 90), rgba(255, 255, 255, 0.74))",
+          flex: { xs: 1, sm: 0.4 },
+          background: "var(--secondary)",
+          position: "sticky",
+          top: 80,
+          mx: "auto",
           borderRadius: 2,
-          p: 4,
+          p: 3,
           display: "flex",
           flexDirection: "column",
           gap: 3,
+          width: { xs: "100%", sm: "80%" },
+          height: "fit-content",
+          mt: { xs: 4, lg: 8 },
+          mb: 4,
         }}
       >
         <Coupons onApplyCoupon={handleCouponApply} />
 
-        <Box sx={{ borderTop: "1px solid #ddd", pt: 2 }}>
+        <Box sx={{ pt: 2 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
             <Typography variant="body1">Subtotal:</Typography>
             <Typography variant="body1">EGP {subtotal}</Typography>
@@ -233,34 +267,25 @@ export default function Checkout() {
               justifyContent: "space-between",
               fontWeight: "bold",
               mt: 2,
-              borderTop: "1px solid #ccc",
               pt: 2,
             }}
           >
             <Typography variant="h6">Total:</Typography>
             <Typography variant="h6">EGP {totalPrice}</Typography>
           </Box>
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{
-              backgroundColor: "var(--primary)",
-              color: "#fff",
-              fontWeight: "bold",
-              borderRadius: 2,
-              mt: 2,
-              "&:hover": {
-                backgroundColor: "var(--secondary)",
-              },
-            }}
-            onClick={handlePayNow}
-            disabled={loading} // Disable button when loading
-          >
-            {loading ? "Processing..." : "Pay Now"}{" "}
-            {/* Show loading text when in loading state */}
-          </Button>
+          <ThemeProvider theme={themeC}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ textTransform: "none" }}
+              onClick={handlePayNow}
+              disabled={loading} // Disable button when loading
+            >
+              {loading ? "Processing..." : "Pay Now"}{" "}
+              {/* Show loading text when in loading state */}
+            </Button>
+          </ThemeProvider>
 
           <Box
             sx={{
@@ -271,7 +296,7 @@ export default function Checkout() {
             }}
           >
             <img
-              src="src/assets/coup.png"
+              src={coup}
               alt="Coupon"
               style={{ width: "100%", maxWidth: "320px", height: "auto" }}
             />

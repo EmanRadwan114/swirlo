@@ -164,36 +164,42 @@ function Search() {
           </Typography>
         </Box>
       ) : (
-        <Container
-          fixed
-          sx={{
-            paddingTop: "70px",
-            paddingBottom: "70px",
-            paddingLeft: { md: "290px" },
-          }}
-        >
-          <Box sx={{ display: "flex", justifyContent: "center", marginY: 4 }}>
-            <Grid container spacing={4}>
-              {products?.map((product) => (
-                <Grid key={product._id} size={{ xs: 12, sm: 6, lg: 4 }}>
-                  <ProductCard
-                    product={product}
-                    onAddToCart={() => handleAddToCart(product._id)}
-                    onToggleFavorite={(id) => toggleWishlist(id)}
-                    onProductClick={handleProductClick}
-                    sx={{ width: "290px", aspectRatio: "2/3", height: "66%" }}
-                  />
-                </Grid>
-              ))}
-            </Grid>
+        <Box sx={{ paddingLeft: { md: "290px" } }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: {
+                xs: "center",
+              },
+              gap: 4,
+              marginY: 4,
+            }}
+          >
+            {products?.map((prd) => (
+              <ProductCard
+                key={prd._id}
+                product={prd}
+                onAddToCart={() => handleAddToCart(prd._id)}
+                onToggleFavorite={(id) => toggleWishlist(id)}
+                onProductClick={() =>
+                  handleProductClick(prd._id, prd.categoryID?.name)
+                }
+                sx={{
+                  width: { xs: "90%", sm: "290px" },
+                  aspectRatio: { xs: "1.80/3", sm: "2/3" },
+                  height: "66%",
+                }}
+              />
+            ))}
           </Box>
-
           <PaginationComponent
             currentPage={currentPage}
             totalPages={totalPages}
             handlePagination={handlePagination}
           />
-        </Container>
+        </Box>
       )}
     </Box>
   );

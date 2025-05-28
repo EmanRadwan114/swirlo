@@ -32,11 +32,8 @@ import favoritesServices from "../../services/favorites";
 import PaginationComponent from "../../components/Pagination/PaginationComp";
 import AboutBg from "../../components/AboutSec/AboutBg";
 import favoritesImg from "../../assets/favorites.jpg";
-<<<<<<< HEAD
 import { Link } from "react-router";
-=======
 import { useCart } from "../../context/CartContext";
->>>>>>> 8aef1ed765417c31b1cd5284491aea46fd85d317
 
 const Favorites = () => {
   const queryClient = useQueryClient();
@@ -45,8 +42,8 @@ const Favorites = () => {
 
   const user = localStorage.getItem("user");
 
-    const { addToCart } = useCart();
-  
+  const { addToCart } = useCart();
+
   const {
     data: { favorites = [], totalPages } = {},
     isLoading,
@@ -91,7 +88,6 @@ const Favorites = () => {
     },
   });
 
-
   // Handle Add To Cart
   const handleAddToCart = (id) => {
     if (!user) {
@@ -102,7 +98,6 @@ const Favorites = () => {
     addToCart(id);
   };
 
-  
   if (user && (isLoading || isRemoving || isClearing))
     return <LoadingSpinner></LoadingSpinner>;
 
@@ -244,8 +239,6 @@ const Favorites = () => {
                 {favorites.map((item) => (
                   <Grid key={item._id} size={{ xs: 12, md: 6, lg: 4 }}>
                     <Card
-                      component={Link}
-                      to={`/menu-items/all/${item._id}`}
                       sx={{
                         borderRadius: 4,
                         transition: "transform 0.3s, box-shadow 0.3s",
@@ -256,15 +249,21 @@ const Favorites = () => {
                         },
                       }}
                     >
-                      <CardMedia
-                        sx={{
-                          height: 0,
-                          pt: "50%",
-                          backgroundSize: "cover",
-                        }}
-                        image={item.thumbnail}
-                        title={item.title}
-                      />
+                      <Box
+                        component={Link}
+                        to={`/menu-items/all/${item._id}`}
+                        sx={{ textDecoration: "none" }}
+                      >
+                        <CardMedia
+                          sx={{
+                            height: 0,
+                            pt: "50%",
+                            backgroundSize: "cover",
+                          }}
+                          image={item.thumbnail}
+                          title={item.title}
+                        />
+                      </Box>
                       <CardContent sx={{ minHeight: { md: "190px" } }}>
                         <Box
                           sx={{
@@ -274,14 +273,19 @@ const Favorites = () => {
                             marginBottom: "0px",
                           }}
                         >
-                          <Typography
-                            variant="h6"
-                            component="h3"
-                            gutterBottom
-                            sx={{ color: "var(--main-text)" }}
+                          <Box
+                            component={Link}
+                            to={`/menu-items/all/${item._id}`}
                           >
-                            {item.title}
-                          </Typography>
+                            <Typography
+                              variant="h6"
+                              component="h3"
+                              gutterBottom
+                              sx={{ color: "var(--main-text)" }}
+                            >
+                              {item.title}
+                            </Typography>
+                          </Box>
                           <IconButton
                             aria-label="remove from favorites"
                             onClick={() => {

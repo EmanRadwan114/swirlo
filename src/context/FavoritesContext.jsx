@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import favoritesServices from "../services/favorites";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
+import { useAuth } from "./AuthContext";
 
 export const FavoritesContext = createContext();
 
@@ -11,7 +12,8 @@ export default function FavoritesContextProvider({ children }) {
   const [currentPage, setCurrentPage] = useState(1);
 
   // Fetch favorites with pagination
-  const user = localStorage.getItem("user");
+  const { user } = useAuth();
+
   const {
     data = {},
     isLoading,

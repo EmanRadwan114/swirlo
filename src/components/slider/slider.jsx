@@ -24,7 +24,14 @@ export default function MultiCardSlider() {
   }, [getCartItems]);
 
   return (
-    <Box sx={{ maxHeight: 900, maxWidth: 820, mx: "auto", mt: 4, px: 2 }}>
+    <Box
+      sx={{
+        maxHeight: 900,
+        maxWidth: { lg: "800px", xl: "1000px" },
+        mt: 4,
+        px: 2,
+      }}
+    >
       <Swiper
         modules={[Navigation]}
         spaceBetween={20}
@@ -37,8 +44,11 @@ export default function MultiCardSlider() {
         }}
         breakpoints={{
           0: { slidesPerView: 1 },
-          600: { slidesPerView: 2 },
-          960: { slidesPerView: 3 },
+          600: { slidesPerView: 1.5 },
+          960: { slidesPerView: 2 },
+          1200: { slidesPerView: 2.5 },
+          1350: { slidesPerView: 3 },
+          1500: { slidesPerView: 3.5 },
         }}
       >
         {cartItems.map((item, index) => (
@@ -53,6 +63,8 @@ export default function MultiCardSlider() {
                   transform: "translateY(-4px)",
                   boxShadow: "0 6px 16px rgba(129, 83, 52, 0.15)",
                 },
+                minHeight: "370px",
+                backgroundColor: "#f9f9f7",
               }}
             >
               <CardMedia
@@ -69,7 +81,6 @@ export default function MultiCardSlider() {
               />
               <CardContent
                 sx={{
-                  bgcolor: "#f9f9f7",
                   p: 3,
                   borderBottomLeftRadius: 8,
                   borderBottomRightRadius: 8,

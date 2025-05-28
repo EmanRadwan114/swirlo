@@ -36,10 +36,10 @@ export default function Products() {
   // add to cart
   const handleAddToCart = (id) => {
     if (!user) {
-      toast.error("Please log in to add items to cart");
+      toast.error("Please log in to add items to cart!");
       return;
     }
-    toast.success("item added to cart successfully");
+    toast.success("item added to cart successfully!");
     addToCart(id);
   };
 
@@ -82,6 +82,10 @@ export default function Products() {
   });
 
   const toggleWishlist = (id) => {
+    if (!user) {
+      toast.error("Please log in to add items to your favorites!");
+      return;
+    }
     if (favArr.includes(id)) {
       removeFromFavorites(id);
     } else {
@@ -190,7 +194,7 @@ export default function Products() {
 
   return (
     <div>
-      <FilterationSideNav  onFilterChange={handleFilterChange} />
+      <FilterationSideNav onFilterChange={handleFilterChange} />
       {loading ? (
         <LoadingSpinner />
       ) : displayProducts.length === 0 ? (
@@ -216,8 +220,7 @@ export default function Products() {
               flexDirection: "row",
               flexWrap: "wrap",
               justifyContent: {
-                xs: "center", // center on small screens
-                 // default to left on medium and above
+                xs: "center",
               },
               gap: 4,
               marginY: 4,
@@ -234,7 +237,7 @@ export default function Products() {
                 }
                 sx={{
                   width: { xs: "90%", sm: "290px" },
-                  aspectRatio: {xs:"1.80/3",sm:"2/3"},
+                  aspectRatio: { xs: "1.80/3", sm: "2/3" },
                   height: "66%",
                 }}
               />

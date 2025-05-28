@@ -19,7 +19,6 @@ const changeUserData = async (data) => {
 
 const logout = async (data) => {
   const res = await api.post(`/auth/logout`, data);
-  localStorage.removeItem("user");
   return res.data;
 };
 
