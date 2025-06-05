@@ -53,7 +53,7 @@ const AboutMid = () => {
               textTransform: "none",
               fontSize: "1.3rem",
               "&:hover": {
-                color: "var(--light-color)",
+                color: "rgb(173, 119, 38)",
                 boxShadow: "none",
               },
             }}>

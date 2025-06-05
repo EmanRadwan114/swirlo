@@ -103,7 +103,7 @@ const AboutOne = () => {
                 fontWeight: "bold",
                 boxShadow: "none",
                 "&:hover": {
-                  color: "var(--light-color)",
+                  color: "rgb(196, 131, 34)",
                   boxShadow: "none",
                 },
               }}>
@@ -120,6 +120,7 @@ const AboutOne = () => {
               alignItems: "center",
               position: "relative",
               order: { xs: -1, md: 0 }, // Reorder for mobile
+              // display: { xs: "none", md: "block" },
             }}>
             <Box
               sx={{
@@ -150,7 +151,7 @@ const AboutOne = () => {
                          a 75,75 0 1,1 -150,0"
                       />
                     </defs>
-                    <text fill="#6f4e37" fontSize="26" fontWeight="bold">
+                    <text fill="#6f4e37" fontSize="29" fontWeight="bold">
                       <textPath href="#circle" startOffset="0%">
                         PREMIUM QUALITY COFFEE 100%
                       </textPath>

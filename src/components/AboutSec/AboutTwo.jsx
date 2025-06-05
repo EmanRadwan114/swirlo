@@ -36,7 +36,7 @@ const AboutTwo = () => {
         sx={{
           background: `linear-gradient(0deg, rgba(232, 241, 229, 0.69), rgba(255, 255, 255, 0.74)), url(${beans})`,
           backgroundSize: "fit",
-          backgroundPosition: "center",
+          backgroundPosition: { xs: "right", lg: "center" },
           minHeight: "100vh",
           display: "flex",
           alignItems: "center",
@@ -49,30 +49,34 @@ const AboutTwo = () => {
             spacing={{ xs: 5, md: 4 }}
             alignItems="center"
             justifyContent="center"
-            sx={{ px: { xs: 2, md: 7 } }}>
+            sx={{
+              px: { xs: 2, md: 7 },
+            }}>
             {/* Image Column*/}
             <Grid
-              size={{ xs: 12, md: 6 }}
+              size={{ xs: 12, md: 4, lg: 6 }}
               sx={{
                 display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                justifyContent: "right",
+                alignItems: "right",
+                display: { xs: "none", md: "block" },
               }}>
               <Box
                 sx={{
-                  width: "fit-content",
+                  width: "full",
                   display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
+                  justifyContent: "right",
+                  alignItems: "right",
                 }}>
-                {/* Beans Bag Image */}
+                {/* Donut and Coffee MugImage */}
                 <Box
                   component="img"
                   src={donutMug}
                   alt="Donut and Coffee Mug"
                   sx={{
-                    maxHeight: { xs: "300px", md: "500px" },
+                    maxHeight: { md: "380px", lg: "500px" },
                     width: "auto",
+                    marginRight: { md: -10, lg: 0 },
                     transition: "transform 0.3s ease-in-out",
                     "&:hover": {
                       transform: "scale(1.05)",
@@ -84,9 +88,9 @@ const AboutTwo = () => {
 
             {/* Text Column */}
             <Grid
-              size={{ xs: 12, md: 6 }}
+              size={{ xs: 12, md: 8, lg: 6 }}
               sx={{
-                textAlign: { xs: "center", md: "left" },
+                textAlign: "left",
                 display: "flex",
                 flexDirection: "column",
                 gap: 4,
@@ -142,7 +146,7 @@ const AboutTwo = () => {
                   </Box>
 
                   {/* Steps */}
-                  <Grid container spacing={4}>
+                  <Grid container spacing={4} sx={{ justifyContent: "center" }}>
                     {steps.map((step, index) => (
                       <Grid item xs={12} key={index}>
                         <Box
@@ -190,7 +194,7 @@ const AboutTwo = () => {
                         px: 4,
                         py: 1.3,
                         "&:hover": {
-                          backgroundColor: "#d08f00",
+                          backgroundColor: "rgb(173, 119, 38)",
                         },
                       }}>
                       More About Us
@@ -202,7 +206,8 @@ const AboutTwo = () => {
                         backgroundColor: "var(--green-color)",
                         color: "#fff",
                         fontWeight: "bold",
-                        px: 4,
+                        px: 3.4,
+                        py: 1.3,
                         "&:hover": {
                           backgroundColor: "#2e5b3a",
                         },
