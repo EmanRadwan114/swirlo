@@ -37,7 +37,7 @@ export default function Cart() {
 
   return (
     <>
-      {data.data.length > 0 ? (
+      {data?.data.length > 0 ? (
         <Stack minHeight="90vh" p={{ xs: 2, md: 6 }} spacing={3} width="100%">
           <Stack flexDirection={{ xs: "column", lg: "row" }}>
             {/* LEFT COLUMN - Cart */}

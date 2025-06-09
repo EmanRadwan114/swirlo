@@ -65,6 +65,7 @@ export default function AuthProvider({ children }) {
       };
       setUserState(userData);
       await PostUserByGoogle({ token });
+      hasLoggedOut = false;
       localStorage.setItem("user", JSON.stringify(userData));
       navigate("/");
       toast.success("Logged In Successfully!");
