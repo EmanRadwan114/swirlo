@@ -181,7 +181,7 @@ const Navbar = () => {
             <Box>
               <IconButton
                 component={RouterLink}
-                to={user ? "/profile" : "/login"}
+                to={localStorage.getItem("user") ? "/profile" : "/login"}
                 sx={{
                   color:
                     location.pathname === "/profile"
